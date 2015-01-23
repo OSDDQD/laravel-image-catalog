@@ -1,0 +1,13 @@
+/.idea
+/app/data
+/app/uploads
+/bootstrap/compiled.php
+/public/speedtest/speedtest/*.jpg
+/public/uploads
+/vendor
+composer.phar
+composer.lock
+.env.*.php
+.env.php
+.DS_Store
+Thumbs.db

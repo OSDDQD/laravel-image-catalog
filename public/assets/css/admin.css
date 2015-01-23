@@ -1,0 +1,41 @@
+@import "manager/bootstrap.min.css";
+@import "manager/sb-admin.css";
+@import "manager/plugins/morris.css";
+@import "manager/font-awesome-4.1.0/css/font-awesome.min.css";
+@import "../js/global/jquery-ui/jquery-ui.min.css";
+@import "../../packages/barryvdh/laravel-elfinder/css/elfinder.min.css";
+@import "../../packages/barryvdh/laravel-elfinder/css/theme.css";
+.gallery-uploader-container {
+  display: none;
+}
+.gallery-uploader-container #console-tip-anchor {
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+  width: 10px;
+}
+.gallery-uploader-container .btn-std {
+  margin-left: 1em;
+  min-width: 100px;
+}
+.gallery-uploader-container .form-group {
+  display: inline-block;
+  vertical-align: top;
+  width: 290px;
+  margin-bottom: 0!important;
+}
+.gallery-uploader-container .checkbox {
+  display: inline-block;
+  vertical-align: top;
+  width: 267px;
+  margin: 0!important;
+}
+.gallery-uploader-container .highlighted {
+  background-image: none;
+  background-color: honeydew !important;
+}
+.gallery-uploader-container #canvas-tab,
+.gallery-uploader-container #teaxtarea-tab {
+  display: none;
+  visibility: hidden;
+}

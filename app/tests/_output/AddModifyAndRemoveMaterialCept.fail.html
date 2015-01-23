@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SOHO Networks Control Panel</title>
+    <link href="/assets/css/admin.css" rel="stylesheet">
+    <script src="/assets/js/global/jquery-1.11.1.min.js"></script>
+    <script src="/assets/js/global/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/assets/js/manager/plugins/morris/raphael.min.js"></script>
+    <script src="/assets/js/manager/plugins/morris/morris.min.js"></script>
+    <script src="/assets/js/manager/plugins/damnUploader/interface.js"></script>
+    <script src="/assets/js/manager/plugins/damnUploader/uploader-setup.js"></script>
+    <script src="/assets/js/manager/plugins/damnUploader/jquery.damnUploader.js"></script>
+    <script src="/packages/barryvdh/laravel-elfinder/js/elfinder.min.js"></script>
+    <script src="/assets/js/manager/tinymce/tinymce.min.js"></script>
+    <script src="/assets/js/manager/main.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/assets/js/manager/html5shiv.min.js"></script>
+    <script src="/assets/js/manager/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://soho.local/manager">SOHO Networks</a>
+    </div>
+    <!-- Top Menu Items -->
+    <ul class="nav navbar-right top-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Website Administrator <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="http://soho.local/manager/users/1/edit"><i class="fa fa-fw fa-gear"></i> Профиль</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="http://soho.local"><i class="fa fa-fw fa-sitemap"></i> К сайту</a>
+                </li>
+                <li>
+                    <a href="http://soho.local/logout"><i class="fa fa-fw fa-sign-out"></i> Выйти</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav"><li><a href="http://soho.local/manager"><i class="fa fa-fw fa-home"></i> Главная</a></li><li class="active"><a href="http://soho.local/manager/materials"><i class="fa fa-fw fa-file-text"></i> Материалы</a></li><li><a href="http://soho.local/manager/structure/menus"><i class="fa fa-fw fa-bars"></i> Структура сайта</a></li><li><a href="http://soho.local/manager/guestbook"><i class="fa fa-fw fa-book"></i> Гостевая книга</a></li><li><a href="http://soho.local/manager/users"><i class="fa fa-fw fa-users"></i> Пользователи</a></li><li><a href="http://soho.local/manager/settings"><i class="fa fa-fw fa-cogs"></i> Настройки</a></li><li><a href="http://soho.local"><i class="fa fa-fw fa-sitemap"></i> К сайту</a></li><li><a href="http://soho.local/logout"><i class="fa fa-fw fa-sign-out"></i> Выйти</a></li></ul>
+            </div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+<div id="page-wrapper">
+
+<div class="container-fluid">
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Список материалов
+            </h1>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="navbar navbar-btn">
+            <a href="http://soho.local/manager/materials/create"><button class="btn-large btn-success btn">Добавить</button></a>
+        <div class="pull-right form form-inline">
+        <label for="Выберите тип материала" class="control-label">Выберите тип материала</label>
+        <select id="type" class="form-control">
+            <option value="">Все материалы</option>
+                        <option value="page">Текст страницы сайта</option>
+                        <option value="news">Новостной материал</option>
+                        <option value="action">Материал об акции</option>
+                        <option value="announcement">Оповещение</option>
+                    </select>
+    </div>
+    <div class="clearfix"></div>
+
+    <script>
+    $('#type').on('change', function() {
+        location.assign('http://soho.local/manager/materials/' + $(this).val());
+    });
+    </script>
+</div>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                <div class="table-responsive">
+    <form method="POST" action="http://soho.local/manager/materials/destroy" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th><input id="select-all-rows" type="checkbox" value="1"></th>
+            <th>#</th>
+                                                                <th>Название</th>
+                                                                                <th>Тип</th>
+                                                                                <th>Отображать</th>
+                                                                                <th>Дата создания</th>
+                                                                                <th>Дата обновления</th>
+                                        <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+                <tr>
+    <td><input class="select-row" name="id[0]" type="checkbox" value="23"></td>
+    <td>
+                                                                1
+    </td>
+        <td>
+                    Оповещение1 (рус)
+                        </td>
+        <td>
+                    Оповещение
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-31 10:35:07
+                        </td>
+        <td>
+                    2014-10-31 10:35:07
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/23/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[1]" type="checkbox" value="22"></td>
+    <td>
+                                                                2
+    </td>
+        <td>
+                    Материал об акции2 (рус)
+                        </td>
+        <td>
+                    Материал об акции
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-31 10:16:25
+                        </td>
+        <td>
+                    2014-10-31 10:16:25
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/22/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[2]" type="checkbox" value="21"></td>
+    <td>
+                                                                3
+    </td>
+        <td>
+                    Оповещения
+                        </td>
+        <td>
+                    Текст страницы сайта
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-31 10:06:43
+                        </td>
+        <td>
+                    2014-10-31 10:06:43
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/21/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[3]" type="checkbox" value="20"></td>
+    <td>
+                                                                4
+    </td>
+        <td>
+                    Акции
+                        </td>
+        <td>
+                    Текст страницы сайта
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-31 10:06:23
+                        </td>
+        <td>
+                    2014-10-31 10:06:23
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/20/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[4]" type="checkbox" value="19"></td>
+    <td>
+                                                                5
+    </td>
+        <td>
+                    Материал об акции1 (рус)
+                        </td>
+        <td>
+                    Материал об акции
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-31 10:03:45
+                        </td>
+        <td>
+                    2014-10-31 10:03:45
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/19/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[5]" type="checkbox" value="18"></td>
+    <td>
+                                                                6
+    </td>
+        <td>
+                    Новости компании
+                        </td>
+        <td>
+                    Текст страницы сайта
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-30 10:30:32
+                        </td>
+        <td>
+                    2014-10-30 10:30:32
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/18/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[6]" type="checkbox" value="17"></td>
+    <td>
+                                                                7
+    </td>
+        <td>
+                    Коротко о нас
+                        </td>
+        <td>
+                    Текст страницы сайта
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 13:59:01
+                        </td>
+        <td>
+                    2014-10-28 13:59:01
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/17/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[7]" type="checkbox" value="15"></td>
+    <td>
+                                                                8
+    </td>
+        <td>
+                    Новостной материал10 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/15/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[8]" type="checkbox" value="14"></td>
+    <td>
+                                                                9
+    </td>
+        <td>
+                    Новостной материал9 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/14/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[9]" type="checkbox" value="13"></td>
+    <td>
+                                                                10
+    </td>
+        <td>
+                    Новостной материал8 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/13/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[10]" type="checkbox" value="12"></td>
+    <td>
+                                                                11
+    </td>
+        <td>
+                    Новостной материал7 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/12/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[11]" type="checkbox" value="11"></td>
+    <td>
+                                                                12
+    </td>
+        <td>
+                    Новостной материал6 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/11/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[12]" type="checkbox" value="6"></td>
+    <td>
+                                                                13
+    </td>
+        <td>
+                    Новостной материал1 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/6/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[13]" type="checkbox" value="7"></td>
+    <td>
+                                                                14
+    </td>
+        <td>
+                    Новостной материал2 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/7/edit">Изменить</a>
+                        </td>
+</tr>
+                <tr>
+    <td><input class="select-row" name="id[14]" type="checkbox" value="8"></td>
+    <td>
+                                                                15
+    </td>
+        <td>
+                    Новостной материал3 (рус)
+                        </td>
+        <td>
+                    Новостной материал
+                </td>
+        <td>
+                    <div class="label label-success">Да</div>
+                </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                    2014-10-28 11:43:39
+                        </td>
+        <td>
+                                                                        <a class="btn btn-xs btn-primary" href="http://soho.local/manager/materials/8/edit">Изменить</a>
+                        </td>
+</tr>
+                </tbody>
+    </table>
+    <input class="btn-large btn-danger btn" type="submit" value="Удалить отмеченные">
+    </form>
+</div>
+<script>
+    $(function() {
+        $('#select-all-rows').on('change', function(){
+            $('.select-row').prop('checked', $(this).is(':checked'));
+        });
+    })
+</script>
+<div class="text-center">
+    <ul class="pagination">
+			<li class="disabled"><span>&laquo;</span></li><li class="active"><span>1</span></li><li><a href="http://soho.local/manager/materials?page=2">2</a></li><li><a href="http://soho.local/manager/materials?page=2" rel="next">&raquo;</a></li>	</ul>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.row-->
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+    <script src="/assets/js/manager/bootstrap.min.js"></script>
+    <script src="/assets/js/manager/ie10-viewport-bug-workaround.js"></script>
+<link rel="stylesheet" type="text/css" href="http://soho.local/_debugbar/assets.css?1409929725">
+<script type="text/javascript" src="http://soho.local/_debugbar/assets.js?1409929725"></script>
+<script type="text/javascript">jQuery.noConflict(true);</script>
+<script type="text/javascript">
+var phpdebugbar = new PhpDebugBar.DebugBar();
+phpdebugbar.addTab("messages", new PhpDebugBar.DebugBar.Tab({"icon":"list-alt","title":"Messages", "widget": new PhpDebugBar.Widgets.MessagesWidget()}));
+phpdebugbar.addIndicator("time", new PhpDebugBar.DebugBar.Indicator({"icon":"clock-o","tooltip":"Request Duration"}), "right");
+phpdebugbar.addTab("timeline", new PhpDebugBar.DebugBar.Tab({"icon":"tasks","title":"Timeline", "widget": new PhpDebugBar.Widgets.TimelineWidget()}));
+phpdebugbar.addIndicator("memory", new PhpDebugBar.DebugBar.Indicator({"icon":"cogs","tooltip":"Memory Usage"}), "right");
+phpdebugbar.addTab("exceptions", new PhpDebugBar.DebugBar.Tab({"icon":"bug","title":"Exceptions", "widget": new PhpDebugBar.Widgets.ExceptionsWidget()}));
+phpdebugbar.addTab("views", new PhpDebugBar.DebugBar.Tab({"icon":"gear","title":"Views", "widget": new PhpDebugBar.Widgets.VariableListWidget()}));
+phpdebugbar.addTab("route", new PhpDebugBar.DebugBar.Tab({"icon":"share","title":"Route", "widget": new PhpDebugBar.Widgets.VariableListWidget()}));
+phpdebugbar.addIndicator("currentroute", new PhpDebugBar.DebugBar.Indicator({"icon":"share","tooltip":"Route"}), "right");
+phpdebugbar.addTab("queries", new PhpDebugBar.DebugBar.Tab({"icon":"inbox","title":"Queries", "widget": new PhpDebugBar.Widgets.SQLQueriesWidget()}));
+phpdebugbar.addTab("emails", new PhpDebugBar.DebugBar.Tab({"icon":"inbox","title":"Mails", "widget": new PhpDebugBar.Widgets.MailsWidget()}));
+phpdebugbar.addTab("request", new PhpDebugBar.DebugBar.Tab({"icon":"tags","title":"Request", "widget": new PhpDebugBar.Widgets.VariableListWidget()}));
+phpdebugbar.setDataMap({
+"messages": ["messages.messages", []],
+"messages:badge": ["messages.count", null],
+"time": ["time.duration_str", '0ms'],
+"timeline": ["time", {}],
+"memory": ["memory.peak_usage_str", '0B'],
+"exceptions": ["exceptions.exceptions", []],
+"exceptions:badge": ["exceptions.count", null],
+"views": ["views", {}],
+"route": ["route", {}],
+"currentroute": ["route.uri", ],
+"queries": ["queries", []],
+"queries:badge": ["queries.nb_statements", 0],
+"emails": ["swiftmailer_mails.mails", []],
+"emails:badge": ["swiftmailer_mails.count", null],
+"request": ["request", {}]
+});
+phpdebugbar.restoreState();
+phpdebugbar.ajaxHandler = new PhpDebugBar.AjaxHandler(phpdebugbar);
+if (jQuery) phpdebugbar.ajaxHandler.bindToJquery(jQuery);
+phpdebugbar.setOpenHandler(new PhpDebugBar.OpenHandler({"url":"http:\/\/soho.local\/_debugbar\/open"}));
+phpdebugbar.addDataSet({"__meta":{"id":"6c5ed24e04c42b8aa51f9bac6c1a7e14","datetime":"2014-10-31 16:38:57","utime":1414755537.1798,"method":"GET","uri":"\/manager\/materials","ip":"127.0.0.1"},"php":{"version":"5.5.9-1ubuntu4.5"},"messages":{"count":0,"messages":[]},"time":{"start":1414755537.019,"end":1414755537.1798,"duration":0.16079902648926,"duration_str":"160.8ms","measures":[{"label":"Booting","start":1414755537.0199,"relative_start":0.00086092948913574,"end":1414755537.1138,"relative_end":1414755537.1138,"duration":0.093951940536499,"duration_str":"93.95ms"},{"label":"Application","start":1414755537.1143,"relative_start":0.095322847366333,"end":1414755537.178,"relative_end":1414755537.178,"duration":0.063707113265991,"duration_str":"63.71ms"},{"label":"After application","start":1414755537.1781,"relative_start":0.15905690193176,"end":1414755537.1798,"relative_end":2.8610229492188e-6,"duration":0.0017449855804443,"duration_str":"1.74ms"}]},"memory":{"peak_usage":15728640,"peak_usage_str":"15MB"},"exceptions":{"count":0,"exceptions":[]},"views":{"materials.index":"materials.index","manager.index":"manager.index","manager.partials.index_table":"manager.partials.index_table","manager.partials.index_tr":"manager.partials.index_tr","manager.partials.index_td_field":"manager.partials.index_td_field","pagination::slider-3":"pagination::slider-3","layouts.manager":"layouts.manager"},"route":{"host":"-","uri":"GET manager\/materials\/{type?}","name":"manager.materials.index","action":"MaterialsController@index","before":"roles","after":"-"},"queries":{"nb_statements":10,"nb_failed_statements":0,"accumulated_duration":0.00335,"accumulated_duration_str":"3.35ms","statements":[{"sql":"select * from `settings`","params":{},"duration":0.00024,"duration_str":"240\u03bcs","stmt_id":null},{"sql":"select * from `menus` where `slug` = 'main-menu' limit 1","params":{"0":"main-menu"},"duration":0.00019,"duration_str":"190\u03bcs","stmt_id":null},{"sql":"select `id`, `parent_id`, `path`, `level`, `slug`, `content_type`, `content` from `pages` where `menu_id` = '1' and `is_visible` = '1' order by parent_id IS NULL DESC, parent_id ASC, position ASC","params":{"0":"1","1":true},"duration":0.00022,"duration_str":"220\u03bcs","stmt_id":null},{"sql":"select * from `pages_translations` where `pages_translations`.`page_id` in ('1', '11', '14', '18', '19', '12', '13', '15', '16', '17', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '20', '21', '22', '23') and `locale` = 'ru'","params":{"0":"1","1":"11","2":"14","3":"18","4":"19","5":"12","6":"13","7":"15","8":"16","9":"17","10":"24","11":"25","12":"26","13":"27","14":"28","15":"29","16":"30","17":"31","18":"32","19":"33","20":"34","21":"35","22":"20","23":"21","24":"22","25":"23","26":"ru"},"duration":0.0003,"duration_str":"300\u03bcs","stmt_id":null},{"sql":"select * from `users` where `users`.`id` = '1' limit 1","params":{"0":"1"},"duration":0.0002,"duration_str":"200\u03bcs","stmt_id":null},{"sql":"select `roles`.*, `users_roles`.`user_id` as `pivot_user_id`, `users_roles`.`role_id` as `pivot_role_id` from `roles` inner join `users_roles` on `roles`.`id` = `users_roles`.`role_id` where `users_roles`.`user_id` = '1'","params":{"0":"1"},"duration":0.00021,"duration_str":"210\u03bcs","stmt_id":null},{"sql":"SHOW COLUMNS FROM materials WHERE Field = 'type'","params":{},"duration":0.00076,"duration_str":"760\u03bcs","stmt_id":null},{"sql":"select count(*) as aggregate from `materials`","params":{},"duration":0.00023,"duration_str":"230\u03bcs","stmt_id":null},{"sql":"select * from `materials` order by `updated_at` desc limit 15 offset 0","params":{},"duration":0.00041,"duration_str":"410\u03bcs","stmt_id":null},{"sql":"select * from `materials_translations` where `materials_translations`.`material_id` in ('23', '22', '21', '20', '19', '18', '17', '15', '14', '13', '12', '11', '6', '7', '8')","params":{"0":"23","1":"22","2":"21","3":"20","4":"19","5":"18","6":"17","7":"15","8":"14","9":"13","10":"12","11":"11","12":"6","13":"7","14":"8"},"duration":0.00059,"duration_str":"590\u03bcs","stmt_id":null}]},"swiftmailer_mails":{"count":0,"mails":[]},"request":{"format":"html","content_type":"text\/html; charset=UTF-8","status_text":"OK","status_code":"integer 200","request_query":"array()","request_request":"array()","request_headers":"array(4) [\n    'host' => array(1) [\n        string (10) \"soho.local\"\n    ]\n    'user-agent' => array(1) [\n        string (19) \"Symfony2 BrowserKit\"\n    ]\n    'referer' => array(1) [\n        string (25) \"http:\/\/soho.local\/manager\"\n    ]\n    'cookie' => array(1) [\n        string (300) \"laravel_session=eyJpdiI6Imp6a1Y1NjdwMlJiZ3M3TWw4eGpUTnc9PSIsInZhbHVlIjoiTEg5RlNNaVdsaURcL0E0ZE52YkZQWXBhcjNSbTJGb051VkNVVlwvYjV4eVMwOXlKRURZZll4Y0VwRTJwVGtId2RNOExERmlLZE9WXC9jTGh0QzVpUkMxZVE9PSIsIm1hYyI6IjljNWYwZjQ3YjkwMzUxZmJiZDI0ZGUxN2Q3ZDk3MGY0MjE0MDMzN2Y0MWE5NmFlOGE2YjAxYzU2M2Y3ZGM3MjIifQ%3D%3D\"\n    ]\n]","request_server":"array(29) [\n    'REDIRECT_STATUS' => string (3) \"200\"\n    'HTTP_HOST' => string (10) \"soho.local\"\n    'HTTP_USER_AGENT' => string (19) \"Symfony2 BrowserKit\"\n    'HTTP_REFERER' => string (25) \"http:\/\/soho.local\/manager\"\n    'HTTP_COOKIE' => string (300) \"laravel_session=eyJpdiI6Imp6a1Y1NjdwMlJiZ3M3TWw4eGpUTnc9PSIsInZhbHVlIjoiTEg5RlNNaVdsaURcL0E0ZE52YkZQWXBhcjNSbTJGb051VkNVVlwvYjV4eVMwOXlKRURZZll4Y0VwRTJwVGtId2RNOExERmlLZE9WXC9jTGh0QzVpUkMxZVE9PSIsIm1hYyI6IjljNWYwZjQ3YjkwMzUxZmJiZDI0ZGUxN2Q3ZDk3MGY0MjE0MDMzN2Y0MWE5NmFlOGE2YjAxYzU2M2Y3ZGM3MjIifQ%3D%3D\"\n    'PATH' => string (60) \"\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin\"\n    'SERVER_SIGNATURE' => string (70) \"&lt;address&gt;Apache\/2.4.7 (Ubuntu) Server at soho.local Port 80&lt;\/address&gt;\n\"\n    'SERVER_SOFTWARE' => string (21) \"Apache\/2.4.7 (Ubuntu)\"\n    'SERVER_NAME' => string (10) \"soho.local\"\n    'SERVER_ADDR' => string (9) \"127.0.0.1\"\n    'SERVER_PORT' => string (2) \"80\"\n    'REMOTE_ADDR' => string (9) \"127.0.0.1\"\n    'DOCUMENT_ROOT' => string (26) \"\/var\/www\/soho.local\/public\"\n    'REQUEST_SCHEME' => string (4) \"http\"\n    'CONTEXT_PREFIX' => string (0) \"\"\n    'CONTEXT_DOCUMENT_ROOT' => string (26) \"\/var\/www\/soho.local\/public\"\n    'SERVER_ADMIN' => string (18) \"[no address given]\"\n    'SCRIPT_FILENAME' => string (36) \"\/var\/www\/soho.local\/public\/index.php\"\n    'REMOTE_PORT' => string (5) \"59611\"\n    'REDIRECT_URL' => string (18) \"\/manager\/materials\"\n    'GATEWAY_INTERFACE' => string (7) \"CGI\/1.1\"\n    'SERVER_PROTOCOL' => string (8) \"HTTP\/1.1\"\n    'REQUEST_METHOD' => string (3) \"GET\"\n    'QUERY_STRING' => string (0) \"\"\n    'REQUEST_URI' => string (18) \"\/manager\/materials\"\n    'SCRIPT_NAME' => string (10) \"\/index.php\"\n    'PHP_SELF' => string (10) \"\/index.php\"\n    'REQUEST_TIME_FLOAT' => float 1414755537.019\n    'REQUEST_TIME' => integer 1414755537\n]","request_cookies":"array(1) [\n    'laravel_session' => string (40) \"41407c5c643a9f7a20d282fbaa453c159de68659\"\n]","response_headers":"array(3) [\n    'cache-control' => array(1) [\n        string (8) \"no-cache\"\n    ]\n    'date' => array(1) [\n        string (29) \"Fri, 31 Oct 2014 11:38:57 GMT\"\n    ]\n    'content-type' => array(1) [\n        string (24) \"text\/html; charset=UTF-8\"\n    ]\n]","path_info":"\/manager\/materials","session_attributes":"array(4) [\n    '_token' => string (40) \"i9rK3cSX1ha6a1RCJmq8L7E8IJW3zkuJcRR1rQ4M\"\n    'flash' => array(2) [\n        'old' => array()\n        'new' => array()\n    ]\n    'login_82e5d2c56bdd0811318f0cf078b78bfc' => string (1) \"1\"\n    'PHPDEBUGBAR_STACK_DATA' => array()\n]"}}, "6c5ed24e04c42b8aa51f9bac6c1a7e14");
+
+</script>
+</body>
+</html>

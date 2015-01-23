@@ -1,0 +1,1 @@
+@include('search.partials.news')

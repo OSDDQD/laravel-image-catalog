@@ -1,0 +1,24 @@
+<?php 
+$I = new AcceptanceTester($scenario);
+$I->wantTo('add, modify and remove Material');
+$I->amOnPage('/login');
+$I->fillField('login', 'admin');
+$I->fillField('password', 'admin');
+$I->click('Войти');
+$I->amOnPage('/manager');
+$I->see('Панель управления');
+$I->see('Материалы', 'a');
+$I->click('Материалы');
+$I->see('Добавить', 'button');
+$I->click('Добавить');
+$I->see('Добавление материала', 'h1.page-header');
+//$I->see('Сохранить', 'input');
+$I->selectOption('type', 'page');
+$I->click('Русский');
+$I->fillField('ru[title]', 'Автотест страница (рус)');
+$I->click('Узбекский');
+$I->fillField('uz[title]', 'Автотест страница (узб)');
+$I->click('Английский');
+$I->fillField('en[title]', 'Автотест страница (англ)');
+$I->click('Сохранить');
+$I->see('Автотест страница (рус)');
