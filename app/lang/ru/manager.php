@@ -48,6 +48,7 @@ return array(
         'home' => 'Главная',
         'logout' => 'Выйти',
         'materials' => 'Материалы',
+        'pizzas' => 'Пицца',
         'profile' => 'Профиль',
         'settings' => 'Настройки',
         'structure' => 'Структура сайта',

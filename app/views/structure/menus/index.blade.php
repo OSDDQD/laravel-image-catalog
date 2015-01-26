@@ -1,4 +1,4 @@
-@extends('......manager.index')
+@extends('manager.index')
 
 @section('toolbar')
 <div class="navbar navbar-btn">

@@ -65,7 +65,7 @@ class MenusController extends \BaseController {
         }
 
         Session::flash('manager_success_message', Lang::get('manager.messages.entity_created') .
-            ' <a href="' . URL::Route('manager.materials.edit', ['id' => $menu->id]) . '">' . Lang::get('buttons.edit') . '</a>');
+            ' <a href="' . URL::Route('manager.structure.menus.edit', ['id' => $menu->id]) . '">' . Lang::get('buttons.edit') . '</a>');
         return Redirect::route('manager.structure.menus.index');
     }
 
@@ -105,7 +105,7 @@ class MenusController extends \BaseController {
         }
 
         Session::flash('manager_success_message', Lang::get('manager.messages.entity_updated') .
-            ' <a href="' . URL::Route('manager.materials.edit', ['id' => $menu->id]) . '">' . Lang::get('buttons.edit') . '</a>');
+            ' <a href="' . URL::Route('manager.structure.menus.edit', ['id' => $menu->id]) . '">' . Lang::get('buttons.edit') . '</a>');
         return Redirect::route('manager.structure.menus.index');
     }
 

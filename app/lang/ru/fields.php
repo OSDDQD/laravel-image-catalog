@@ -36,6 +36,7 @@ return array(
             'page' => 'Текст страницы сайта',
         ],
     ],
+    'max_weight' => 'Предельный вес',
     'month' => 'Месяц',
     'page' => [
         'content_types' => [
@@ -77,6 +78,7 @@ return array(
     'type' => 'Тип',
     'updated_at' => 'Дата обновления',
     'username' => 'Логин',
+    'weight' => 'Вес',
     'year' => 'Год',
 
 

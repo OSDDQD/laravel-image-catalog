@@ -185,6 +185,17 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
         ]);
     });
 
+    // Pizza
+    Route::group(['prefix' => 'pizza', 'namespace' => 'Pizza'], function() {
+        // Pizzas
+        Route::resource('pizzas', 'PizzasController', ['except' => ['show', 'destroy']]);
+        Route::delete('pizzas/destroy', [
+            'as' => 'manager.pizza.pizzas.destroy',
+            'uses' => 'PizzasController@destroy'
+        ]);
+    });
+
+
     // Guestbook
     Route::resource('guestbook', 'GuestbookController', ['only' => ['index', 'edit', 'update']]);
     Route::delete('guestbook/destroy', [
