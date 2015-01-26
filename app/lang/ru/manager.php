@@ -46,6 +46,7 @@ return array(
     'menu' => [
         'guestbook' => 'Гостевая книга',
         'home' => 'Главная',
+        'ingredients' => 'Ингредиенты',
         'logout' => 'Выйти',
         'materials' => 'Материалы',
         'pizzas' => 'Пицца',

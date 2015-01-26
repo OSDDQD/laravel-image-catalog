@@ -21,7 +21,7 @@ class PizzasController extends \BaseController {
 
         return \View::make('manager.index', [
             'entities' => $pizzas,
-            'fields' => ['title', 'size', 'max_weight'],
+            'fields' => ['title', 'size', 'max_weight', 'is_visible'],
             'actions' => [/*'show' => ['route' => 'manager.structure.pages.index'],*/ 'edit'],
             'slug' => 'pizza',
             'routeSlug' => 'pizza.pizzas',
@@ -74,7 +74,7 @@ class PizzasController extends \BaseController {
 
         return \View::make('manager.edit', [
             'entity' => $pizza,
-            'slug' => 'menu',
+            'slug' => 'pizza',
             'routeSlug' => 'pizza.pizzas',
         ]);
     }

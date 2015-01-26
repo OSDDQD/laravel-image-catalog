@@ -20,12 +20,12 @@ class CreateIngredientsCategoriesTable extends Migration {
 		Schema::create('ingredients_categories_translations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('category_id')->unsigned();
+			$table->integer('ingredients_category_id')->unsigned();
 			$table->string('title');
 			$table->string('locale', 3)->index();
 
-			$table->unique(['category_id', 'locale']);
-			$table->foreign('category_id')
+			$table->unique(['ingredients_category_id', 'locale'], 'ings_category_id_locale_unique');
+			$table->foreign('ingredients_category_id', 'ings_category_id_foreign')
 				->references('id')->on('ingredients_categories')
 				->onDelete('cascade');
 		});

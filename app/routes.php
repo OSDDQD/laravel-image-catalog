@@ -178,7 +178,7 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
         Route::get('menus/{menuId}/pages/create', [
             'as' => 'manager.structure.pages.create',
             'uses' => 'PagesController@create'
-        ])->where(['albumId' => '\d+']);
+        ])->where(['menuId' => '\d+']);
         Route::delete('pages/destroy', [
             'as' => 'manager.structure.pages.destroy',
             'uses' => 'PagesController@destroy'
@@ -192,6 +192,28 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
         Route::delete('pizzas/destroy', [
             'as' => 'manager.pizza.pizzas.destroy',
             'uses' => 'PizzasController@destroy'
+        ]);
+
+        // Ingredients Categories
+        Route::resource('icategories', 'IngredientsCategoriesController', ['except' => ['show', 'destroy']]);
+        Route::delete('icategories/destroy', [
+            'as' => 'manager.pizza.icategories.destroy',
+            'uses' => 'IngredientsCategoriesController@destroy'
+        ]);
+
+        // Ingredients
+        Route::resource('ingredients', 'IngredientsController', ['except' => ['index', 'create', 'show', 'destroy']]);
+        Route::get('icategories/{id}/ingredients', [
+            'as' => 'manager.pizza.ingredients.index',
+            'uses' => 'IngredientsController@index',
+        ]);
+        Route::get('icategories/{categoryId}/ingredients/create', [
+            'as' => 'manager.pizza.ingredients.create',
+            'uses' => 'IngredientsController@create'
+        ])->where(['categoryId' => '\d+']);
+        Route::delete('ingredients/destroy', [
+            'as' => 'manager.pizza.ingredients.destroy',
+            'uses' => 'IngredientsController@destroy'
         ]);
     });
 

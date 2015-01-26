@@ -13,6 +13,7 @@ return array(
 
     'balance' => 'Баланс',
     'birthday' => 'День рождения',
+    'category' => 'Категория',
     'content' => 'Содержимое страницы',
     'content_type' => 'Тип содержимого',
     'created_at' => 'Дата создания',

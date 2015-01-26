@@ -79,6 +79,7 @@ try {
                 $menu->add('<i class="fa fa-fw fa-file-text"></i> ' . Lang::get('manager.menu.materials'), ['route' => 'manager.materials.index']);
                 $menu->add('<i class="fa fa-fw fa-bars"></i> ' . Lang::get('manager.menu.structure'), ['route' => 'manager.structure.menus.index']);
                 $menu->add('<i class="fa fa-fw fa-pie-chart"></i> ' . Lang::get('manager.menu.pizzas'), ['route' => 'manager.pizza.pizzas.index']);
+                $menu->add('<i class="fa fa-fw fa-recycle"></i> ' . Lang::get('manager.menu.ingredients'), ['route' => 'manager.pizza.icategories.index']);
                 $menu->add('<i class="fa fa-fw fa-book"></i> ' . Lang::get('manager.menu.guestbook'), ['route' => 'manager.guestbook.index']);
                 $menu->add('<i class="fa fa-fw fa-users"></i> ' . Lang::get('manager.menu.users'), ['route' => 'manager.users.index']);
                 $menu->add('<i class="fa fa-fw fa-cogs"></i> ' . Lang::get('manager.menu.settings'), ['route' => 'manager.settings.index']);
