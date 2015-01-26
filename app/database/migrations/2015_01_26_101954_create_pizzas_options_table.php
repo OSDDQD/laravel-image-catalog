@@ -12,7 +12,7 @@ class CreatePizzasIngredientsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('pizzas_ingredients', function(Blueprint $table) {
+		Schema::create('pizzas_options', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('pizza_id')->unsigned();
 			$table->integer('ingredient_id')->unsigned();
@@ -36,7 +36,7 @@ class CreatePizzasIngredientsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('pizzas_ingredients');
+		Schema::drop('pizzas_options');
 	}
 
 }

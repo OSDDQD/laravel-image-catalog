@@ -43,9 +43,9 @@ class Ingredient extends \BaseModel
         return $this->hasOne('\Pizza\IngredientsCategory');
     }
 
-//    public function ingredients()
-//    {
-//        return $this->hasMany('\Structure\Page');
-//    }
+    public function options()
+    {
+        return $this->hasMany('\Pizza\Option');
+    }
 
 }

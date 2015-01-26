@@ -24,8 +24,39 @@
                             {{ $errors->first('category_id', '<span class="help-block has-error">:message</span>') }}
                         </div>
                     </div>
-
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
+
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ Lang::get('fields.pizza') }}</th>
+                            <th>{{ Lang::get('fields.weight') }}</th>
+                            <th>{{ Lang::get('fields.price') }}</th>
+                            <th>{{ Lang::get('fields.max_quantity') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (Pizza\Pizza::with('translations')->get() as $pizza)
+                            <tr>
+                                <td>
+                                    {{ $pizza->title }}
+                                    @if ($pizza->size or $pizza->max_weight)
+                                        ({{ ($pizza->size ? $pizza->size . ($pizza->max_weight ? ' / ' : '') : '') . $pizza->max_weight }})
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ Form::text('option[' . $pizza->id . '][weight]', (isset($options[$pizza->id]['weight']) ? $options[$pizza->id]['weight'] : '0.00'), ['class' => 'form-control']) }}
+                                </td>
+                                <td>
+                                    {{ Form::text('option[' . $pizza->id . '][price]', (isset($options[$pizza->id]['price']) ? $options[$pizza->id]['price'] : '0.00'), ['class' => 'form-control']) }}
+                                </td>
+                                <td>
+                                    {{ Form::text('option[' . $pizza->id . '][max_quantity]', (isset($options[$pizza->id]['max_quantity']) ? $options[$pizza->id]['max_quantity'] : 0), ['class' => 'form-control']) }}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             @foreach (Config::get('app.locales') as $i => $locale)

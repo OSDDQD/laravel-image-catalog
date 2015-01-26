@@ -38,10 +38,10 @@ class Pizza extends \BaseModel
 
     protected static $rules = [];
 
-//    public function ingredients()
-//    {
-//        return $this->hasMany('\Structure\Page');
-//    }
+    public function options()
+    {
+        return $this->hasMany('\Pizza\Option');
+    }
 
     public function setMaxWeightAttribute($value)
     {

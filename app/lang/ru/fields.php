@@ -37,6 +37,7 @@ return array(
             'page' => 'Текст страницы сайта',
         ],
     ],
+    'max_quantity' => 'Максимальное кол-во',
     'max_weight' => 'Предельный вес',
     'month' => 'Месяц',
     'page' => [
@@ -53,6 +54,7 @@ return array(
     ],
     'parent_page' => 'Родительский элемент',
     'password' => 'Пароль',
+    'pizza' => 'Пицца',
     'position' => 'Порядковый номер',
     'price' => 'Цена',
     'remove_uploaded_image' => 'Удалить загруженное изображение',

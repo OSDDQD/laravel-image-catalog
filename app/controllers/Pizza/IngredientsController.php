@@ -82,11 +82,22 @@ class IngredientsController extends \BaseController {
     {
         $ingredient = Ingredient::find($id);
 
+        $options = [];
+        $optionsData = Option::whereIngredientId($ingredient->id)->get();
+        foreach($optionsData as $data) {
+            $options[$data->pizza_id] = [
+                'weight' => $data->weight,
+                'price' => $data->price,
+                'max_quantity' => $data->max_quantity,
+            ];
+        }
+
         return \View::make('manager.edit', [
             'entity' => $ingredient,
             'slug' => 'ingredient',
             'routeSlug' => 'pizza.ingredients',
             'indexRouteParams' => ['id' => $ingredient->category_id],
+            'options' => $options,
         ]);
     }
 
