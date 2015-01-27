@@ -45,11 +45,15 @@ class IngredientsController extends \BaseController {
      */
     public function create($categoryId)
     {
+        if (!$options = \Input::get('options'))
+            $options = [];
+
         return \View::make('manager.create', [
             'entity' => new Ingredient(['category_id' => $categoryId]),
             'slug' => 'ingredient',
             'routeSlug' => 'pizza.ingredients',
             'indexRouteParams' => ['id' => $categoryId],
+            'options' => $options,
         ]);
     }
 
@@ -61,9 +65,28 @@ class IngredientsController extends \BaseController {
      */
     public function store()
     {
-        $ingredient = new Ingredient(\Input::all());
+        $ingredient = new Ingredient(\Input::except('options'));
         if (!$ingredient->save()) {
             return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+        }
+
+        $pizzas = [];
+        $options = \Input::get('options');
+        foreach(array_keys($options) as $pizza) {
+            if (!isset($pizzas[$pizza])) {
+                $pizza = Pizza::find($pizza);
+                $pizzas[$pizza->id] = $pizza;
+            } else {
+                $pizza = $pizzas[$pizza];
+            }
+            if (!$pizza instanceof Pizza)
+                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+
+            $option = new Option($options[$pizza->id]);
+            $option->pizza_id = $pizza->id;
+            $option->ingredient_id = $ingredient->id;
+            if (!$option->save())
+                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
@@ -82,14 +105,16 @@ class IngredientsController extends \BaseController {
     {
         $ingredient = Ingredient::find($id);
 
-        $options = [];
-        $optionsData = Option::whereIngredientId($ingredient->id)->get();
-        foreach($optionsData as $data) {
-            $options[$data->pizza_id] = [
-                'weight' => $data->weight,
-                'price' => $data->price,
-                'max_quantity' => $data->max_quantity,
-            ];
+        if (!$options = \Input::get('options')) {
+            $options = [];
+            $optionsData = Option::whereIngredientId($ingredient->id)->get();
+            foreach ($optionsData as $data) {
+                $options[$data->pizza_id] = [
+                    'weight' => $data->weight,
+                    'price' => $data->price,
+                    'max_quantity' => $data->max_quantity,
+                ];
+            }
         }
 
         return \View::make('manager.edit', [
@@ -118,6 +143,25 @@ class IngredientsController extends \BaseController {
             return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
         }
 
+        $pizzas = [];
+        $options = \Input::get('options');
+        foreach(array_keys($options) as $pizza) {
+            if (!isset($pizzas[$pizza])) {
+                $pizza = Pizza::find($pizza);
+                $pizzas[$pizza->id] = $pizza;
+            } else {
+                $pizza = $pizzas[$pizza];
+            }
+            if (!$pizza instanceof Pizza)
+                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+
+            $option = new Option($options[$pizza->id]);
+            $option->pizza_id = $pizza->id;
+            $option->ingredient_id = $ingredient->id;
+            if (!$option->save())
+                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+        }
+
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
             ' <a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
         return \Redirect::route('manager.pizza.ingredients.index', ['id' => $ingredient->category_id]);
@@ -133,7 +177,7 @@ class IngredientsController extends \BaseController {
     {
         $ids = \Input::get('id');
         foreach ($ids as $id) {
-            $ingredient = Pizza::find($id);
+            $ingredient = Ingredient::find($id);
             if (!$ingredient)
                 continue;
 //            foreach ($ingredient->pages as $page) {
@@ -142,7 +186,7 @@ class IngredientsController extends \BaseController {
 //                    return \Redirect::back();
 //                }
 //            }
-            Pizza::destroy($id);
+            Ingredient::destroy($id);
         }
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
         return \Redirect::back();

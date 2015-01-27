@@ -41,17 +41,17 @@
                                 <td>
                                     {{ $pizza->title }}
                                     @if ($pizza->size or $pizza->max_weight)
-                                        ({{ ($pizza->size ? $pizza->size . ($pizza->max_weight ? ' / ' : '') : '') . $pizza->max_weight }})
+                                        <br>({{ ($pizza->size ? $pizza->size . ($pizza->max_weight ? ' / ' : '') : '') . $pizza->max_weight }})
                                     @endif
                                 </td>
                                 <td>
-                                    {{ Form::text('option[' . $pizza->id . '][weight]', (isset($options[$pizza->id]['weight']) ? $options[$pizza->id]['weight'] : '0.00'), ['class' => 'form-control']) }}
+                                    {{ Form::text('options[' . $pizza->id . '][weight]', (isset($options[$pizza->id]['weight']) ? $options[$pizza->id]['weight'] : '0.00'), ['class' => 'form-control']) }}
                                 </td>
                                 <td>
-                                    {{ Form::text('option[' . $pizza->id . '][price]', (isset($options[$pizza->id]['price']) ? $options[$pizza->id]['price'] : '0.00'), ['class' => 'form-control']) }}
+                                    {{ Form::text('options[' . $pizza->id . '][price]', (isset($options[$pizza->id]['price']) ? $options[$pizza->id]['price'] : '0.00'), ['class' => 'form-control']) }}
                                 </td>
                                 <td>
-                                    {{ Form::text('option[' . $pizza->id . '][max_quantity]', (isset($options[$pizza->id]['max_quantity']) ? $options[$pizza->id]['max_quantity'] : 0), ['class' => 'form-control']) }}
+                                    {{ Form::text('options[' . $pizza->id . '][max_quantity]', (isset($options[$pizza->id]['max_quantity']) ? $options[$pizza->id]['max_quantity'] : 0), ['class' => 'form-control']) }}
                                 </td>
                             </tr>
                         @endforeach
