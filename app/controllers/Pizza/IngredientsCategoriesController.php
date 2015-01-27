@@ -13,7 +13,7 @@ class IngredientsCategoriesController extends \BaseController {
     {
         $itemsOnMenu = 15;
 
-        $categories = IngredientsCategory::with('translations')->orderBy('id')->paginate($itemsOnMenu);
+        $categories = IngredientsCategory::with('translations')->orderBy('position')->paginate($itemsOnMenu);
         foreach ($categories as $category) {
             $category->title = '<a href="' . \URL::Route('manager.pizza.icategories.index', ['id' => $category->id]) . '">' . $category->title . '</a>';
         }
@@ -25,6 +25,7 @@ class IngredientsCategoriesController extends \BaseController {
             'actions' => ['show' => ['route' => 'manager.pizza.ingredients.index'], 'edit'],
             'slug' => 'ingredients_category',
             'routeSlug' => 'pizza.icategories',
+            'fieldAsIndex' => 'position',
         ]);
     }
 

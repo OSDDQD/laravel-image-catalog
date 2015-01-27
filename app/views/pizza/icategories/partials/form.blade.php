@@ -1,3 +1,4 @@
+<?php $maxPosition = \Pizza\IngredientsCategory::count() + ($entity->id ? 0 : 1); ?>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-settings" data-toggle="tab">{{ Lang::get('forms.tabs.settings') }}</a></li>
@@ -13,6 +14,12 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
                 <div class="row">
+                    @include('manager.partials.form_control', [
+                        'type' => 'selectEnhanced',
+                        'field' => 'position',
+                        'selected' => ($entity->id ? $entity->position : $maxPosition),
+                        'list' => array_combine(range(1, $maxPosition), range(1, $maxPosition))
+                    ])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
                 </div>
             </div>
