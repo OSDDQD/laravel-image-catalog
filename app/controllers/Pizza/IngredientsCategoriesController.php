@@ -15,7 +15,7 @@ class IngredientsCategoriesController extends \BaseController {
 
         $categories = IngredientsCategory::with('translations')->orderBy('position')->paginate($itemsOnMenu);
         foreach ($categories as $category) {
-            $category->title = '<a href="' . \URL::Route('manager.pizza.icategories.index', ['id' => $category->id]) . '">' . $category->title . '</a>';
+            $category->title = '<a href="' . \URL::Route('manager.pizza.ingredients.index', ['categoryId' => $category->id]) . '">' . $category->title . '</a>';
         }
         unset($itemsOnMenu);
 

@@ -17,9 +17,9 @@ class IngredientsController extends \BaseController {
 
         $itemsOnMenu = 15;
 
-        $ingredients = Ingredient::with('translations')->whereCategoryId($categpry->id)->orderBy('id')->paginate($itemsOnMenu);
+        $ingredients = Ingredient::with('translations')->whereCategoryId($categpry->id)->orderBy('position')->paginate($itemsOnMenu);
         foreach ($ingredients as $ingredient) {
-            $ingredient->title = '<a href="' . \URL::Route('manager.pizza.ingredients.index', ['id' => $ingredient->id]) . '">' . $ingredient->title . '</a>';
+            $ingredient->title = '<a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . $ingredient->title . '</a>';
         }
         unset($itemsOnMenu);
 
@@ -33,7 +33,8 @@ class IngredientsController extends \BaseController {
                 ['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.pizza.ingredients.create', 'routeParams' => ['categoryId' => $categpry['id']]],
                 ['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.pizza.icategories.index'],
             ],
-            'headerSubtext' => '(' . \Lang::choice('entities.ingredients_category.inf', 1) . ' "' . $categpry->title . '")',
+            'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $categpry->title . '")',
+            'fieldAsIndex' => 'position',
         ]);
     }
 

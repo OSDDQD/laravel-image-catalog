@@ -32,6 +32,7 @@ return array(
         'guestbook_text' => 'Содержание вашего сообщения',
         'login_or_email' => 'Логин или Email',
         'material_type_select' => 'Выберите тип материала',
+        'new_ingredient' => 'Новый ингредиент',
         'new_page' => 'Новая страница',
         'new_root_page' => 'Корневой раздел',
         'no' => 'Нет',

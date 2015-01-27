@@ -16,7 +16,7 @@
                     <div class="col-md-12">
                         <div class="form-group{{ $errors->first('category_id') ? ' has-error' : null }}">
                             {{ Form::label('category_id', Lang::get('fields.category'), ['class' => 'control-label']) }}
-                            <select class="form-control" id="category_id" name="category_id">
+                            <select class="form-control position-parent" id="category_id" name="category_id">
                                 @foreach (Pizza\IngredientsCategory::with('translations')->get() as $category)
                                     <option{{ $entity->category_id == $category->id ? ' selected="selected"' : null }} value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endforeach
@@ -24,6 +24,14 @@
                             {{ $errors->first('category_id', '<span class="help-block has-error">:message</span>') }}
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group{{ $errors->first('position') ? ' has-error' : null }}">
+                            {{ Form::label('position', Lang::get('fields.position'), ['class' => 'control-label']) }}
+                            {{ Form::select('position', [], null, ['class' => 'form-control']) }}
+                            {{ $errors->first('position', '<span class="help-block has-error">:message</span>') }}
+                        </div>
+                    </div>
+
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
 
                     <table class="table table-bordered table-hover table-striped">
@@ -73,3 +81,14 @@
         </div>
     {{ Form::close() }}
 </div>
+<script>
+    $(function() {
+        managePositions(
+            '{{ json_encode(Pizza\Ingredient::getByParentList(["parentField" => "category_id"])) }}',
+            {{ $entity->id ? (int) $entity->category_id : 'undefined' }},
+            {{ $entity->id ? 1 : 0 }},
+            '{{ Lang::get("forms.labels.new_ingredient") }}',
+            {{ $entity->position ? $entity->position : 0 }}
+        );
+    });
+</script>

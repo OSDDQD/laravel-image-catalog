@@ -15,7 +15,7 @@ class PizzasController extends \BaseController {
 
         $pizzas = Pizza::with('translations')->orderBy('position')->paginate($itemsOnMenu);
         foreach ($pizzas as $pizza) {
-            $pizza->title = '<a href="' . \URL::Route('manager.pizza.pizzas.index', ['id' => $pizza->id]) . '">' . $pizza->title . '</a>';
+            $pizza->title = '<a href="' . \URL::Route('manager.pizza.pizzas.edit', ['id' => $pizza->id]) . '">' . $pizza->title . '</a>';
         }
         unset($itemsOnMenu);
 
