@@ -13,7 +13,7 @@ class PizzasController extends \BaseController {
     {
         $itemsOnMenu = 15;
 
-        $pizzas = Pizza::with('translations')->orderBy('id')->paginate($itemsOnMenu);
+        $pizzas = Pizza::with('translations')->orderBy('position')->paginate($itemsOnMenu);
         foreach ($pizzas as $pizza) {
             $pizza->title = '<a href="' . \URL::Route('manager.pizza.pizzas.index', ['id' => $pizza->id]) . '">' . $pizza->title . '</a>';
         }
@@ -25,6 +25,7 @@ class PizzasController extends \BaseController {
             'actions' => [/*'show' => ['route' => 'manager.structure.pages.index'],*/ 'edit'],
             'slug' => 'pizza',
             'routeSlug' => 'pizza.pizzas',
+            'fieldAsIndex' => 'position',
         ]);
     }
 

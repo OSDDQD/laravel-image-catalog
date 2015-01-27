@@ -180,12 +180,6 @@ class IngredientsController extends \BaseController {
             $ingredient = Ingredient::find($id);
             if (!$ingredient)
                 continue;
-//            foreach ($ingredient->pages as $page) {
-//                if ($page->is_home) {
-//                    \Session::flash('manager_error_message', \Lang::get('manager.messages.menu_containing_home_page_cant_be_removed'));
-//                    return \Redirect::back();
-//                }
-//            }
             Ingredient::destroy($id);
         }
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));

@@ -8,6 +8,8 @@
             {{ Form::checkbox($field, (isset($value) ? $value : 1), ($entity->id ? $entity->$field : (isset($default) ? $default : 1))) }}
         @elseif ($type == 'file')
             {{ Form::$type($field, array_merge((isset($attributes) ? $attributes : []), ['class' => 'form-control'])) }}
+        @elseif ($type == 'selectEnhanced')
+            {{ Form::$type($field, (isset($list) ? $list : []), (isset($selected) ? $selected : $entity->$field), array_merge((isset($attributes) ? $attributes : []), ['class' => 'form-control'])) }}
         @else
             {{ Form::$type($field, $entity->$field, array_merge((isset($attributes) ? $attributes : []), ['class' => 'form-control'])) }}
         @endif
