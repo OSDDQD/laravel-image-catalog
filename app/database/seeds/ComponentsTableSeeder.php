@@ -38,6 +38,27 @@ class ComponentsTableSeeder extends Seeder {
             'action' => 'news',
             'params' => '',
         ]);
+
+        Component::create([
+            'name' => 'latestnews_small',
+            'controller' => 'MaterialsController',
+            'action' => 'news',
+            'params' => 'limit:2|mode:small|template:materials.partials.news_small',
+        ]);
+
+        Component::create([
+            'name' => 'user_recipes',
+            'controller' => 'Pizza\RecipesController',
+            'action' => 'show',
+            'params' => 'limit:4|type:preview|sort:rating',
+        ]);
+
+        Component::create([
+            'name' => 'latestnews_additional',
+            'controller' => 'MaterialsController',
+            'action' => 'news',
+            'params' => 'limit:4|type:additional|mode:small|template:materials.partials.news_additional',
+        ]);
 	}
 
 }
