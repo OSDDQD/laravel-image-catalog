@@ -65,7 +65,7 @@ class Ingredient extends \BaseModel
 
     public function category()
     {
-        return $this->hasOne('\Pizza\IngredientsCategory');
+        return $this->belongsTo('\Pizza\IngredientsCategory');
     }
 
     public function options()

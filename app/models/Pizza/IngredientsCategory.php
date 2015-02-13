@@ -61,7 +61,7 @@ class IngredientsCategory extends \BaseModel
 
     public function ingredients()
     {
-        return $this->hasMany('\Pizza\Ingredient');
+        return $this->hasMany('\Pizza\Ingredient', 'category_id');
     }
 
     public function setPositionAttribute($value)
