@@ -42,8 +42,8 @@ $(document).ready(function(){
 	
 	//slider
 	$("#showcase").awShowcase({
-		content_width:			990,
-		content_height:			347,
+		content_width:			940,
+		content_height:			350,
 		fit_to_parent:			false,
 		auto:					true,
 		interval:				5000,
@@ -56,7 +56,7 @@ $(document).ready(function(){
 		tooltip_offsety:		0,
 		arrows:					true,
 		buttons:				true,
-		btn_numbers:			true,
+		btn_numbers:			false,
 		keybord_keys:			true,
 		mousetrace:				false, /* Trace x and y coordinates for the mouse */
 		pauseonover:			true,
@@ -85,4 +85,6 @@ $(document).ready(function(){
             allNavA.eq(0).css('color', '#fff');
         }
     }
+    //indent for menu item before logo
+    $(".mainMenu ul li:nth-child(3)").addClass("indent");
 });

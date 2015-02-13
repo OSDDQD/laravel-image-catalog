@@ -127,5 +127,10 @@ class PizzasController extends \BaseController {
         return \Redirect::back();
     }
 
+    public function showRecipes() {
+        return \View::make('pizza.pizzas.partials.recipes', [
+        ]);
+    }
+
 
 }

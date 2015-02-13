@@ -14,6 +14,7 @@ class Material extends BaseModel implements UploadableInterface
     const TYPE_ANNOUNCEMENT = 'announcement';
     const TYPE_NEWS = 'news';
     const TYPE_PAGE = 'page';
+    const TYPE_ADDITIONAL = 'additional';
 
     /**
      * The table associated with the model.

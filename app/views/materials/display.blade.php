@@ -1,4 +1,4 @@
-@extends('layouts.' . ($backPage ? $backPage->template : 'client_noslider'))
+@extends('layouts.' . ($backPage ? $backPage->template : 'client_wslider'))
 
 @section('content')
     @if ($backPage)

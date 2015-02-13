@@ -46,6 +46,6 @@ return array(
     |
     */
 
-    'csrf'=>null,
+    'csrf' => null,
 
 );

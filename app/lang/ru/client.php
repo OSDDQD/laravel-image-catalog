@@ -25,7 +25,7 @@ return array(
     'feedback_message_sent' => 'Ваше сообщение отправлено. Спасибо!',
     'footer' => [
         'address' => 'Наш адрес в Ташкенте',
-        'all_rights_reserved' => 'Все права защищены',
+        'all_rights_reserved' => 'Все права защищены &copy; :year',
         'license' => 'Лицензия № АА0003306 от 25.07.2010 г.',
         'phones' => 'Телефон',
         'schedule' => 'График работы',
@@ -36,6 +36,7 @@ return array(
     'how_could_you' => 'Как вы могли',
     'link_manager' => 'Админцентр',
     'mail_send_error' => 'Ошибка при отправке сообщения!',
+    'go_to_archive' => 'Перейти к архиву',
     'menu' => [
         'cabinet' => 'Личный кабинет',
         'reference_materials' => 'Справочные материалы',
@@ -63,6 +64,8 @@ return array(
     'sign_out' => 'Выход',
     'top_hello' => 'Привет, :displayname!',
     'user_profile' => 'Профиль',
+    'sell_by_phone' => 'Заказать по телефону',
+    'phone_num' => '+998916668877'
 
 
 );

@@ -11,13 +11,13 @@ class IngredientsController extends \BaseController {
      */
     public function index($id)
     {
-        $categpry = IngredientsCategory::find($id);
-        if (!$categpry)
+        $category = IngredientsCategory::find($id);
+        if (!$category)
             return \Response::view('errors.404', [], 404);
 
         $itemsOnMenu = 15;
 
-        $ingredients = Ingredient::with('translations')->whereCategoryId($categpry->id)->orderBy('position')->paginate($itemsOnMenu);
+        $ingredients = Ingredient::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
         foreach ($ingredients as $ingredient) {
             $ingredient->title = '<a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . $ingredient->title . '</a>';
         }
@@ -30,10 +30,10 @@ class IngredientsController extends \BaseController {
             'slug' => 'ingredient',
             'routeSlug' => 'pizza.ingredients',
             'toolbar' => [
-                ['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.pizza.ingredients.create', 'routeParams' => ['categoryId' => $categpry['id']]],
+                ['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.pizza.ingredients.create', 'routeParams' => ['categoryId' => $category['id']]],
                 ['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.pizza.icategories.index'],
             ],
-            'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $categpry->title . '")',
+            'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $category->title . '")',
             'fieldAsIndex' => 'position',
         ]);
     }

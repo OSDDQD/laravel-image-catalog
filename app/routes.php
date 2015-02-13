@@ -113,6 +113,12 @@ Route::get('pages/display/{slug}', [
     'uses' => 'Structure\PagesController@display',
 ]);
 
+// Archive
+Route::get('archive/{type}', [
+    'as' => 'archive',
+    'uses' => 'MaterialsController@archive',
+]);
+
 // Materials
 Route::get('news/display/{id}', [
     'as' => 'materials.news.display',
@@ -137,6 +143,11 @@ Route::get('speed', [
     }
 ]);
 
+// Pizza Constructor
+Route::get('constructor', [
+    'as' => 'pizza.constructor',
+    'uses' => 'Pizza\ConstructorController@index',
+]);
 // ===============================================
 // MANAGER SECTION ===============================
 // ===============================================
@@ -215,6 +226,7 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
             'as' => 'manager.pizza.ingredients.destroy',
             'uses' => 'IngredientsController@destroy'
         ]);
+
     });
 
 

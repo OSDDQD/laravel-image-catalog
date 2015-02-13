@@ -225,6 +225,7 @@ return array(
         'material' => [
             '_class' => 'Material',
             'news' => [100, 200],
+            'preview' => [80, 60],
         ],
         'slider' => [
             '_class' => 'Slider\Image',

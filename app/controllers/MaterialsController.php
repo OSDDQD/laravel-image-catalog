@@ -12,6 +12,21 @@ class MaterialsController extends \BaseController {
 
         $limit = isset($input['limit']) ? (int) $input['limit'] : 0;
         $type  = isset($input['type']) ? strtolower($input['type']) : null;
+        $template  = isset($input['template']) ? strtolower($input['template']) : 'materials.news';
+
+        if(isset($input['mode'])) {
+            switch($input['mode']) {
+                case 'small':
+                    $shortLimit = '150';
+                    break;
+                case 'medium':
+                    $shortLimit = '300';
+                    break;
+                default:
+                    $shortLimit = '500';
+                    break;
+            }
+        }
 
         $query = Material::with('translations')
             ->whereIsVisible(true)
@@ -28,9 +43,37 @@ class MaterialsController extends \BaseController {
 
         Paginator::setViewName('structure.pages.partials.pagination');
 
-        return View::make('materials.news', [
+        return View::make($template, [
             'entities' => $materials,
-            'textShorten' => 500,
+            'textShorten' => isset($shortLimit) ? $shortLimit : 500,
+        ]);
+    }
+
+    public function archive($type = null)
+    {
+        $itemsOnPage = 25;
+
+        $possibleTypes = [
+            'news',
+            'additional',
+            'announcement',
+            'action',
+        ];
+        if (!in_array($type, $possibleTypes))
+            return Response::view('errors.404', [], 404);
+
+        $materials = Material::with('translations')
+            ->whereIsVisible(true)
+            ->whereType($type)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($itemsOnPage);
+        unset($itemsOnPage);
+
+
+        Paginator::setViewName('structure.pages.partials.pagination');
+
+        return View::make('materials.partials.archive', [
+            'entities' => $materials,
         ]);
     }
 

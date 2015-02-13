@@ -17,39 +17,31 @@
 @yield('body')
 
 @section('footer')
-<section class="brown">
-    <div class="middle">
-        @include('layouts.partials.footer_menu')
-        <aside class="brownBlockRight">
-            @if (isset($footerAddress))
-                <p>{{ Lang::get('client.footer.address') }}:</p>
-                <p>{{ $footerAddress }}</p>
-            @endif
-            @if (isset($footerPhones))
-                <p>{{ Lang::get('client.footer.phones') }}:</p>
-                @foreach($footerPhones as $phone)
-                    <span>{{ trim($phone) }}</span>
-                @endforeach
-            @endif
-            @if (isset($footerSchedule))
-                <p>{{ Lang::get('client.footer.schedule') }}:</p>
-                {{ $footerSchedule }}
-            @endif
-        </aside>
-        <div class="clear"></div>
-    </div>
-</section>
 <footer>
-    <div class="middle">
-        <div class="dynamic-dimension">{{ Lang::get('client.developed_and_supported', ['companyname' => '<a href="http://2d.uz">“Dynamic Dimesion”</a>']) }}</div>
-
-        @include('layouts.partials.social')
-        <div class="footBlockOne">
-            <p>{{ Lang::get('client.footer.all_rights_reserved') }}</p>
-            <p>{{ Lang::get('client.footer.service_providers') }}</p>
-            <p>{{ Lang::get('client.footer.license') }}</p>
-        </div>
-        <div class="clear"></div>
+    <div class="wrapper">
+        <section class="top">
+            <div class="payServices">
+                <img src="/assets/img/client/mbank.png" />
+                <img src="/assets/img/client/click.png" />
+            </div>
+        </section>
+        <section class="bottom">
+            <section>
+                <div class="copyright">
+                    {{ Lang::get('client.footer.all_rights_reserved', ['year' => date('Y')]) }}
+                </div>
+            </section>
+            <section>
+                <div class="counter">
+                    <img src="/assets/img/client/counter.png" />
+                </div>
+            </section>
+            <section>
+               <div class="dd">
+                    {{ Lang::get('client.developed_and_supported', ['companyname' => '<a href="http://2d.uz">“Dynamic Dimesion”</a>']) }}
+                </div>
+            </section>
+        </section>
     </div>
 </footer>
 @show

@@ -39,6 +39,9 @@ return array(
     'vkontakte' => [
         '_title' => 'Адрес страницы ВКонтакте',
     ],
+    'instagram' => [
+        '_title' => 'Адрес страницы в Instagram',
+    ],
 
 
 );

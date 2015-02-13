@@ -56,15 +56,17 @@
             @foreach (Config::get('app.locales') as $i => $locale)
                 <div class="tab-pane" id="tab-{{ $locale }}">
                     <div class="row">
-                        @foreach($localizedFields[$locale] as $localizedField)
-                            <div class="col-md-12">
-                                <div class="form-group{{ $errors->first($localizedField->name) ? ' has-error' : null }}">
-                                    {{ Form::label($locale.'['.$localizedField->name.']', Lang::get("settings.$localizedField->name._title"), ['class' => 'control-label']) }}
-                                    {{ Form::text($locale.'['.$localizedField->name.']', $localizedField->value, ['class' => 'form-control']) }}
-                                    {{ $errors->first($localizedField->name, '<span class="help-block has-error">:message</span>') }}
+                        @if (isset($localizedFields[$locale]))
+                            @foreach($localizedFields[$locale] as $localizedField)
+                                <div class="col-md-12">
+                                    <div class="form-group{{ $errors->first($localizedField->name) ? ' has-error' : null }}">
+                                        {{ Form::label($locale.'['.$localizedField->name.']', Lang::get("settings.$localizedField->name._title"), ['class' => 'control-label']) }}
+                                        {{ Form::text($locale.'['.$localizedField->name.']', $localizedField->value, ['class' => 'form-control']) }}
+                                        {{ $errors->first($localizedField->name, '<span class="help-block has-error">:message</span>') }}
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             @endforeach

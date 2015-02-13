@@ -30,6 +30,12 @@ return array(
     'latestnews' => [
         '_title' => 'Последние новости',
     ],
+    'latestnews_small' => [
+        '_title' => 'Последние новости (превью 150 символов)',
+    ],
+    'latestnews_additional' => [
+        '_title' => 'Дополнительный новостной материал',
+    ],
     'musiclibrary' => [
         '_title' => 'Музыкальная коллекция',
     ],
@@ -38,6 +44,9 @@ return array(
     ],
     'videolibrary' => [
         '_title' => 'Видеотека',
+    ],
+    'user_recipes' => [
+        '_title' => 'Лучшие пользовательские рецепты',
     ],
 
 
