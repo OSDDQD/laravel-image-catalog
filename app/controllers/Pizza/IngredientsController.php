@@ -146,19 +146,23 @@ class IngredientsController extends \BaseController {
 
         $pizzas = [];
         $options = \Input::get('options');
-        foreach(array_keys($options) as $pizza) {
-            if (!isset($pizzas[$pizza])) {
-                $pizza = Pizza::find($pizza);
+        foreach($options as $key => $value) {
+            if (!isset($pizzas[$key])) {
+                $pizza = Pizza::find($key);
                 $pizzas[$pizza->id] = $pizza;
             } else {
-                $pizza = $pizzas[$pizza];
+                $pizza = $pizzas[$key];
             }
             if (!$pizza instanceof Pizza)
                 return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
 
-            $option = new Option($options[$pizza->id]);
+            $option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first();
             $option->pizza_id = $pizza->id;
             $option->ingredient_id = $ingredient->id;
+            foreach ($value as $field => $setting) {
+                $option->$field = $setting;
+            }
+
             if (!$option->save())
                 return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
         }
