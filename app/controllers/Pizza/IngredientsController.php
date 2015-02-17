@@ -146,6 +146,7 @@ class IngredientsController extends \BaseController {
 
         $pizzas = [];
         $options = \Input::get('options');
+
         foreach($options as $key => $value) {
             if (!isset($pizzas[$key])) {
                 $pizza = Pizza::find($key);
@@ -156,15 +157,22 @@ class IngredientsController extends \BaseController {
             if (!$pizza instanceof Pizza)
                 return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
 
-            $option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first();
-            $option->pizza_id = $pizza->id;
-            $option->ingredient_id = $ingredient->id;
-            foreach ($value as $field => $setting) {
-                $option->$field = $setting;
+
+            if ($option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first()) {
+                $option->pizza_id = $pizza->id;
+                $option->ingredient_id = $ingredient->id;
+                foreach ($value as $field => $setting) {
+                    $option->$field = $setting;
+                }
+            } else {
+                $option = new Option($options[$key]);
+                $option->pizza_id = $pizza->id;
+                $option->ingredient_id = $ingredient->id;
             }
 
             if (!$option->save())
                 return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+            unset($option);
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
