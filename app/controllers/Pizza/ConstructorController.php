@@ -9,20 +9,6 @@ class ConstructorController extends \BaseController {
 
         $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
 
-        return \View::make('pizza.constructor.index', [
-            'categories' => $categories,
-            'pageTitle' => \Lang::get('pizzas.constructor'),
-        ]);
-    }
-
-    public function add()
-    {
-
-    }
-
-    public function menu()
-    {
-        $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
         $pizzas = Pizza::whereIsVisible(true)->get();
 
         $menu = [];
@@ -51,8 +37,16 @@ class ConstructorController extends \BaseController {
 
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
 
-        return \View::make('pizza.constructor.partials.menu', [
-            'menu' => $menu,
+        return \View::make('pizza.constructor.index', [
+            'categories' => $categories,
+            'pageTitle' => \Lang::get('pizzas.constructor'),
+            'jsonMenu' => $menu,
         ]);
     }
+
+    public function add()
+    {
+
+    }
+
 }
