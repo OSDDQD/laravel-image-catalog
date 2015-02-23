@@ -1,3 +1,4 @@
+{{  }}
 <div class="wrapper">
     <div class="constructor">
         <div class="texture">
@@ -5,7 +6,6 @@
                 <ul>
                     @foreach ($categories as $category)
                     <li>
-                   {{ $category }}
                         <a href="#">{{ $category->title }}</a>
                         <ul>
                             @foreach ($category->ingredients as $ingredient)

@@ -1,1 +1,1 @@
-{{ json_decode($menu) }}
+{{ $menu }}
