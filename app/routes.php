@@ -148,6 +148,10 @@ Route::get('constructor', [
     'as' => 'pizza.constructor',
     'uses' => 'Pizza\ConstructorController@index',
 ]);
+Route::get('constructor/menu', [
+    'as' => 'pizza.constructor.menu',
+    'uses' => 'Pizza\ConstructorController@menu',
+]);
 // ===============================================
 // MANAGER SECTION ===============================
 // ===============================================

@@ -72,6 +72,9 @@ li {
 .box-shadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
+.box-shadow-constructor {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
 .box-shadow-inset {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
@@ -480,4 +483,38 @@ footer section.bottom section .counter {
 }
 footer section.bottom section .dd {
   text-align: right;
+}
+.constructor {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  margin: 20px 0;
+  padding: 30px;
+}
+.constructor .texture {
+  padding-top: 30px;
+  background: url(/assets/img/client/constructor_bg.png) top left;
+}
+.constructor .categories {
+  background: #881719;
+}
+.constructor .categories:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.constructor .categories ul li {
+  float: left;
+}
+.constructor .categories ul li a {
+  display: block;
+  border-bottom: none !important;
+  height: 55px;
+  padding: 0 10px;
+  line-height: 58px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.constructor .categories ul li ul {
+  display: none;
 }

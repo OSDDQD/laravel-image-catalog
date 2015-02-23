@@ -10,7 +10,22 @@ class ConstructorController extends \BaseController {
         $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
 
         return \View::make('pizza.constructor.index', [
-            'entities' => $categories,
+            'categories' => $categories,
+            'pageTitle' => \Lang::get('pizzas.constructor'),
+        ]);
+    }
+
+    public function add()
+    {
+
+    }
+
+    public function menu()
+    {
+        $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
+
+        return \View::make('pizza.constructor.partials.menu', [
+            'menu' => $categories,
         ]);
     }
 }

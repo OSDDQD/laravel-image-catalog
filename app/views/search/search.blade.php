@@ -1,4 +1,4 @@
-@extends('layouts.client_noslider')
+@extends('layouts.client_wslider')
 
 @section('content')
 <div class="resultSearch">

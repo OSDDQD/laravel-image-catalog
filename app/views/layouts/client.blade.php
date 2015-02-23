@@ -3,7 +3,7 @@
 <html lang="{{ App::getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <title>{{ Config::get('app.site_title') }}</title>
+    <title>{{ Config::get('app.site_title') }} {{ isset($pageTitle) ? $pageTitle : '' }}</title>
     <link type="text/css" href="/assets/css/client/style.css" rel="stylesheet">
     <link rel="alternate" type="application/rss+xml" title="{{ Lang::get('client.rss.title') }}" href="{{ URL::Route('rss', ['locale' => App::getLocale()]) }}">
     <script src="/assets/js/client/jquery-2.1.1.js"></script>

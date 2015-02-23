@@ -154,9 +154,9 @@ class IngredientsController extends \BaseController {
             } else {
                 $pizza = $pizzas[$key];
             }
+
             if (!$pizza instanceof Pizza)
                 return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
-
 
             if ($option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first()) {
                 $option->pizza_id = $pizza->id;

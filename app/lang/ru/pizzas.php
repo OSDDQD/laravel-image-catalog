@@ -8,5 +8,6 @@ return array (
     ],
     'recipes' => [
         'best_user_recipes' => 'Лучшие пользовательские рецепты',
-    ]
+    ],
+    'constructor' => 'Конструктор',
 );
