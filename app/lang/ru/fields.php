@@ -26,6 +26,7 @@ return array(
     'ip' => 'IP адрес',
     'is_home' => 'Главная страница',
     'is_visible' => 'Отображать',
+    'is_prepared' => 'Готовая пицца',
     'is_new' => 'Отметить как новый',
     'keywords' => 'Ключевые слова',
     'material' => [

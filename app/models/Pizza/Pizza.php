@@ -20,7 +20,7 @@ class Pizza extends \BaseModel
      *
      * @var array
      */
-    protected $fillable = ['position', 'title', 'description', 'is_visible', 'max_weight', 'size'];
+    protected $fillable = ['position', 'title', 'description', 'is_visible', 'max_weight', 'size', 'is_prepared'];
 
     /**
      * The attributes that are translatable.

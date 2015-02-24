@@ -9,7 +9,7 @@ class ConstructorController extends \BaseController {
 
         $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
 
-        $pizzas = Pizza::whereIsVisible(true)->get();
+        $pizzas = Pizza::whereIsVisible(true)->whereIsPrepared(false)->get();
 
         $menu = [];
 
