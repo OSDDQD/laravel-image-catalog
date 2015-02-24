@@ -1,7 +1,7 @@
-{{ $jsonMenu }}
 <div class="wrapper">
     <div class="constructor">
         <div class="texture">
+        {{ $jsonMenu }}
             <div class="categories">
                 <ul>
                     @foreach ($categories as $category)

@@ -13,28 +13,34 @@ class ConstructorController extends \BaseController {
 
         $menu = [];
 
-        foreach ($pizzas as $pizza) {
-            $menu['pizza'][$pizza->id]['title'] = $pizza->title;
-            $menu['pizza'][$pizza->id]['position'] = $pizza->position;
-            $menu['pizza'][$pizza->id]['max_weight'] = $pizza->max_weight;
-            $menu['pizza'][$pizza->id]['size'] = $pizza->size;
+        foreach ($pizzas as $key => $value) {
+            $menu['pizza'][$key] = [
+                'title' => $value->title,
+                'position' => $value->position,
+                'max_weight' => $value->max_weight,
+                'size' => $value->size,
+                'id' => $value->id,
+            ];
         }
 
-        foreach ($categories as $category) {
-            $menu['category'][$category->id]['title'] = $category->title;
-            $menu['category'][$category->id]['position'] = $category->position;
-            foreach ($category->ingredients as $ingredient) {
-                $menu['category'][$category->id]['ingredient'][$ingredient->id]['title'] = $ingredient->title;
-                $menu['category'][$category->id]['ingredient'][$ingredient->id]['position'] = $ingredient->position;
-                foreach ($ingredient->options as $option) {
-                    $menu['category'][$category->id]['ingredient'][$ingredient->id]['option']['pizzaid'] = $option->pizzaid;
-                    $menu['category'][$category->id]['ingredient'][$ingredient->id]['option']['price'] = $option->price;
-                    $menu['category'][$category->id]['ingredient'][$ingredient->id]['option']['max_quantity'] = $option->max_quantity;
-                    $menu['category'][$category->id]['ingredient'][$ingredient->id]['option']['weight'] = $option->weight;
+        foreach ($categories as $key => $value) {
+            $menu['category'][$key]['id'] = $value->id;
+            $menu['category'][$key]['title'] = $value->title;
+            $menu['category'][$key]['position'] = $value->position;
+            foreach ($value->ingredients as $ikey => $ingredient) {
+                $menu['category'][$key]['ingredient'][$ikey]['id'] = $ingredient->id;
+                $menu['category'][$key]['ingredient'][$ikey]['title'] = $ingredient->title;
+                $menu['category'][$key]['ingredient'][$ikey]['position'] = $ingredient->position;
+                foreach ($ingredient->options as $okey => $option) {
+                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['pizza_id'] = $option->pizza_id;
+                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['price'] = $option->price;
+                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['max_quantity'] = $option->max_quantity;
+                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['weight'] = $option->weight;
                 }
             }
         }
-
+        var_dump($menu);
+        exit();
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
 
         return \View::make('pizza.constructor.index', [
