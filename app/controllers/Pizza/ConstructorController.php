@@ -39,8 +39,7 @@ class ConstructorController extends \BaseController {
                 }
             }
         }
-        var_dump($menu);
-        exit();
+
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
 
         return \View::make('pizza.constructor.index', [
