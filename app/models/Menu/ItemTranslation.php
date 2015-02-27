@@ -1,8 +1,8 @@
 <?php
 
-namespace Pizza;
+namespace Menu;
 
-class IngredientTranslation extends \BaseModel
+class ItemTranslation extends \BaseModel
 {
 
     protected static $rules = [
@@ -14,7 +14,7 @@ class IngredientTranslation extends \BaseModel
      *
      * @var string
      */
-    protected $table = 'ingredients_translations';
+    protected $table = 'menu_items_translations';
 
     /**
      * The attributes that are mass assignable.

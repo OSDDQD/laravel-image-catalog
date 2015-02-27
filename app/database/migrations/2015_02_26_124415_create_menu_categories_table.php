@@ -21,12 +21,12 @@ class CreateMenuCategoriesTable extends Migration {
         Schema::create('menu_categories_translations', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('menu_category_id')->unsigned();
+            $table->integer('category_id')->unsigned();
             $table->string('title');
             $table->string('locale', 3)->index();
 
-            $table->unique(['menu_category_id', 'locale'], 'menu_category_id_locale_unique');
-            $table->foreign('menu_category_id', 'menu_category_id_foreign')
+            $table->unique(['category_id', 'locale'], 'menu_category_id_locale_unique');
+            $table->foreign('category_id', 'menu_category_id_foreign')
                 ->references('id')->on('menu_categories')
                 ->onDelete('cascade');
         });

@@ -23,7 +23,7 @@ class CategoriesController extends \BaseController {
             'entities' => $categories,
             'fields' => ['title', 'is_visible'],
             'actions' => ['show' => ['route' => 'manager.menu.items.index'], 'edit'],
-            'slug' => 'items_category',
+            'slug' => 'menu_category',
             'routeSlug' => 'menu.categories',
             'fieldAsIndex' => 'position',
         ]);
@@ -75,7 +75,7 @@ class CategoriesController extends \BaseController {
 
         return \View::make('manager.edit', [
             'entity' => $category,
-            'slug' => 'menu',
+            'slug' => 'menu_category',
             'routeSlug' => 'menu.categories',
         ]);
     }

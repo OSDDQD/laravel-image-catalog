@@ -17,21 +17,21 @@ class ItemsController extends \BaseController {
 
         $itemsOnMenu = 15;
 
-        $ingredients = Item::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
-        foreach ($ingredients as $ingredient) {
-            $ingredient->title = '<a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . $ingredient->title . '</a>';
+        $items = Item::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
+        foreach ($items as $item) {
+            $item->title = '<a href="' . \URL::Route('manager.menu.items.edit', ['id' => $item->id]) . '">' . $item->title . '</a>';
         }
         unset($itemsOnMenu);
 
         return \View::make('manager.index', [
-            'entities' => $ingredients,
+            'entities' => $items,
             'fields' => ['title', 'is_visible'],
             'actions' => ['edit'],
-            'slug' => 'ingredient',
-            'routeSlug' => 'pizza.ingredients',
+            'slug' => 'menu_items',
+            'routeSlug' => 'menu.items',
             'toolbar' => [
-                ['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.pizza.ingredients.create', 'routeParams' => ['categoryId' => $category['id']]],
-                ['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.pizza.icategories.index'],
+                ['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.menu.items.create', 'routeParams' => ['categoryId' => $category['id']]],
+                ['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.menu.categories.index'],
             ],
             'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $category->title . '")',
             'fieldAsIndex' => 'position',
@@ -50,9 +50,9 @@ class ItemsController extends \BaseController {
             $options = [];
 
         return \View::make('manager.create', [
-            'entity' => new Ingredient(['category_id' => $categoryId]),
-            'slug' => 'ingredient',
-            'routeSlug' => 'pizza.ingredients',
+            'entity' => new Item(['category_id' => $categoryId]),
+            'slug' => 'menu_items',
+            'routeSlug' => 'menu.items',
             'indexRouteParams' => ['id' => $categoryId],
             'options' => $options,
         ]);
@@ -66,33 +66,14 @@ class ItemsController extends \BaseController {
      */
     public function store()
     {
-        $ingredient = new Ingredient(\Input::except('options'));
-        if (!$ingredient->save()) {
-            return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
-        }
-
-        $pizzas = [];
-        $options = \Input::get('options');
-        foreach(array_keys($options) as $pizza) {
-            if (!isset($pizzas[$pizza])) {
-                $pizza = Pizza::find($pizza);
-                $pizzas[$pizza->id] = $pizza;
-            } else {
-                $pizza = $pizzas[$pizza];
-            }
-            if (!$pizza instanceof Pizza)
-                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
-
-            $option = new Option($options[$pizza->id]);
-            $option->pizza_id = $pizza->id;
-            $option->ingredient_id = $ingredient->id;
-            if (!$option->save())
-                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+        $item = new Item(\Input::except('options'));
+        if (!$item->save()) {
+            return \Redirect::back()->withInput()->withErrors($item->getErrors());
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
-            ' <a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
-        return \Redirect::route('manager.pizza.ingredients.index', ['id' => $ingredient->category_id]);
+            ' <a href="' . \URL::Route('manager.menu.items.edit', ['id' => $item->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+        return \Redirect::route('manager.menu.items.index', ['id' => $item->category_id]);
     }
 
 
@@ -104,26 +85,13 @@ class ItemsController extends \BaseController {
      */
     public function edit($id)
     {
-        $ingredient = Ingredient::find($id);
-
-        if (!$options = \Input::get('options')) {
-            $options = [];
-            $optionsData = Option::whereIngredientId($ingredient->id)->get();
-            foreach ($optionsData as $data) {
-                $options[$data->pizza_id] = [
-                    'weight' => $data->weight,
-                    'price' => $data->price,
-                    'max_quantity' => $data->max_quantity,
-                ];
-            }
-        }
+        $item = Item::find($id);
 
         return \View::make('manager.edit', [
-            'entity' => $ingredient,
-            'slug' => 'ingredient',
-            'routeSlug' => 'pizza.ingredients',
-            'indexRouteParams' => ['id' => $ingredient->category_id],
-            'options' => $options,
+            'entity' => $item,
+            'slug' => 'menu_items',
+            'routeSlug' => 'menu.items',
+            'indexRouteParams' => ['id' => $item->category_id],
         ]);
     }
 
@@ -136,48 +104,17 @@ class ItemsController extends \BaseController {
      */
     public function update($id)
     {
-        $ingredient = Ingredient::find($id);
-        if (!$ingredient)
+        $item = Item::find($id);
+        if (!$item)
             return \Response::View('errors.404', [], 404);
 
-        if (!$ingredient->update(\Input::all())) {
-            return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
-        }
-
-        $pizzas = [];
-        $options = \Input::get('options');
-
-        foreach($options as $key => $value) {
-            if (!isset($pizzas[$key])) {
-                $pizza = Pizza::find($key);
-                $pizzas[$pizza->id] = $pizza;
-            } else {
-                $pizza = $pizzas[$key];
-            }
-
-            if (!$pizza instanceof Pizza)
-                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
-
-            if ($option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first()) {
-                $option->pizza_id = $pizza->id;
-                $option->ingredient_id = $ingredient->id;
-                foreach ($value as $field => $setting) {
-                    $option->$field = $setting;
-                }
-            } else {
-                $option = new Option($options[$key]);
-                $option->pizza_id = $pizza->id;
-                $option->ingredient_id = $ingredient->id;
-            }
-
-            if (!$option->save())
-                return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
-            unset($option);
+        if (!$item->update(\Input::all())) {
+            return \Redirect::back()->withInput()->withErrors($item->getErrors());
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
-            ' <a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
-        return \Redirect::route('manager.pizza.ingredients.index', ['id' => $ingredient->category_id]);
+            ' <a href="' . \URL::Route('manager.menu.items.edit', ['id' => $item->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+        return \Redirect::route('manager.menu.items.index', ['id' => $item->category_id]);
     }
 
 
@@ -190,10 +127,10 @@ class ItemsController extends \BaseController {
     {
         $ids = \Input::get('id');
         foreach ($ids as $id) {
-            $ingredient = Ingredient::find($id);
-            if (!$ingredient)
+            $item = Item::find($id);
+            if (!$item)
                 continue;
-            Ingredient::destroy($id);
+            Item::destroy($id);
         }
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
         return \Redirect::back();
