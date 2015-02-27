@@ -148,6 +148,11 @@ Route::get('constructor', [
     'as' => 'pizza.constructor',
     'uses' => 'Pizza\ConstructorController@index',
 ]);
+
+Route::get('menu', [
+    'as' => 'menu',
+    'uses' => 'Structure\PagesController@menu',
+]);
 // ===============================================
 // MANAGER SECTION ===============================
 // ===============================================
@@ -229,6 +234,30 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
 
     });
 
+    // Menu
+    Route::group(['prefix' => 'menu', 'namespace' => 'Menu'], function() {
+        // Menu Categories
+        Route::resource('categories', 'CategoriesController', ['except' => ['show', 'destroy']]);
+        Route::delete('categories/destroy', [
+            'as' => 'manager.menu.categories.destroy',
+            'uses' => 'CategoriesController@destroy'
+        ]);
+
+        // Menu Items
+        Route::resource('items', 'ItemsController', ['except' => ['index', 'create', 'show', 'destroy']]);
+        Route::get('categories/{id}/items', [
+            'as' => 'manager.menu.items.index',
+            'uses' => 'ItemsController@index',
+        ]);
+        Route::get('categories/{categoryId}/items/create', [
+            'as' => 'manager.menu.items.create',
+            'uses' => 'ItemsController@create'
+        ])->where(['categoryId' => '\d+']);
+        Route::delete('items/destroy', [
+            'as' => 'manager.menu.items.destroy',
+            'uses' => 'ItemsController@destroy'
+        ]);
+    });
 
     // Guestbook
     Route::resource('guestbook', 'GuestbookController', ['only' => ['index', 'edit', 'update']]);

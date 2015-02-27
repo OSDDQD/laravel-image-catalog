@@ -50,6 +50,7 @@ return array(
         'logout' => 'Выйти',
         'materials' => 'Материалы',
         'pizzas' => 'Пицца',
+        'menu' => 'Меню',
         'profile' => 'Профиль',
         'settings' => 'Настройки',
         'structure' => 'Структура сайта',
