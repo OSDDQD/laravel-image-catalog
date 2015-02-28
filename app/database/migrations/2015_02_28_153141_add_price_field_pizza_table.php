@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPriceFieldMenuItems extends Migration {
+class AddPriceFieldPizzaTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class AddPriceFieldMenuItems extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('menu_items', function(Blueprint $table)
+        Schema::table('pizzas', function(Blueprint $table)
         {
             $table->decimal('price', '10', '2')->default(0);
         });
@@ -25,7 +25,7 @@ class AddPriceFieldMenuItems extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('menu_items', function(Blueprint $table) {
+        Schema::table('pizzas', function(Blueprint $table) {
             $table->dropColumn('price');
         });
 	}

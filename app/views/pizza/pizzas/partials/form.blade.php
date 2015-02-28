@@ -20,6 +20,7 @@
                         'selected' => ($entity->id ? $entity->position : $maxPosition),
                         'list' => array_combine(range(1, $maxPosition), range(1, $maxPosition))
                     ])
+                    @include('manager.partials.form_control', ['type' => 'text', 'field' => 'price'])
                     @include('manager.partials.form_control', ['type' => 'text', 'field' => 'size'])
                     @include('manager.partials.form_control', ['type' => 'text', 'field' => 'max_weight'])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
