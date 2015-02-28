@@ -28,6 +28,8 @@ return array(
     'is_visible' => 'Отображать',
     'is_prepared' => 'Готовая пицца',
     'is_new' => 'Отметить как новый',
+    'is_novelty' => 'Новинка',
+    'is_popular' => 'Популярный выбор',
     'keywords' => 'Ключевые слова',
     'material' => [
         'types' => [

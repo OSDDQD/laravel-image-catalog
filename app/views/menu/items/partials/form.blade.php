@@ -31,9 +31,10 @@
                             {{ $errors->first('position', '<span class="help-block has-error">:message</span>') }}
                         </div>
                     </div>
-
+                    @include('manager.partials.form_control', ['type' => 'text', 'field' => 'price'])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
-
+                    @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_novelty', 'default' => 0])
+                    @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_popular', 'default' => 0])
                 </div>
             </div>
             @foreach (Config::get('app.locales') as $i => $locale)

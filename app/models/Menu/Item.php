@@ -22,7 +22,7 @@ class Item extends \BaseModel
      *
      * @var array
      */
-    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible'];
+    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible', 'is_novelty', 'is_popular', 'price', 'image'];
 
     /**
      * The attributes that are translatable.
@@ -73,7 +73,7 @@ class Item extends \BaseModel
         if (!$this->id) {
             $this->attributes['position'] = $value;
         } else {
-            $maxPosition = Category::whereCategoryId($this->category_id)->count();
+            $maxPosition = Item::whereCategoryId($this->category_id)->count();
 
             if ($this->category_id != $this->getOriginal('category_id'))
                 $maxPosition++;
