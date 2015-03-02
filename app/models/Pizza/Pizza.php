@@ -6,9 +6,10 @@ use \Basic\TranslatableTrait;
 use \Basic\UploadableInterface;
 use \Basic\UploadableTrait;
 
-class Pizza extends \BaseModel
+class Pizza extends \BaseModel implements UploadableInterface
 {
-    use TranslatableTrait;
+    use TranslatableTrait,
+        UploadableTrait;
 
     /**
      * The table associated with the model.
@@ -58,7 +59,40 @@ class Pizza extends \BaseModel
         });
         static::deleted(function(Pizza $entity) {
             $entity->alterSiblingsPosition('decrement');
+            $entity->removeImage('image');
         });
+    }
+
+    /**
+     * Returns directory name where uploaded files are stored.
+     * Starting slash should be included.
+     *
+     * @return string
+     */
+    public static function getUploadDir()
+    {
+        return '/pizzas/pizza';
+    }
+
+    /**
+     * Returns path to directory where uploaded files are stored.
+     * Usually it returns Config::get('app.uploads_root').self::getUploadDir()
+     *
+     * @return string
+     */
+    public static function getUploadPath()
+    {
+        return \Config::get('app.uploads_root').self::getUploadDir();
+    }
+
+    /**
+     * Returns slug used to name uploaded files like 'slug-id.ext'
+     *
+     * @return string
+     */
+    public static function getUploadSlug()
+    {
+        return 'pizza';
     }
 
     public function options()

@@ -2,7 +2,7 @@
 
 namespace Menu;
 
-use Basic\PositionedTrait;
+use \Basic\PositionedTrait;
 use \Basic\TranslatableTrait;
 use \Basic\UploadableInterface;
 use \Basic\UploadableTrait;
@@ -96,7 +96,7 @@ class Item extends \BaseModel implements UploadableInterface
      */
     public static function getUploadSlug()
     {
-        return 'menu-items';
+        return 'menu-item';
     }
 
     public function category()

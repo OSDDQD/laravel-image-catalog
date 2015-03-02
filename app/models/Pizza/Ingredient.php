@@ -4,10 +4,13 @@ namespace Pizza;
 
 use Basic\PositionedTrait;
 use \Basic\TranslatableTrait;
+use \Basic\UploadableInterface;
+use \Basic\UploadableTrait;
 
-class Ingredient extends \BaseModel
+class Ingredient extends \BaseModel implements UploadableInterface
 {
     use TranslatableTrait,
+        UploadableTrait,
         PositionedTrait;
 
     /**
@@ -60,7 +63,40 @@ class Ingredient extends \BaseModel
 
         static::deleted(function(Ingredient $entity) {
             $entity->alterSiblingsPosition('decrement');
+            $entity->removeImage('image');
         });
+    }
+
+    /**
+     * Returns directory name where uploaded files are stored.
+     * Starting slash should be included.
+     *
+     * @return string
+     */
+    public static function getUploadDir()
+    {
+        return '/pizzas/ingredients/';
+    }
+
+    /**
+     * Returns path to directory where uploaded files are stored.
+     * Usually it returns Config::get('app.uploads_root').self::getUploadDir()
+     *
+     * @return string
+     */
+    public static function getUploadPath()
+    {
+        return \Config::get('app.uploads_root').self::getUploadDir();
+    }
+
+    /**
+     * Returns slug used to name uploaded files like 'slug-id.ext'
+     *
+     * @return string
+     */
+    public static function getUploadSlug()
+    {
+        return 'pizza-ingredient';
     }
 
     public function category()

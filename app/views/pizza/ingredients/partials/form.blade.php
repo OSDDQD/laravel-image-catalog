@@ -33,6 +33,14 @@
                     </div>
 
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
+                    @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image'])
+                    @if (isset($entity->image))
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <img src="{{ \URL::Route('preview.managed', ['object' => 'pizza-ingredient', 'mode' => 'preview', 'format' => 'jpg', 'file' => $entity->image]) }}" alt="" />
+                        </div>
+                    </div>
+                    @endif
 
                     <table class="table table-bordered table-hover table-striped">
                         <thead>

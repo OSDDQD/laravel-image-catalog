@@ -227,6 +227,18 @@ return array(
             'news' => [100, 200],
             'preview' => [80, 60],
         ],
+        'menu-item' => [
+            '_class' => 'Menu\Item',
+            'preview' => [150, 150],
+        ],
+        'pizza' => [
+            '_class' => 'Pizza\Pizza',
+            'preview' => [150, 150],
+        ],
+        'pizza-ingredient' => [
+            '_class' => 'Pizza\Ingredient',
+            'preview' => [150, 150],
+        ],
         'slider' => [
             '_class' => 'Slider\Image',
             'managertable' => [123, 43],
