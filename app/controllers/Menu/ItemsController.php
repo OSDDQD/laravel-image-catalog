@@ -66,9 +66,16 @@ class ItemsController extends \BaseController {
      */
     public function store()
     {
-        $item = new Item(\Input::except('options'));
+        $item = new Item(\Input::all());
         if (!$item->save()) {
             return \Redirect::back()->withInput()->withErrors($item->getErrors());
+        }
+
+        if (\Input::file('image')) {
+            if (!$item->uploadImage(\Input::file('image'), 'image')) {
+                $item->delete();
+                return \Redirect::back()->withInput()->withErrors($item->getErrors());
+            }
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
@@ -110,6 +117,12 @@ class ItemsController extends \BaseController {
 
         if (!$item->update(\Input::all())) {
             return \Redirect::back()->withInput()->withErrors($item->getErrors());
+        }
+
+        if (\Input::file('image')) {
+            if (!$item->uploadImage(\Input::file('image'), 'image')) {
+                return \Redirect::back()->withInput()->withErrors($item->getErrors());
+            }
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .

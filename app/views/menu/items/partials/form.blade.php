@@ -6,9 +6,9 @@
         @endforeach
     </ul>
     @if($entity->id)
-    {{ Form::open(['route' => ["manager.$routeSlug.update", $entity->id], 'method' => 'put', 'class' => 'form-vertical']) }}
+    {{ Form::open(['route' => ["manager.$routeSlug.update", $entity->id], 'method' => 'put', 'files' => true, 'class' => 'form-vertical']) }}
     @else
-    {{ Form::open(['route' => "manager.$routeSlug.store", 'class' => 'form-vertical']) }}
+    {{ Form::open(['route' => "manager.$routeSlug.store", 'files' => true, 'class' => 'form-vertical']) }}
     @endif
         <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
@@ -35,6 +35,7 @@
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_novelty', 'default' => 0])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_popular', 'default' => 0])
+                    @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image'])
                 </div>
             </div>
             @foreach (Config::get('app.locales') as $i => $locale)
