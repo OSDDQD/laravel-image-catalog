@@ -3,6 +3,8 @@
 namespace Pizza;
 
 use \Basic\TranslatableTrait;
+use \Basic\UploadableInterface;
+use \Basic\UploadableTrait;
 
 class Pizza extends \BaseModel
 {
