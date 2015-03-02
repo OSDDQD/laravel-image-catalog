@@ -112,17 +112,23 @@ class ItemsController extends \BaseController {
     public function update($id)
     {
         $item = Item::find($id);
+
         if (!$item)
             return \Response::View('errors.404', [], 404);
 
-        if (!$item->update(\Input::all())) {
+        if (!$item->update(\Input::except(['image_delete', 'image']))) {
             return \Redirect::back()->withInput()->withErrors($item->getErrors());
         }
 
-        if (\Input::file('image')) {
-            if (!$item->uploadImage(\Input::file('image'), 'image')) {
-                return \Redirect::back()->withInput()->withErrors($item->getErrors());
-            }
+        $imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+        $imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+        if ($imageDelete) {
+            $item->removeImage('image');
+        } elseif ($imageFile) {
+            $item->uploadImage($imageFile, 'image');
+        } elseif (!$item->uploadImage($imageFile, 'image')) {
+            return \Redirect::back()->withInput()->withErrors($item->getErrors());
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .

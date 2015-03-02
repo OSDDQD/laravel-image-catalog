@@ -66,9 +66,16 @@ class IngredientsController extends \BaseController {
      */
     public function store()
     {
-        $ingredient = new Ingredient(\Input::except('options'));
+        $ingredient = new Ingredient(\Input::except(['options, image']));
         if (!$ingredient->save()) {
             return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+        }
+
+        if (\Input::file('image')) {
+            if (!$ingredient->uploadImage(\Input::file('image'), 'image')) {
+                $ingredient->delete();
+                return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+            }
         }
 
         $pizzas = [];
@@ -140,7 +147,18 @@ class IngredientsController extends \BaseController {
         if (!$ingredient)
             return \Response::View('errors.404', [], 404);
 
-        if (!$ingredient->update(\Input::all())) {
+        if (!$ingredient->update(\Input::except(['image_delete', 'image']))) {
+            return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+        }
+
+        $imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+        $imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+        if ($imageDelete) {
+            $ingredient->removeImage('image');
+        } elseif ($imageFile) {
+            $ingredient->uploadImage($imageFile, 'image');
+        } elseif (!$ingredient->uploadImage($imageFile, 'image')) {
             return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
         }
 

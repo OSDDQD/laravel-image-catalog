@@ -30,6 +30,7 @@ return array(
     'is_new' => 'Отметить как новый',
     'is_novelty' => 'Новинка',
     'is_popular' => 'Популярный выбор',
+    'image_delete' => 'Удалить изображение',
     'keywords' => 'Ключевые слова',
     'material' => [
         'types' => [

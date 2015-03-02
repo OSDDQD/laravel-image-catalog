@@ -57,6 +57,13 @@ class PizzasController extends \BaseController {
             return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
         }
 
+        if (\Input::file('image')) {
+            if (!$pizza->uploadImage(\Input::file('image'), 'image')) {
+                $pizza->delete();
+                return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
+            }
+        }
+
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
             ' <a href="' . \URL::Route('manager.pizza.pizzas.edit', ['id' => $pizza->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
         return \Redirect::route('manager.pizza.pizzas.index');
@@ -93,7 +100,18 @@ class PizzasController extends \BaseController {
         if (!$pizza)
             return \Response::View('errors.404', [], 404);
 
-        if (!$pizza->update(\Input::all())) {
+        if (!$pizza->update(\Input::except(['image_delete', 'image']))) {
+            return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
+        }
+
+        $imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+        $imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+        if ($imageDelete) {
+            $pizza->removeImage('image');
+        } elseif ($imageFile) {
+            $pizza->uploadImage($imageFile, 'image');
+        } elseif (!$pizza->uploadImage($imageFile, 'image')) {
             return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
         }
 

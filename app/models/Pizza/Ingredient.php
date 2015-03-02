@@ -25,7 +25,7 @@ class Ingredient extends \BaseModel implements UploadableInterface
      *
      * @var array
      */
-    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible'];
+    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible', 'image'];
 
     /**
      * The attributes that are translatable.
@@ -75,7 +75,7 @@ class Ingredient extends \BaseModel implements UploadableInterface
      */
     public static function getUploadDir()
     {
-        return '/pizzas/ingredients/';
+        return '/pizzas/ingredient';
     }
 
     /**

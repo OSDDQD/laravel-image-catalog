@@ -6,9 +6,9 @@
         @endforeach
     </ul>
     @if($entity->id)
-    {{ Form::open(['route' => ["manager.$routeSlug.update", $entity->id], 'method' => 'put', 'class' => 'form-vertical']) }}
+    {{ Form::open(['route' => ["manager.$routeSlug.update", $entity->id], 'method' => 'put', 'files' => true, 'class' => 'form-vertical']) }}
     @else
-    {{ Form::open(['route' => "manager.$routeSlug.store", 'class' => 'form-vertical']) }}
+    {{ Form::open(['route' => "manager.$routeSlug.store", 'files' => true, 'class' => 'form-vertical']) }}
     @endif
         <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
@@ -34,12 +34,13 @@
 
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
                     @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image'])
-                    @if (isset($entity->image))
+                    @if (isset($entity->image) and $entity->image)
                     <div class="col-md-12">
                         <div class="form-group">
                             <img src="{{ \URL::Route('preview.managed', ['object' => 'pizza-ingredient', 'mode' => 'preview', 'format' => 'jpg', 'file' => $entity->image]) }}" alt="" />
                         </div>
                     </div>
+                    @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'image_delete', 'default' => 0])
                     @endif
 
                     <table class="table table-bordered table-hover table-striped">

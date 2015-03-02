@@ -36,12 +36,13 @@
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_novelty', 'default' => 0])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_popular', 'default' => 0])
                     @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image'])
-                    @if (isset($entity->image))
+                    @if (isset($entity->image) and $entity->image)
                     <div class="col-md-12">
                         <div class="form-group">
                             <img src="{{ \URL::Route('preview.managed', ['object' => 'menu-item', 'mode' => 'preview', 'format' => 'jpg', 'file' => $entity->image]) }}" alt="" />
                         </div>
                     </div>
+                    @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'image_delete', 'default' => 0])
                     @endif
                 </div>
             </div>

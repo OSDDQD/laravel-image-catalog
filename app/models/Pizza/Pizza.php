@@ -23,7 +23,7 @@ class Pizza extends \BaseModel implements UploadableInterface
      *
      * @var array
      */
-    protected $fillable = ['position', 'title', 'description', 'is_visible', 'max_weight', 'size', 'is_prepared', 'is_novelty', 'is_popular', 'price'];
+    protected $fillable = ['position', 'title', 'description', 'is_visible', 'max_weight', 'size', 'is_prepared', 'is_novelty', 'is_popular', 'price', 'image'];
 
     /**
      * The attributes that are translatable.
