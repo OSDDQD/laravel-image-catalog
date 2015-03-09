@@ -30,7 +30,7 @@ class Pizza extends \BaseModel implements UploadableInterface
      *
      * @var array
      */
-    public $translatedAttributes = ['title'];
+    public $translatedAttributes = ['title', 'description'];
 
     /**
      * Indicates if the model should be timestamped.

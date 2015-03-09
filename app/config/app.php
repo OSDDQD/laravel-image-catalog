@@ -230,10 +230,12 @@ return array(
         'menu-item' => [
             '_class' => 'Menu\Item',
             'preview' => [150, 150],
+            'frontend' => [195, 170],
         ],
         'pizza' => [
             '_class' => 'Pizza\Pizza',
             'preview' => [150, 150],
+            'frontend' => [195, 170],
         ],
         'pizza-ingredient' => [
             '_class' => 'Pizza\Ingredient',

@@ -1,4 +1,5 @@
 <div class="blockReg guest">
+    <h2>{{ Lang::get('components.reviews._title') }}</h2>
     <div class="guestRed">
         @if (Session::has('guestbook_message'))
             <p>{{ Session::get('guestbook_message') }}</p>
@@ -23,8 +24,7 @@
                     {{ $errors->first('text', '<div class="errorRedMessage">:message</div>')}}
                 </div>
                 @if (!Auth::user())
-                    <div>
-                        {{ Lang::get('forms.labels.captcha') }}
+                    <div class="captcha">
                         {{ HTML::image(Captcha::img(), 'Captcha image') }}
                         {{ Form::text('captcha', '') }}
                         {{ $errors->first('captcha', '<div class="errorRedMessage">:message</div>')}}
@@ -38,14 +38,15 @@
             </div>
         </div>
     </div>
-    <div class="topBlog">
+    <div class="reviews">
         @foreach ($entities as $entity)
-        <div class="blog statusBlog">
-            <div class="guestForm guestStatus">
-                <p>Ваше имя <span class="authUser">{{{ $entity->displayname }}}</span><span class="dateOfPost">{{ date('d/m/Y', strtotime($entity->created_at)) }}</span></p>
-                <div class="textBlog">
-                    <p>{{{ $entity->text }}}</p>
-                </div>
+        <div class="review">
+            <p class="info">
+                <span class="authUser">{{{ $entity->displayname }}}</span>
+                <span class="dateOfPost">{{ date('d/m/Y', strtotime($entity->created_at)) }}</span>
+            </p>
+            <div class="textBlog">
+                <p>{{{ $entity->text }}}</p>
             </div>
         </div>
         @endforeach

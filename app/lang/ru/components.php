@@ -27,6 +27,12 @@ return array(
     'guestbook' => [
         '_title' => 'Гостевая книга',
     ],
+    'reviews' => [
+        '_title' => 'Отзывы',
+    ],
+    'archive' => [
+        '_title' => 'Архив',
+    ],
     'latestnews' => [
         '_title' => 'Последние новости',
     ],

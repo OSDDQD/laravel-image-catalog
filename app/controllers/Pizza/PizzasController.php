@@ -110,9 +110,9 @@ class PizzasController extends \BaseController {
         if ($imageDelete) {
             $pizza->removeImage('image');
         } elseif ($imageFile) {
-            $pizza->uploadImage($imageFile, 'image');
-        } elseif (!$pizza->uploadImage($imageFile, 'image')) {
-            return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
+            if (!$pizza->uploadImage($imageFile, 'image')) {
+                return \Redirect::back()->withInput()->withErrors($pizza->getErrors());
+            }
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .

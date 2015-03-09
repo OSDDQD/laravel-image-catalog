@@ -126,9 +126,9 @@ class ItemsController extends \BaseController {
         if ($imageDelete) {
             $item->removeImage('image');
         } elseif ($imageFile) {
-            $item->uploadImage($imageFile, 'image');
-        } elseif (!$item->uploadImage($imageFile, 'image')) {
-            return \Redirect::back()->withInput()->withErrors($item->getErrors());
+            if (!$item->uploadImage($imageFile, 'image')) {
+                return \Redirect::back()->withInput()->withErrors($item->getErrors());
+            }
         }
 
         \Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .

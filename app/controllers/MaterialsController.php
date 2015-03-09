@@ -51,7 +51,7 @@ class MaterialsController extends \BaseController {
 
     public function archive($type = null)
     {
-        $itemsOnPage = 25;
+        $itemsOnPage = 1;
 
         $possibleTypes = [
             'news',
@@ -74,6 +74,8 @@ class MaterialsController extends \BaseController {
 
         return View::make('materials.partials.archive', [
             'entities' => $materials,
+            'textShorten' => '500',
+            'pageTitle' => Lang::get('components.archive._title'),
         ]);
     }
 

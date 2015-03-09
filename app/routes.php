@@ -151,7 +151,7 @@ Route::get('constructor', [
 
 Route::get('menu', [
     'as' => 'menu',
-    'uses' => 'Structure\PagesController@menu',
+    'uses' => 'Menu\HomeController@index',
 ]);
 // ===============================================
 // MANAGER SECTION ===============================

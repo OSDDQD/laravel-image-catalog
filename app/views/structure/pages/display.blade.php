@@ -12,7 +12,7 @@
 
 @section('content')
     @if (isset($pageTitle) and $pageTitle)
-        <h2>{{ $pageTitle }}</h2>
+        <h2 class="pageHead">{{ $pageTitle }}</h2>
     @endif
     @if ($page->content_type == 'material')
         @include("structure.pages.partials.$page->content_type")

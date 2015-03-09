@@ -10,4 +10,10 @@ return array (
         'best_user_recipes' => 'Лучшие пользовательские рецепты',
     ],
     'constructor' => 'Конструктор',
+    'our_menu' => 'Наше меню',
+    'pizzas' => 'Пиццы',
+    'numeric' => [
+        'gramm' => 'гр',
+        'value' => 'сум',
+    ]
 );

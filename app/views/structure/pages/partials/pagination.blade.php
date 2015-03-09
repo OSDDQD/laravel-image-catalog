@@ -3,7 +3,7 @@ $presenter = new Illuminate\Pagination\BootstrapPresenter($paginator);
 ?>
 
 @if ($paginator->getLastPage() > 1)
-    <div class="navigation">
+    <div class="pagination">
         {{ getFirst($paginator->getCurrentPage(), $paginator->getUrl(1)) }}
         {{ getPrevious($paginator->getCurrentPage(), $paginator->getUrl($paginator->getCurrentPage() - 1)) }}
         <nav>
@@ -17,17 +17,17 @@ $presenter = new Illuminate\Pagination\BootstrapPresenter($paginator);
 <?php
 function getFirst($currentPage, $url) {
     if ($currentPage <= 1)
-        return '<a href="javascript:void(0);"></a>';
+        return '<a href="javascript:void(0);" class="disabled">&#8612;</a>';
     else
-        return '<a href="' . $url . '"></a>';
+        return '<a href="' . $url . '">&#8612;</a>';
 }
 
 function getPrevious($currentPage, $url)
 {
     if ($currentPage <= 1)
-        return '<a href="javascript:void(0);" class="navA2"></a>';
+        return '<a href="javascript:void(0);" class="disabled">&larr;</a>';
     else
-       return '<a href="' . $url . '" class="navA2"></a>';
+       return '<a href="' . $url . '">&larr;</a>';
 }
 
 function getRange($paginator, $maxPages) {
@@ -37,7 +37,7 @@ function getRange($paginator, $maxPages) {
     $lastPage = $paginator->getLastPage();
 
     $pages = [];
-    $pages[$currentPage] = '<a href="' . $paginator->getUrl($currentPage) . '">' . $currentPage . '</a>';
+    $pages[$currentPage] = '<a href="' . $paginator->getUrl($currentPage) . '" class="current">' . $currentPage . '</a>';
     while(count($pages) < $maxPages) {
         $bool = isset($bool) ? !$bool : true;
         if ($prevPage < 1 and $nextPage > $lastPage)
@@ -53,15 +53,15 @@ function getRange($paginator, $maxPages) {
 
 function getNext($currentPage, $lastPage, $url) {
     if ($currentPage >= $lastPage)
-        return '<a href="javascript:void(0);" class="navA3"></a>';
+        return '<a href="javascript:void(0);" class="disabled">&rarr;</a>';
     else
-        return '<a href="' . $url . '" class="navA3"></a>';
+        return '<a href="' . $url . '" class="navA3">&rarr;</a>';
 }
 
 function getLast($currentPage, $lastPage, $url) {
     if ($currentPage >= $lastPage)
-        return '<a href="javascript:void(0);" class="navA4"></a>';
+        return '<a href="javascript:void(0);" class="disabled">&#8614;</a>';
     else
-        return '<a href="' . $url . '" class="navA4"></a>';
+        return '<a href="' . $url . '" class="navA4">&#8614;</a>';
 }
 ?>

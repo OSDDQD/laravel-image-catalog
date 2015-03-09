@@ -267,5 +267,4 @@ class PagesController extends \BaseController {
         return Redirect::back();
     }
 
-
 }

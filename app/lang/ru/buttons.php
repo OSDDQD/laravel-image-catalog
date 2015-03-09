@@ -29,6 +29,7 @@ return array(
     'show' => 'Открыть',
     'sign_in' => 'Войти',
     'upload' => 'Загрузить',
+    'read_more' => 'Читать далее',
 
 
 );

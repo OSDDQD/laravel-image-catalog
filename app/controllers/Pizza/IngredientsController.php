@@ -157,9 +157,9 @@ class IngredientsController extends \BaseController {
         if ($imageDelete) {
             $ingredient->removeImage('image');
         } elseif ($imageFile) {
-            $ingredient->uploadImage($imageFile, 'image');
-        } elseif (!$ingredient->uploadImage($imageFile, 'image')) {
-            return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+            if (!$ingredient->uploadImage($imageFile, 'image')) {
+                return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+            }
         }
 
         $pizzas = [];

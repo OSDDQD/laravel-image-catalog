@@ -10,6 +10,7 @@ class GuestbookController extends \BaseController {
 
         return View::make('guestbook.display', [
             'entities' => $messages,
+            'pageTitle' => Lang::get('components.reviews._title'),
         ]);
     }
 
