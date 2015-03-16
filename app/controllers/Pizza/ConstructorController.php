@@ -8,44 +8,50 @@ class ConstructorController extends \BaseController {
     {
 
         $categories = IngredientsCategory::with('translations', 'ingredients', 'ingredients.translations', 'ingredients.options')->whereIsVisible(true)->orderBy('position')->get();
+        $pizzas = Pizza::with('translations')->whereIsVisible(true)->whereIsPrepared(false)->orderBy('position')->get();
 
-        $pizzas = Pizza::with('translations')->whereIsVisible(true)->whereIsPrepared(false)->get();
+        $pizza = [];
+        $item = [];
 
-        $menu = [];
-
+        $pizza[0]['title'] = \Lang::get('pizzas.constructor.base');
         foreach ($pizzas as $key => $value) {
-            $menu['pizza'][$key] = [
+            $pizza[0]['ingredient'][$key] = [
+                'id' => $value->id,
                 'title' => $value->title,
-                'position' => $value->position,
+                #'position' => $value->position,
                 'max_weight' => $value->max_weight,
                 'size' => $value->size,
-                'id' => $value->id,
+                'image' => $value->image,
+                'base' => true,
             ];
         }
 
         foreach ($categories as $key => $value) {
-            $menu['category'][$key]['id'] = $value->id;
-            $menu['category'][$key]['title'] = $value->title;
-            $menu['category'][$key]['position'] = $value->position;
+            $item[$key]['id'] = $value->id;
+            $item[$key]['title'] = $value->title;
+            #$items[$key]['position'] = $value->position;
             foreach ($value->ingredients as $ikey => $ingredient) {
-                $menu['category'][$key]['ingredient'][$ikey]['id'] = $ingredient->id;
-                $menu['category'][$key]['ingredient'][$ikey]['title'] = $ingredient->title;
-                $menu['category'][$key]['ingredient'][$ikey]['position'] = $ingredient->position;
+                $item[$key]['ingredient'][$ikey]['id'] = $ingredient->id;
+                $item[$key]['ingredient'][$ikey]['title'] = $ingredient->title;
+                #$items[$key]['ingredient'][$ikey]['position'] = $item->position;
+                $item[$key]['ingredient'][$ikey]['image'] = $ingredient->image;
                 foreach ($ingredient->options as $okey => $option) {
-                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['pizza_id'] = $option->pizza_id;
-                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['price'] = $option->price;
-                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['max_quantity'] = $option->max_quantity;
-                    $menu['category'][$key]['ingredient'][$ikey]['option'][$okey]['weight'] = $option->weight;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['pizza_id'] = $option->pizza_id;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['price'] = $option->price;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['max_quantity'] = $option->max_quantity;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['weight'] = $option->weight;
                 }
             }
         }
-
-        $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
+//        var_dump(array_merge($pizza, $item));
+//        exit();
+        $items = array_merge($pizza, $item);
+        $json = json_encode(array_merge($pizza, $item), JSON_UNESCAPED_UNICODE);
 
         return \View::make('pizza.constructor.index', [
-            'categories' => $categories,
-            'pageTitle' => \Lang::get('pizzas.constructor'),
-            'jsonMenu' => $menu,
+            'pageTitle' => \Lang::get('pizzas.constructor.title'),
+            'items' => $items,
+            'json' => $json,
         ]);
     }
 

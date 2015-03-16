@@ -9,7 +9,10 @@ return array (
     'recipes' => [
         'best_user_recipes' => 'Лучшие пользовательские рецепты',
     ],
-    'constructor' => 'Конструктор',
+    'constructor' => [
+        'title' => 'Конструктор',
+        'base' => 'Основа',
+    ],
     'our_menu' => 'Наше меню',
     'pizzas' => 'Пиццы',
     'numeric' => [

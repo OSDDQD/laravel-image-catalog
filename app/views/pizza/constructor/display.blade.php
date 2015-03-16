@@ -1,65 +1,16 @@
 <script>
     $(document).ready(function(){
-        var pizzaQuery = {};
-        pizzaQuery.plate = [];
-        //получаем JSON объект пицы
-        pizzaQuery.jsonMenu = {{ $jsonMenu }};
-        pizzaQuery.categories = pizzaQuery.jsonMenu.category;
-        pizzaQuery.pizza = pizzaQuery.jsonMenu.pizza;
+        var pizza = {};
+        pizza.plate = [];
 
-        //Делаем основу
-        pizzaQuery.foundation = function(objPizza, classFoundation){
-            for(var i=0; i<objPizza.length; i++){
-                var onePizza = objPizza[i];
-                classFoundation.append('<li><a href=\"#\" data-id=\"'+onePizza.id+'\" data-title=\"'+onePizza.title+'\" data-position=\"'+onePizza.position+'\" data-maxWeight=\"'+onePizza.max_weight+'\" data-size=\"'+onePizza.size+'\">'+onePizza.title+'</a></li>');
-            }
-        };
+        pizza.elements = {{ $json }};
 
-        //Делаем категории с и их ингредиентами
-        pizzaQuery.drawСategoryMenu = function(objCat, ingredientMenu){
-            for(var i=0; i<objCat.length; i++){
-                var category = objCat[i];
-                ingredientMenu
-                    .append('<li style=\"display: none;\"><a href=\"#\" data-id=\"'+category.id+'\" data-position=\"'+category.position+'\" class=\"ingredientId\">'+category.title+'</a><ul class=\"underUl\"></ul></li>')
-                    .children('li').children('.ingredientId').each(function(){
-                        var idUrlCat = $(this).attr('data-id');
-                        idUrlCat = parseInt(idUrlCat);
-
-                        if(idUrlCat == category.id){
-                            for(var ma in category.ingredient){
-                                var ingredient = category.ingredient[ma];
-                                var ingredientId = ingredient.id;
-                                $(this).next().append('<li class=\"allCategories\"><a href=\"#\" data-id=\"'+ingredientId+'\" data-position=\"'+ingredient.position+'\" data-title=\"'+ingredient.title+'\">'+ingredient.title+'</a></li>');
-
-                                $('.underUl li a').each(function(){
-                                    var idOfCategory = $(this).attr('data-id');
-                                    idOfCategory = parseInt(idOfCategory);
-                                    if(idOfCategory == ingredientId){
-                                        var options = ingredient.option;
-                                        for(var i2=0; i2<options.length; i2++){
-                                            var oneOption = options[i2];
-                                            $(this).append('<span class=\"additionalParam\" data-pizza_id=\"'+oneOption.pizza_id+'\" data-price=\"'+oneOption.price+'\" data-max_quantity="'+oneOption.max_quantity+'" data-weight=\"'+oneOption.weight+'\"></span>');
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-            }
-        };
-        pizzaQuery.foundation(pizzaQuery.pizza, $('.foundation .fundUl'));
-        pizzaQuery.drawСategoryMenu(pizzaQuery.categories, $('.ingredientMenu'));
-
-        $('.fundUl').one('click', function(){
-            $('.ingredientMenu li').show(100);
-        });
-
-        $('.foundation').one('click', function(){
+        $('.foundation').one('click', function() {
             $('.fundUl').show(100);
         });
         var myBool = false;
 
-        $('.foundation .fundUl li a').each(function(){
+        $('.foundation .fundUl li a').each(function() {
             $(this).on('click', function(){
                 pizzaQuery.plate = [];
                 var pizzaId = $(this).attr('data-id');
@@ -130,26 +81,33 @@
     <div class="constructor">
         <div class="texture">
             <div class="categories">
-                <ul class="ingredientMenu">
-                    <li class="foundation">
-                        <a href="#">Основа</a>
-                        <ul class="fundUl"></ul>
-                    </li>
-                    {{--@foreach ($jsonMenu as $category)--}}
-                    {{--<li>--}}
-                        {{--<a href="#">{{ $category->title }}</a>--}}
-                        {{--<ul>--}}
-                            {{--@foreach ($category->ingredients as $ingredient)--}}
-                                {{--<li>--}}
-                                    {{--<p>{{ $ingredient->title }}</p>--}}
-                                    {{--@foreach($ingredient->options as $option)--}}
-                                        {{--<p>{{ $option }}</p>--}}
-                                    {{--@endforeach--}}
-                                {{--</li>--}}
-                            {{--@endforeach--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--@endforeach--}}
+                <ul>
+                    @foreach ($items as $item)
+                        <li>
+                            <a href="#">{{ $item['title'] }}</a>
+                            <ul>
+                                @foreach ($item['ingredient'] as $ingredient)
+                                    <li>
+                                        <a href="#"
+                                        @if(!empty($ingredient['image']))data-image="{{ $ingredient['image'] }}" @endif
+                                        @if(isset($ingredient['base']))data-base="1" @endif
+                                        data-id="{{ $ingredient['id'] }}"
+                                        @if(isset($ingredient['size']))data-size="{{ $ingredient['size'] }}" @endif
+                                        @if(isset($ingredient['max_weight']))data-max-weight="{{ $ingredient['max_weight'] }}" @endif
+                                        @if (isset($ingredient['option']))
+                                            @foreach ($ingredient['option'] as $option)
+                                                @if(isset($option['pizza_id']))data-pizza-id="{{ $option['pizza_id'] }}" @endif
+                                                @if(isset($option['price']))data-price="{{ $option['price'] }}" @endif
+                                                @if(isset($option['max_quantity']))data-max-quantity="{{ $option['max_quantity'] }}" @endif
+                                                @if(isset($option['weight']))data-weight="{{ $option['weight'] }}" @endif
+                                            @endforeach
+                                        @endif
+                                        >{{ $ingredient['title'] }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
