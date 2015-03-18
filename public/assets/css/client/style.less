@@ -451,7 +451,6 @@ footer {
   margin: @indent * 2 0;
   padding: @indent * 3;
   .texture {
-    padding-top: @indent * 3;
     background: url(/assets/img/client/constructor_bg.png) top left;
   }
   .categories {
@@ -460,20 +459,72 @@ footer {
       .clearfix;
     }
     ul {
+      margin: 0 2px;
+      &:after {
+        .clearfix;
+      }
       li {
         float: left;
+        padding-bottom: 1px;
+        &.selected {
+          > a {
+            border-bottom: 4px solid #fff;
+          }
+        }
         a {
           display: block;
-          .nobottomborder;
-          height: 55px;
+          border-bottom: 4px solid #881719;
+          height: 49px;
           padding: 0 10px;
           line-height: 58px;
           color: #fff;
           text-transform: uppercase;
+          &:hover {
+            border-bottom: 4px solid #fff;
+          }
         }
-        ul {
-          display: none;
+        .submenu {
+          position: relative;
+          display: block;
+          ul {
+            display: none;
+            position: absolute;
+            left: 0;
+            background: #fff;
+            z-index: 1;
+          }
         }
+      }
+    }
+  }
+  .main {
+    padding: @indent * 3 @indent;
+    &:after {
+      .clearfix;
+    }
+    .presentation {
+      float: left;
+      background: url(/assets/img/client/plate.png) no-repeat center #fff;
+      background-size: cover;
+      width: 470px;
+      height: 470px;
+      padding: @indent;
+      .box-shadow;
+      position: relative;
+      margin-right: @indent * 2;
+    }
+    .structure {
+      background: #fff;
+      padding: @indent;
+      .box-shadow;
+      float: right;
+      width: 350px;
+      position: relative;
+      .clip {
+        background: url(/assets/img/client/clip.png) no-repeat top center;
+        width: 350px;
+        height: 44px;
+        margin-top: -30px;
       }
     }
   }

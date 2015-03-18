@@ -515,7 +515,6 @@ footer section.bottom section .dd {
   padding: 30px;
 }
 .constructor .texture {
-  padding-top: 30px;
   background: url(/assets/img/client/constructor_bg.png) top left;
 }
 .constructor .categories {
@@ -526,20 +525,76 @@ footer section.bottom section .dd {
   display: block;
   clear: both;
 }
+.constructor .categories ul {
+  margin: 0 2px;
+}
+.constructor .categories ul:after {
+  content: '';
+  display: block;
+  clear: both;
+}
 .constructor .categories ul li {
   float: left;
+  padding-bottom: 1px;
+}
+.constructor .categories ul li.selected > a {
+  border-bottom: 4px solid #fff;
 }
 .constructor .categories ul li a {
   display: block;
-  border-bottom: none !important;
-  height: 55px;
+  border-bottom: 4px solid #881719;
+  height: 49px;
   padding: 0 10px;
   line-height: 58px;
   color: #fff;
   text-transform: uppercase;
 }
-.constructor .categories ul li ul {
+.constructor .categories ul li a:hover {
+  border-bottom: 4px solid #fff;
+}
+.constructor .categories ul li .submenu {
+  position: relative;
+  display: block;
+}
+.constructor .categories ul li .submenu ul {
   display: none;
+  position: absolute;
+  left: 0;
+  background: #fff;
+  z-index: 1;
+}
+.constructor .main {
+  padding: 30px 10px;
+}
+.constructor .main:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.constructor .main .presentation {
+  float: left;
+  background: url(/assets/img/client/plate.png) no-repeat center #ffffff;
+  background-size: cover;
+  width: 470px;
+  height: 470px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin-right: 20px;
+}
+.constructor .main .structure {
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  float: right;
+  width: 350px;
+  position: relative;
+}
+.constructor .main .structure .clip {
+  background: url(/assets/img/client/clip.png) no-repeat top center;
+  width: 350px;
+  height: 44px;
+  margin-top: -30px;
 }
 .catalog .category h2 {
   background: #650506;
