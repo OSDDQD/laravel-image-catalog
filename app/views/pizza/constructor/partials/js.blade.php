@@ -1,11 +1,12 @@
 <script>
     var data = {{ $json }};
-
+    var options = {{ $options }};
     console.log(data);
 
     var pizza = {};
     pizza.check = [];
     pizza.plate = [];
+
 
     jQuery(window).load(function() {
 

@@ -36,11 +36,17 @@ class ConstructorController extends \BaseController {
                 $item[$key]['ingredient'][$ikey]['title'] = $ingredient->title;
                 $item[$key]['ingredient'][$ikey]['position'] = $ingredient->position;
                 $item[$key]['ingredient'][$ikey]['image'] = \URL::Route('preview.managed', ['object' => 'pizza-ingredient', 'mode' => 'constructor', 'format' => 'jpg', 'file' => $ingredient->image]);
-                foreach ($ingredient->options as $okey => $option) {
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['pizza_id'] = $option->pizza_id;
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['price'] = round($option->price, 0);
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['max_quantity'] = $option->max_quantity;
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['weight'] = round($option->weight);
+            }
+        }
+
+        foreach ($categories as $categoryid => $category) {
+            foreach ($category->ingredients as $ingredientid => $ingredient) {
+                foreach ($ingredient->options as $key => $value) {
+                    $option[$categoryid][$ingredientid][$key]['ingredient_id'] = $ingredient->id;
+                    $option[$categoryid][$ingredientid][$key]['pizza_id'] = $value->pizza_id;
+                    $option[$categoryid][$ingredientid][$key]['price'] = round($value->price, 0);
+                    $option[$categoryid][$ingredientid][$key]['max_quantity'] = $value->max_quantity;
+                    $option[$categoryid][$ingredientid][$key]['weight'] = round($value->weight);
                 }
             }
         }
@@ -48,11 +54,13 @@ class ConstructorController extends \BaseController {
 //        exit();
         $items = array_merge($pizza, $item);
         $json = json_encode(array_merge($pizza, $item), JSON_UNESCAPED_UNICODE);
+        $options = json_encode($option, JSON_UNESCAPED_UNICODE);
 
         return \View::make('pizza.constructor.index', [
             'pageTitle' => \Lang::get('pizzas.constructor.title'),
             'items' => $items,
             'json' => $json,
+            'options' => $options,
         ]);
     }
 

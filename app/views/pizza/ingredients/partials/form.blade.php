@@ -53,7 +53,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (Pizza\Pizza::with('translations')->get() as $pizza)
+                        @foreach (Pizza\Pizza::with('translations')->whereIsPrepared(false)->get() as $pizza)
                             <tr>
                                 <td>
                                     {{ $pizza->title }}
