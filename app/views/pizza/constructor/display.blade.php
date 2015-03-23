@@ -4,7 +4,7 @@
             <div class="categories">
                 <ul>
                     @foreach ($items as $item)
-                        <li>
+                        <li class="category">
                             <a href="#">{{ $item['title'] }}</a>
                             <div class="submenu">
                                 <ul>
@@ -17,6 +17,7 @@
                                                 @if(isset($ingredient['size']))data-size="{{ $ingredient['size'] }}" @endif
                                                 @if(isset($ingredient['max_weight']))data-max-weight="{{ $ingredient['max_weight'] }}" @endif
                                                 @if(isset($ingredient['price']))data-price="{{ $ingredient['price'] }}" @endif
+                                                @if(isset($ingredient['title']))data-title="{{ $ingredient['title'] }}" @endif
                                             >
                                                 <span>{{ $ingredient['title'] }}</span>
                                                 @if(isset($ingredient['size']))<span>{{ $ingredient['size'] }}</span>@endif
@@ -41,6 +42,7 @@
         </div>
     </div>
 </div>
+<?php var_dump($items); ?>
 {{--@if (isset($ingredient['option']))--}}
 {{--@foreach ($ingredient['option'] as $option)--}}
 {{--@if(isset($option['pizza_id']))data-pizza-id="{{ $option['pizza_id'] }}" @endif--}}
