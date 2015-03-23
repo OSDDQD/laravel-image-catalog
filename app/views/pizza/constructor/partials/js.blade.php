@@ -1,7 +1,7 @@
 <script>
     var data = {{ $json }};
     var options = {{ $options }};
-    console.log(data);
+    console.log(options);
 
     var pizza = {};
     pizza.check = [];
@@ -62,7 +62,22 @@
 
             $(this).on('click', function(){
                 var dataId = $(this).attr('data-id');
-                console.log(dataId);
+                for(var one in options){
+                    var option = options[one];
+                    if(option.ingredient_id == dataId){
+
+                        var checkId = pizza.check[0].id;
+                        var pizzaId = option.pizza_id;
+                        if(pizzaId == checkId){
+                            console.log(option);
+                            var price = option.price;
+                            var weight = option.weight;
+                            pizza.plate.push({'id': dataId});
+                            console.log(pizza.plate);
+                        }
+                    }
+
+                }
             });
         });
 
