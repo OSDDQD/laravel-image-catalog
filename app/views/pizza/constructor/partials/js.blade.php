@@ -1,12 +1,6 @@
 <script>
     var data = {{ $json }};
-    var array = $.map(data, function(value, index) {
-        return [value];
-    });
-    console.log(array);
-    for (var key in array) {
-        console.log(array[key]);
-    }
+    var options = {{ $options }};
     jQuery(window).load(function() {
 
         $(".categories ul > li").click(function (e) { // binding onclick
