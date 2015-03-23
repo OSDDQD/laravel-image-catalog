@@ -1,3 +1,4 @@
+{{ $options }}
 <div class="wrapper">
     <div class="constructor">
         <div class="texture">
