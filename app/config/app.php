@@ -236,10 +236,12 @@ return array(
             '_class' => 'Pizza\Pizza',
             'preview' => [150, 150],
             'frontend' => [195, 170],
+            'constructor' => [400, 400],
         ],
         'pizza-ingredient' => [
             '_class' => 'Pizza\Ingredient',
             'preview' => [150, 150],
+            'constructor' => [400, 400],
         ],
         'slider' => [
             '_class' => 'Slider\Image',

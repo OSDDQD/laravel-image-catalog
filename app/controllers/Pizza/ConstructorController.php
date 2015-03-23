@@ -19,9 +19,10 @@ class ConstructorController extends \BaseController {
                 'id' => $value->id,
                 'title' => $value->title,
                 #'position' => $value->position,
-                'max_weight' => $value->max_weight,
-                'size' => $value->size,
-                'image' => $value->image,
+                'max_weight' => round($value->max_weight),
+                'size' => round($value->size),
+                'image' => \URL::Route('preview.managed', ['object' => 'pizza', 'mode' => 'constructor', 'format' => 'jpg', 'file' => $value->image]),
+                'price' => round($value->price),
                 'base' => true,
             ];
         }
@@ -33,13 +34,13 @@ class ConstructorController extends \BaseController {
             foreach ($value->ingredients as $ikey => $ingredient) {
                 $item[$key]['ingredient'][$ikey]['id'] = $ingredient->id;
                 $item[$key]['ingredient'][$ikey]['title'] = $ingredient->title;
-                #$items[$key]['ingredient'][$ikey]['position'] = $item->position;
-                $item[$key]['ingredient'][$ikey]['image'] = $ingredient->image;
+                $item[$key]['ingredient'][$ikey]['position'] = $ingredient->position;
+                $item[$key]['ingredient'][$ikey]['image'] = \URL::Route('preview.managed', ['object' => 'pizza-ingredient', 'mode' => 'constructor', 'format' => 'jpg', 'file' => $ingredient->image]);
                 foreach ($ingredient->options as $okey => $option) {
                     $item[$key]['ingredient'][$ikey]['option'][$okey]['pizza_id'] = $option->pizza_id;
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['price'] = $option->price;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['price'] = round($option->price, 0);
                     $item[$key]['ingredient'][$ikey]['option'][$okey]['max_quantity'] = $option->max_quantity;
-                    $item[$key]['ingredient'][$ikey]['option'][$okey]['weight'] = $option->weight;
+                    $item[$key]['ingredient'][$ikey]['option'][$okey]['weight'] = round($option->weight);
                 }
             }
         }

@@ -533,14 +533,14 @@ footer section.bottom section .dd {
   display: block;
   clear: both;
 }
-.constructor .categories ul li {
+.constructor .categories ul > li {
   float: left;
   padding-bottom: 1px;
 }
-.constructor .categories ul li.selected > a {
+.constructor .categories ul > li.selected a {
   border-bottom: 4px solid #fff;
 }
-.constructor .categories ul li a {
+.constructor .categories ul > li a {
   display: block;
   border-bottom: 4px solid #881719;
   height: 49px;
@@ -549,19 +549,41 @@ footer section.bottom section .dd {
   color: #fff;
   text-transform: uppercase;
 }
-.constructor .categories ul li a:hover {
+.constructor .categories ul > li a:hover {
   border-bottom: 4px solid #fff;
 }
-.constructor .categories ul li .submenu {
+.constructor .categories ul > li .submenu {
   position: relative;
   display: block;
+  margin-top: 1px;
+  z-index: 1;
 }
-.constructor .categories ul li .submenu ul {
+.constructor .categories ul > li .submenu ul {
   display: none;
   position: absolute;
   left: 0;
   background: #fff;
-  z-index: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.constructor .categories ul > li .submenu ul li {
+  width: auto;
+  float: none;
+}
+.constructor .categories ul > li .submenu ul li a {
+  width: auto;
+  height: auto;
+  padding: 5px 10px;
+  color: #000;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.constructor .categories ul > li .submenu ul li a span {
+  display: inline-block;
+  min-width: 100px;
+  margin-right: 10px;
+}
+.constructor .categories ul > li .submenu ul li a span:last-child {
+  margin-right: 0;
 }
 .constructor .main {
   padding: 30px 10px;

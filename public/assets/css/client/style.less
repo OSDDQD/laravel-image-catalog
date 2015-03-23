@@ -463,11 +463,11 @@ footer {
       &:after {
         .clearfix;
       }
-      li {
+      > li {
         float: left;
         padding-bottom: 1px;
         &.selected {
-          > a {
+          a {
             border-bottom: 4px solid #fff;
           }
         }
@@ -486,12 +486,34 @@ footer {
         .submenu {
           position: relative;
           display: block;
+          margin-top: 1px;
+          z-index: 1;
           ul {
             display: none;
             position: absolute;
             left: 0;
             background: #fff;
-            z-index: 1;
+            .box-shadow;
+            li {
+              width: auto;
+              float: none;
+              a {
+                width: auto;
+                height: auto;
+                padding: @indent / 2 @indent;
+                color: #000;
+                line-height: normal;
+                text-transform: capitalize;
+                span {
+                  display: inline-block;
+                  min-width: 100px;
+                  margin-right: @indent;
+                  &:last-child {
+                    margin-right: 0;
+                  }
+                }
+              }
+            }
           }
         }
       }
