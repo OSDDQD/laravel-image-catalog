@@ -37,7 +37,18 @@
                 </div>
                 <div class="structure">
                     <div class="clip"></div>
-                    <div id="list"></div>
+                    <div id="list">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <div class="total_weight">
+                        <p>Общий вес: <span></span></p>
+                    </div>
+                    <div class="total_price">
+                        <p>Общая цена: <span></span></p>
+                    </div>
+                    <button class="sendTotal">Отправить</button>
                 </div>
             </div>
         </div>

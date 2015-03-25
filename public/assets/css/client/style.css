@@ -819,3 +819,21 @@ footer section.bottom section .dd {
   color: #650506;
   border: 2px solid #650506;
 }
+
+#list ul li span{
+    margin-right: 10px;
+}
+#list{
+    margin-bottom: 30px;
+}
+#list ul li span.x{
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+    background: #c6c6c6;
+    cursor: pointer;
+    color: #000;
+}
+.sendTotal{
+    margin-top: 20px;
+}
