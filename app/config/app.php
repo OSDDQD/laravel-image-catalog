@@ -26,9 +26,9 @@ return array(
 	|
 	*/
 
-	'url' => 'http://pizza.uz',
+	'url' => 'http://catalog.local',
 
-    'site_title' => 'Pizza',
+    'site_title' => 'Catalog Unesco',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -64,46 +64,9 @@ class HomeController extends BaseController {
             $params['status']['message'] = Lang::get('manager.dashboard.directories_access.status.' . $params['status']['message']);
         }
 
-        // Statistics
-        $stats = [];
-        $result = DB::select(DB::raw("
-            SELECT (
-                SELECT COUNT(id)
-                    FROM materials
-                    WHERE
-                      type = '" . Material::TYPE_PAGE . "'
-            ) AS material, (
-                SELECT COUNT(id)
-                    FROM materials
-                    WHERE
-                      type = '" . Material::TYPE_NEWS . "'
-            ) AS news, (
-                SELECT COUNT(id)
-                    FROM materials
-                    WHERE
-                      type = '" . Material::TYPE_ACTION . "'
-            ) AS action, (
-                SELECT COUNT(id)
-                    FROM materials
-                    WHERE
-                      type = '" . Material::TYPE_ANNOUNCEMENT . "'
-            ) AS announcement, (
-                SELECT COUNT(id)
-                    FROM users
-            ) AS user
-        "));
-        $row = current($result);
-        foreach ($row as $key => $value) {
-            $stats[] = [
-                'name' => Lang::choice("entities.$key.inf", 2),
-                'amount' => $value,
-            ];
-        }
-
         return View::make('manager.home', [
             'serverInfo' => $serverInfo,
             'dirs' => $dirs,
-            'stats' => $stats,
         ]);
     }
 

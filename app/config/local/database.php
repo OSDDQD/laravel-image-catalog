@@ -23,9 +23,9 @@ return array(
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'pizza',
-            'username'  => 'pizza',
-            'password'  => 'pizzapass',
+            'database'  => 'catalog',
+            'username'  => 'catalog',
+            'password'  => '916648',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

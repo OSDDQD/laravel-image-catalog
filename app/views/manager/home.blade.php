@@ -41,35 +41,6 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> {{ Lang::get('manager.dashboard.stats._title') }}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>{{ Lang::get('manager.dashboard.stats.item') }}</th>
-                                <th>{{ Lang::get('manager.dashboard.stats.amount') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for ($i = 0; $i < count($stats); $i++)
-                            <tr>
-                                <td>{{ $i + 1 }}</td>
-                                <td>{{ mb_convert_case($stats[$i]['name'], MB_CASE_TITLE, 'UTF-8') }}</td>
-                                <td>{{ $stats[$i]['amount'] }}</td>
-                            </tr>
-                            @endfor
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 @stop

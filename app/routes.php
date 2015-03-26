@@ -39,7 +39,7 @@ if ($locale and in_array($locale, Config::get('app.locales')))
 // Home
 Route::get('/', [
     'as' => 'home',
-    'uses' => 'Structure\PagesController@home',
+    'uses' => 'Catalog\Category@home',
 ]);
 
 // Preview
@@ -113,20 +113,11 @@ Route::get('pages/display/{slug}', [
     'uses' => 'Structure\PagesController@display',
 ]);
 
-// Archive
-Route::get('archive/{type}', [
-    'as' => 'archive',
-    'uses' => 'MaterialsController@archive',
-]);
-
 // Materials
 Route::get('news/display/{id}', [
     'as' => 'materials.news.display',
     'uses' => 'MaterialsController@display'
 ]);
-
-// Guestbook
-Route::resource('guestbook', 'GuestbookController', ['only' => ['store']]);
 
 // Feedback
 Route::post('feedback/send', [
@@ -134,25 +125,6 @@ Route::post('feedback/send', [
     'uses' => 'FeedbackController@send',
 ]);
 
-
-// Speedtest
-Route::get('speed', [
-    'as' => 'speedtest',
-    function() {
-        return View::make('pages.speedtest');
-    }
-]);
-
-// Pizza Constructor
-Route::get('constructor', [
-    'as' => 'pizza.constructor',
-    'uses' => 'Pizza\ConstructorController@index',
-]);
-
-Route::get('menu', [
-    'as' => 'menu',
-    'uses' => 'Menu\HomeController@index',
-]);
 // ===============================================
 // MANAGER SECTION ===============================
 // ===============================================
@@ -234,38 +206,6 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
 
     });
 
-    // Menu
-    Route::group(['prefix' => 'menu', 'namespace' => 'Menu'], function() {
-        // Menu Categories
-        Route::resource('categories', 'CategoriesController', ['except' => ['show', 'destroy']]);
-        Route::delete('categories/destroy', [
-            'as' => 'manager.menu.categories.destroy',
-            'uses' => 'CategoriesController@destroy'
-        ]);
-
-        // Menu Items
-        Route::resource('items', 'ItemsController', ['except' => ['index', 'create', 'show', 'destroy']]);
-        Route::get('categories/{id}/items', [
-            'as' => 'manager.menu.items.index',
-            'uses' => 'ItemsController@index',
-        ]);
-        Route::get('categories/{categoryId}/items/create', [
-            'as' => 'manager.menu.items.create',
-            'uses' => 'ItemsController@create'
-        ])->where(['categoryId' => '\d+']);
-        Route::delete('items/destroy', [
-            'as' => 'manager.menu.items.destroy',
-            'uses' => 'ItemsController@destroy'
-        ]);
-    });
-
-    // Guestbook
-    Route::resource('guestbook', 'GuestbookController', ['only' => ['index', 'edit', 'update']]);
-    Route::delete('guestbook/destroy', [
-        'as' => 'manager.guestbook.destroy',
-        'uses' => 'GuestbookController@destroy'
-    ]);
-
     // Users
     Route::resource('users', 'UsersController', ['except' => ['destroy']]);
     Route::delete('users/destroy', [
@@ -281,32 +221,6 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
     Route::put('settings', [
         'as' => 'manager.settings.update',
         'uses' => 'SettingsController@update'
-    ]);
-
-    // Editor
-    Route::post('editor/components', [
-        'as' => 'manager.editor.components',
-        'uses' => 'EditorController@components'
-    ]);
-    Route::post('editor/modules', [
-        'as' => 'manager.editor.modules',
-        'uses' => 'EditorController@modules'
-    ]);
-    Route::post('editor/galleryalbums', [
-        'as' => 'manager.editor.galleryalbums',
-        'uses' => 'EditorController@galleryalbums'
-    ]);
-    Route::post('editor/galleryphotos', [
-        'as' => 'manager.editor.galleryphotos',
-        'uses' => 'EditorController@galleryphotos'
-    ]);
-    Route::post('editor/videoalbums', [
-        'as' => 'manager.editor.videoalbums',
-        'uses' => 'EditorController@videoalbums'
-    ]);
-    Route::post('editor/videoclips', [
-        'as' => 'manager.editor.videoclips',
-        'uses' => 'EditorController@videoclips'
     ]);
 
     // Finder

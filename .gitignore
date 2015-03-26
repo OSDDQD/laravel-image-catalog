@@ -11,3 +11,6 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+/app/controllers/Pizza
+/app/controllers/Menu
+/app/controllers/Structure
