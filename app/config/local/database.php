@@ -23,8 +23,8 @@ return array(
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'catalog',
-            'username'  => 'catalog',
+            'database'  => 'unesco',
+            'username'  => 'unesco',
             'password'  => '916648',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',

@@ -39,7 +39,7 @@ if ($locale and in_array($locale, Config::get('app.locales')))
 // Home
 Route::get('/', [
     'as' => 'home',
-    'uses' => 'Catalog\Category@home',
+    'uses' => 'Catalog\Category@index',
 ]);
 
 // Preview
@@ -47,10 +47,10 @@ Route::get('preview/managed/{object}/{mode}-{format}-{file}', [
     'as' => 'preview.managed',
     'uses' => 'PreviewController@managed'
 ]);
-//Route::get('preview/{object}-{id}-{mode}.{format}', [
-//    'as' => 'preview.uploaded',
-//    'uses' => 'PreviewController@uploaded'
-//]);
+Route::get('preview/{object}-{id}-{mode}.{format}', [
+    'as' => 'preview.uploaded',
+    'uses' => 'PreviewController@uploaded'
+]);
 
 // RSS
 Route::get('rss/{locale?}', [
@@ -106,18 +106,6 @@ Route::post('password/reset/{token}', [
     'uses' => 'RemindersController@postReset',
 ]);
 Route::resource('sessions', 'SessionsController', ['only' => ['store', 'destroy']]);
-
-// Pages
-Route::get('pages/display/{slug}', [
-    'as' => 'pages.display',
-    'uses' => 'Structure\PagesController@display',
-]);
-
-// Materials
-Route::get('news/display/{id}', [
-    'as' => 'materials.news.display',
-    'uses' => 'MaterialsController@display'
-]);
 
 // Feedback
 Route::post('feedback/send', [
