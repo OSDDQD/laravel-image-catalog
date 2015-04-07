@@ -17,6 +17,7 @@ try {
         if (Auth::user()->hasRole('master-admin')) {
             Menu::make('ManagerSidebarMenu', function ($menu) {
                 $menu->add('<i class="fa fa-fw fa-home"></i> ' . Lang::get('manager.menu.home'), ['route' => 'manager.home']);
+                $menu->add('<i class="fa fa-fw fa-book"></i> ' . Lang::get('manager.menu.catalog'), ['route' => 'manager.catalog.categories.index']);
                 $menu->add('<i class="fa fa-fw fa-users"></i> ' . Lang::get('manager.menu.users'), ['route' => 'manager.users.index']);
                 $menu->add('<i class="fa fa-fw fa-cogs"></i> ' . Lang::get('manager.menu.settings'), ['route' => 'manager.settings.index']);
                 $menu->add('<i class="fa fa-fw fa-sitemap"></i> ' . Lang::get('manager.menu.site'), ['route' => 'home']);

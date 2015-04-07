@@ -1,7 +1,8 @@
 <?php
+
 namespace Catalog;
 
-use Basic\PositionedTrait;
+use \Basic\PositionedTrait;
 use \Basic\TranslatableTrait;
 use \Basic\UploadableInterface;
 use \Basic\UploadableTrait;
@@ -59,8 +60,8 @@ class Category extends \Eloquent implements UploadableInterface {
             }
         });
         static::deleted(function(Category $entity) {
-            $entity->alterSiblingsPosition('decrement');
             $entity->removeImage('image');
+            $entity->alterSiblingsPosition('decrement');
         });
     }
 

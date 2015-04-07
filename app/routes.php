@@ -125,71 +125,44 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
         'uses' => 'HomeController@manager',
     ]);
 
-    // Materials
-    Route::resource('materials', 'MaterialsController', ['except' => ['index', 'show', 'destroy']]);
-    Route::get('materials/{type?}', [
-        'as' => 'manager.materials.index',
-        'uses' => 'MaterialsController@index'
-    ]);
-    Route::delete('materials/destroy', [
-        'as' => 'manager.materials.destroy',
-        'uses' => 'MaterialsController@destroy'
-    ]);
+    // Catalog
+    Route::group(['prefix' => 'catalog', 'namespace' => 'Catalog'], function() {
 
-    // Structure
-    Route::group(['prefix' => 'structure', 'namespace' => 'Structure'], function() {
-        // Menu
-        Route::resource('menus', 'MenusController', ['except' => ['show', 'destroy']]);
-        Route::delete('menus/destroy', [
-            'as' => 'manager.structure.menus.destroy',
-            'uses' => 'MenusController@destroy'
+        // Catalog Categories
+        Route::resource('categories', 'CategoryController', ['except' => ['show', 'destroy']]);
+        Route::delete('categories/destroy', [
+            'as' => 'manager.catalog.categories.destroy',
+            'uses' => 'CategoryController@destroy'
         ]);
 
-        // Pages
-        Route::resource('pages', 'PagesController', ['except' => ['index', 'create', 'show', 'destroy']]);
-        Route::get('menus/{id}/pages', [
-            'as' => 'manager.structure.pages.index',
-            'uses' => 'PagesController@index',
+        // Albums
+        Route::resource('albums', 'AlbumController', ['except' => ['index', 'create', 'show', 'destroy']]);
+        Route::get('categories/{id}/albums', [
+            'as' => 'manager.catalog.albums.index',
+            'uses' => 'AlbumController@index',
         ]);
-        Route::get('menus/{menuId}/pages/create', [
-            'as' => 'manager.structure.pages.create',
-            'uses' => 'PagesController@create'
-        ])->where(['menuId' => '\d+']);
-        Route::delete('pages/destroy', [
-            'as' => 'manager.structure.pages.destroy',
-            'uses' => 'PagesController@destroy'
-        ]);
-    });
-
-    // Pizza
-    Route::group(['prefix' => 'pizza', 'namespace' => 'Pizza'], function() {
-        // Pizzas
-        Route::resource('pizzas', 'PizzasController', ['except' => ['show', 'destroy']]);
-        Route::delete('pizzas/destroy', [
-            'as' => 'manager.pizza.pizzas.destroy',
-            'uses' => 'PizzasController@destroy'
-        ]);
-
-        // Ingredients Categories
-        Route::resource('icategories', 'IngredientsCategoriesController', ['except' => ['show', 'destroy']]);
-        Route::delete('icategories/destroy', [
-            'as' => 'manager.pizza.icategories.destroy',
-            'uses' => 'IngredientsCategoriesController@destroy'
-        ]);
-
-        // Ingredients
-        Route::resource('ingredients', 'IngredientsController', ['except' => ['index', 'create', 'show', 'destroy']]);
-        Route::get('icategories/{id}/ingredients', [
-            'as' => 'manager.pizza.ingredients.index',
-            'uses' => 'IngredientsController@index',
-        ]);
-        Route::get('icategories/{categoryId}/ingredients/create', [
-            'as' => 'manager.pizza.ingredients.create',
-            'uses' => 'IngredientsController@create'
+        Route::get('categories/{categoryId}/albums/create', [
+            'as' => 'manager.catalog.album.create',
+            'uses' => 'AlbumController@create'
         ])->where(['categoryId' => '\d+']);
-        Route::delete('ingredients/destroy', [
-            'as' => 'manager.pizza.ingredients.destroy',
-            'uses' => 'IngredientsController@destroy'
+        Route::delete('albums/destroy', [
+            'as' => 'manager.catalog.albums.destroy',
+            'uses' => 'AlbumController@destroy'
+        ]);
+
+        //Images
+        Route::resource('images', 'ImageController', ['except' => ['index', 'create', 'show', 'destroy']]);
+        Route::get('albums/{id}/images', [
+            'as' => 'manager.catalog.images.index',
+            'uses' => 'ImageController@index',
+        ]);
+        Route::get('albums/{albumId}/images/create', [
+            'as' => 'manager.catalog.image.create',
+            'uses' => 'ImageController@create'
+        ])->where(['albumId' => '\d+']);
+        Route::delete('images/destroy', [
+            'as' => 'manager.catalog.images.destroy',
+            'uses' => 'ImageController@destroy'
         ]);
 
     });

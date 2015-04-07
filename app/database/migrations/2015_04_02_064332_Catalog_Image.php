@@ -21,13 +21,13 @@ class CatalogImage extends Migration {
 		Schema::create('catalog_images_translations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('catalog_image_id')->unsigned();
+			$table->integer('image_id')->unsigned();
 			$table->string('title');
 			$table->string('description');
 			$table->string('locale', 3)->index();
 
-			$table->unique(['catalog_image_id', 'locale'], 'catalog_image_id_locale_unique');
-			$table->foreign('catalog_image_id', 'catalog_image_id_foreign')
+			$table->unique(['image_id', 'locale'], 'image_id_locale_unique');
+			$table->foreign('image_id', 'image_id_foreign')
 			      ->references('id')->on('catalog_images')
 			      ->onDelete('cascade');
 		});

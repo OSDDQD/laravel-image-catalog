@@ -49,7 +49,7 @@ return array(
         'ingredients' => 'Ингредиенты',
         'logout' => 'Выйти',
         'materials' => 'Материалы',
-        'pizzas' => 'Пицца',
+        'catalog' => 'Каталог',
         'menu' => 'Меню',
         'profile' => 'Профиль',
         'settings' => 'Настройки',

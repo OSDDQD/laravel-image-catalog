@@ -1,11 +1,11 @@
 <?php
 namespace Catalog;
 
-class Image extends \BaseController {
+class AlbumController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /catalog/image
+	 * GET /catalog/album
 	 *
 	 * @return Response
 	 */
@@ -16,7 +16,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /catalog/image/create
+	 * GET /catalog/album/create
 	 *
 	 * @return Response
 	 */
@@ -27,7 +27,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /catalog/image
+	 * POST /catalog/album
 	 *
 	 * @return Response
 	 */
@@ -38,7 +38,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /catalog/image/{id}
+	 * GET /catalog/album/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -50,7 +50,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /catalog/image/{id}/edit
+	 * GET /catalog/album/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -62,7 +62,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /catalog/image/{id}
+	 * PUT /catalog/album/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -74,7 +74,7 @@ class Image extends \BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /catalog/image/{id}
+	 * DELETE /catalog/album/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

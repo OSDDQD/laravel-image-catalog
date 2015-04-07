@@ -21,13 +21,13 @@ class CatalogCategory extends Migration {
 		Schema::create('catalog_categories_translations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('catalog_category_id')->unsigned();
+			$table->integer('category_id')->unsigned();
 			$table->string('title');
 			$table->string('description');
 			$table->string('locale', 3)->index();
 
-			$table->unique(['catalog_category_id', 'locale'], 'catalog_category_id_locale_unique');
-			$table->foreign('catalog_category_id', 'catalog_category_id_foreign')
+			$table->unique(['category_id', 'locale'], 'category_id_locale_unique');
+			$table->foreign('category_id', 'category_id_foreign')
 			      ->references('id')->on('catalog_categories')
 			      ->onDelete('cascade');
 		});

@@ -21,13 +21,13 @@ class CatalogAlbum extends Migration {
 		Schema::create('catalog_albums_translations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('catalog_album_id')->unsigned();
+			$table->integer('album_id')->unsigned();
 			$table->string('title');
 			$table->string('description');
 			$table->string('locale', 3)->index();
 
-			$table->unique(['catalog_album_id', 'locale'], 'catalog_album_id_locale_unique');
-			$table->foreign('catalog_album_id', 'catalog_album_id_foreign')
+			$table->unique(['album_id', 'locale'], 'album_id_locale_unique');
+			$table->foreign('album_id', 'album_id_foreign')
 			      ->references('id')->on('catalog_albums')
 			      ->onDelete('cascade');
 		});

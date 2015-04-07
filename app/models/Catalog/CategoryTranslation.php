@@ -2,7 +2,7 @@
 
 namespace Catalog;
 
-class CatalogCategoryTranslation extends \Eloquent {
+class CategoryTranslation extends \Eloquent {
 
     protected static $rules = [
         'title' => 'required',

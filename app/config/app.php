@@ -222,31 +222,11 @@ return array(
     'incoming_root' => app_path().'/uploads/incoming',
 
     'preview_transform' => [
-        'material' => [
-            '_class' => 'Material',
-            'news' => [100, 200],
-            'preview' => [80, 60],
-        ],
-        'menu-item' => [
-            '_class' => 'Menu\Item',
-            'preview' => [150, 150],
-            'frontend' => [195, 170],
-        ],
-        'pizza' => [
-            '_class' => 'Pizza\Pizza',
+        'category' => [
+            '_class' => 'Catalog\Category',
             'preview' => [150, 150],
             'frontend' => [195, 170],
             'constructor' => [400, 400],
-        ],
-        'pizza-ingredient' => [
-            '_class' => 'Pizza\Ingredient',
-            'preview' => [150, 150],
-            'constructor' => [400, 400],
-        ],
-        'slider' => [
-            '_class' => 'Slider\Image',
-            'managertable' => [123, 43],
-            'topimage' => [990, 347],
         ],
     ],
 

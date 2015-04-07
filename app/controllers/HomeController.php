@@ -37,16 +37,12 @@ class HomeController extends BaseController {
 
         // Directories access
         $dirs = [
+            Config::get('app.uploads_root') . '/catalog' => [
+                'label' => '/catalog',
+                'status' => [],
+            ],
             Config::get('app.uploads_root') . '/incoming' => [
                 'label' => '/incoming',
-                'status' => [],
-            ],
-            Config::get('app.uploads_root') . '/materials' =>  [
-                'label' => '/materials',
-                'status' => [],
-            ],
-            Config::get('app.uploads_root') . '/sliders' =>  [
-                'label' => '/sliders',
                 'status' => [],
             ],
         ];

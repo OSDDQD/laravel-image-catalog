@@ -1,7 +1,8 @@
 <?php
+
 namespace Catalog;
 
-class Category extends \BaseController {
+class CategoryController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -15,16 +16,16 @@ class Category extends \BaseController {
 
 		$categories = Category::with('translations')->orderBy('position')->paginate($itemsOnMenu);
 		foreach ($categories as $category) {
-			$category->title = '<a href="' . \URL::Route('manager.categories.index', ['categoryId' => $category->id]) . '">' . $category->title . '</a>';
+			$category->title = '<a href="' . \URL::Route('manager.catalog.categories.index', ['categoryId' => $category->id]) . '">' . $category->title . '</a>';
 		}
 		unset($itemsOnMenu);
 
 		return \View::make('manager.index', [
 			'entities' => $categories,
 			'fields' => ['title', 'is_visible'],
-			'actions' => ['show' => ['route' => 'manager.categories.index'], 'edit'],
+			'actions' => ['show' => ['route' => 'manager.catalog.categories.index'], 'edit'],
 			'slug' => 'category',
-			'routeSlug' => 'categories',
+			'routeSlug' => 'catalog.categories',
 			'fieldAsIndex' => 'position',
 		]);
 	}
@@ -40,7 +41,7 @@ class Category extends \BaseController {
 		return \View::make('manager.create', [
 			'entity' => new Category(),
 			'slug' => 'category',
-			'routeSlug' => 'categories',
+			'routeSlug' => 'catalog.categories',
 		]);
 	}
 
@@ -56,10 +57,17 @@ class Category extends \BaseController {
 		if (!$category->save()) {
 			return \Redirect::back()->withInput()->withErrors($category->getErrors());
 		}
-
+        
+        if (\Input::file('image')) {
+            if (!$category->uploadImage(\Input::file('image'), 'image')) {
+                $category->delete();
+                return \Redirect::back()->withInput()->withErrors($category->getErrors());
+            }
+        }
+        
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
-		                                           ' <a href="' . \URL::Route('manager.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
-		return \Redirect::route('manager.categories.index');
+		                                           ' <a href="' . \URL::Route('manager.catalog.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.catalog.categories.index');
 	}
 
 	/**
@@ -87,8 +95,8 @@ class Category extends \BaseController {
 
 		return \View::make('manager.edit', [
 			'entity' => $category,
-			'slug' => 'menu',
-			'routeSlug' => 'categories',
+			'slug' => 'catalog',
+			'routeSlug' => 'catalog.categories',
 		]);
 	}
 
@@ -104,14 +112,29 @@ class Category extends \BaseController {
 		$category = Category::find($id);
 		if (!$category)
 			return \Response::View('errors.404', [], 404);
+        
+        if (!$category->update(\Input::except(['image_delete', 'image']))) {
+            return \Redirect::back()->withInput()->withErrors($category->getErrors());
+        }
 
+        $imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+        $imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+        if ($imageDelete) {
+            $category->removeImage('image');
+        } elseif ($imageFile) {
+            if (!$category->uploadImage($imageFile, 'image')) {
+                return \Redirect::back()->withInput()->withErrors($category->getErrors());
+            }
+        }
+        
 		if (!$category->update(\Input::all())) {
 			return \Redirect::back()->withInput()->withErrors($category->getErrors());
 		}
 
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
-		                                           ' <a href="' . \URL::Route('manager.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
-		return \Redirect::route('manager.categories.index');
+		                                           ' <a href="' . \URL::Route('manager.catalog.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.catalog.categories.index');
 	}
 
 	/**
@@ -121,17 +144,17 @@ class Category extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		$ids = \Input::get('id');
-		foreach ($ids as $id) {
-			$category = Category::find($id);
-			if (!$category)
-				continue;
-			Category::destroy($id);
-		}
-		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
-		return \Redirect::back();
-	}
+        $ids = \Input::get('id');
+        foreach ($ids as $id) {
+            $category = Category::find($id);
+            if (!$category)
+                continue;
+            Category::destroy($id);
+        }
+        \Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
+        return \Redirect::back();
+    }
 
 }
