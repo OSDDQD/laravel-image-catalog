@@ -59,7 +59,6 @@ return array(
     ],
     'parent_page' => 'Родительский элемент',
     'password' => 'Пароль',
-    'pizza' => 'Пицца',
     'position' => 'Порядковый номер',
     'price' => 'Цена',
     'remove_uploaded_image' => 'Удалить загруженное изображение',
@@ -88,6 +87,7 @@ return array(
     'username' => 'Логин',
     'weight' => 'Вес',
     'year' => 'Год',
+    'album' => 'Альбом',
 
 
 );

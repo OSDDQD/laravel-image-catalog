@@ -31,7 +31,7 @@ trait TranslatableTrait {
         return $saved;
     }
 
-    public function save(array $rules = array(), array $customMessages = array(), array $options = array(), Closure $beforeSave = null, Closure $afterSave = null)
+    public function save(array $rules = array(), array $customMessages = array(), array $options = array(), \Closure $beforeSave = null, \Closure $afterSave = null)
     {
         $existsBeforeSave = $this->exists;
         if ($this->translatableSave($options)) {

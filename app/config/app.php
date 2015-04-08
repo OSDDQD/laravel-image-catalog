@@ -225,8 +225,14 @@ return array(
         'category' => [
             '_class' => 'Catalog\Category',
             'preview' => [150, 150],
-            'frontend' => [195, 170],
-            'constructor' => [400, 400],
+        ],
+        'album' => [
+            '_class' => 'Catalog\Album',
+            'preview' => [150, 150],
+        ],
+        'image' => [
+            '_class' => 'Catalog\Image',
+            'preview' => [150, 150],
         ],
     ],
 

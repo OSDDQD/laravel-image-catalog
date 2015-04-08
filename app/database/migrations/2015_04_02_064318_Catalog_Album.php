@@ -14,8 +14,10 @@ class CatalogAlbum extends Migration {
 	{
 		Schema::create('catalog_albums', function(Blueprint $table) {
 			$table->increments('id');
+            $table->tinyInteger('position')->unsigned();
 			$table->boolean('is_visible')->nullable();
-			$table->string('cover')->nullable();
+			$table->string('image')->nullable();
+            $table->tinyInteger('category_id')->unsigned();
 		});
 
 		Schema::create('catalog_albums_translations', function(Blueprint $table)

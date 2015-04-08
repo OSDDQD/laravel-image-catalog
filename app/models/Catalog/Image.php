@@ -14,8 +14,6 @@ class Image extends \Eloquent implements UploadableInterface {
         UploadableTrait,
         PositionedTrait;
 
-    public $id;
-
     /**
      * The table associated with the model.
      *
@@ -28,7 +26,7 @@ class Image extends \Eloquent implements UploadableInterface {
      *
      * @var array
      */
-    protected $fillable = ['position', 'album_id', 'title', 'description', 'is_visible'];
+    protected $fillable = ['position', 'album_id', 'title', 'description', 'is_visible', 'image', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are translatable.
@@ -36,13 +34,6 @@ class Image extends \Eloquent implements UploadableInterface {
      * @var array
      */
     public $translatedAttributes = ['title', 'description'];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     protected static $rules = [];
 
@@ -66,7 +57,7 @@ class Image extends \Eloquent implements UploadableInterface {
 
         static::deleted(function(Image $entity) {
             $entity->alterSiblingsPosition('decrement');
-            $entity->removeImage('id');
+            $entity->removeImage('image');
         });
     }
 
@@ -132,34 +123,11 @@ class Image extends \Eloquent implements UploadableInterface {
         $albumId = $useOriginal ? $this->original['album_id'] : $this->album_id;
         $position = $useOriginal ? $this->original['position'] : $this->position;
 
-        $query = Album::whereAlbumId($albumId);
+        $query = Image::whereAlbumId($albumId);
         $query->where('position', $condition, $position)->where('id', '!=', $this->id);
         $result = $query->get();
         foreach($result as $row)
             $row->$method('position');
-    }
-
-    public function getUploadedFilename($ext = null)
-    {
-        $filename = $this->getUploadSlug() . '-' . (int) $this->id;
-        if ($ext)
-            $filename .= '.' . $ext;
-        return $filename;
-    }
-
-    public function removeImage()
-    {
-        $fs = new Filesystem();
-        $file = self::getUploadPath() . '/' . $this->getUploadedFileName('jpg');
-
-        try {
-            $fs->delete($file);
-        }
-        catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
     }
 
 }

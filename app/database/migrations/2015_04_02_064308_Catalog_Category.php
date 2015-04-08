@@ -14,6 +14,7 @@ class CatalogCategory extends Migration {
 	{
 		Schema::create('catalog_categories', function(Blueprint $table) {
 			$table->increments('id');
+            $table->tinyInteger('position')->unsigned();
 			$table->boolean('is_visible')->nullable();
 			$table->string('image')->nullable();
 		});

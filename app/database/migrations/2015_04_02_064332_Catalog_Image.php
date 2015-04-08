@@ -14,8 +14,11 @@ class CatalogImage extends Migration {
 	{
 		Schema::create('catalog_images', function(Blueprint $table) {
 			$table->increments('id');
+            $table->tinyInteger('position')->unsigned();
 			$table->boolean('is_visible')->nullable();
 			$table->integer('album_id')->unsigned();
+            $table->string('image')->nullable();
+            $table->timestamps();
 		});
 
 		Schema::create('catalog_images_translations', function(Blueprint $table)

@@ -19,14 +19,14 @@ class AlbumController extends \BaseController {
 
 		$albums = Album::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
 		foreach ($albums as $album) {
-			$album->title = '<a href="' . \URL::Route('manager.catalog.albums.edit', ['id' => $album->id]) . '">' . $album->title . '</a>';
+			$album->title = '<a href="' . \URL::Route('manager.catalog.images.index', ['albumId' => $album->id]) . '">' . $album->title . '</a>';
 		}
 		unset($itemsOnMenu);
 
 		return \View::make('manager.index', [
 			'entities' => $albums,
 			'fields' => ['title', 'is_visible'],
-			'actions' => ['edit'],
+			'actions' => ['show' => ['route' => 'manager.catalog.images.index'], 'edit'],
 			'slug' => 'album',
 			'routeSlug' => 'catalog.albums',
 			'toolbar' => [
@@ -144,6 +144,7 @@ class AlbumController extends \BaseController {
 			$album = Album::find($id);
 			if (!$album)
 				continue;
+            $album->removeImage('image');
 			Album::destroy($id);
 		}
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));

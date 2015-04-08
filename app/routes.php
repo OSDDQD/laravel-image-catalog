@@ -141,10 +141,12 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
             'as' => 'manager.catalog.albums.index',
             'uses' => 'AlbumController@index',
         ]);
+
         Route::get('categories/{categoryId}/albums/create', [
             'as' => 'manager.catalog.albums.create',
             'uses' => 'AlbumController@create'
         ])->where(['categoryId' => '\d+']);
+
         Route::delete('albums/destroy', [
             'as' => 'manager.catalog.albums.destroy',
             'uses' => 'AlbumController@destroy'
@@ -152,14 +154,16 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
 
         //Images
         Route::resource('images', 'ImageController', ['except' => ['index', 'create', 'show', 'destroy']]);
-        Route::get('albums/{id}/images', [
+        Route::get('albums/{albumId}/images', [
             'as' => 'manager.catalog.images.index',
             'uses' => 'ImageController@index',
-        ]);
+        ])->where(['albumId' => '\d+']);
+
         Route::get('albums/{albumId}/images/create', [
-            'as' => 'manager.catalog.image.create',
+            'as' => 'manager.catalog.images.create',
             'uses' => 'ImageController@create'
         ])->where(['albumId' => '\d+']);
+
         Route::delete('images/destroy', [
             'as' => 'manager.catalog.images.destroy',
             'uses' => 'ImageController@destroy'

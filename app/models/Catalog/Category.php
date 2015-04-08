@@ -2,7 +2,7 @@
 
 namespace Catalog;
 
-use Basic\PositionedTrait;
+use \Basic\PositionedTrait;
 use \Basic\TranslatableTrait;
 use \Basic\UploadableInterface;
 use \Basic\UploadableTrait;
@@ -61,6 +61,7 @@ class Category extends \BaseModel implements UploadableInterface
 		});
 		static::deleted(function(Category $entity) {
 			$entity->alterSiblingsPosition('decrement');
+            $entity->removeImage('image');
 		});
 	}
 
@@ -96,9 +97,9 @@ class Category extends \BaseModel implements UploadableInterface
 		return 'category';
 	}
 
-	public function albums()
+	public function album()
 	{
-		return $this->hasMany('\Catalog\Album', 'category_id');
+		return $this->belongsTo('\Catalog\Album');
 	}
 
 	public function setPositionAttribute($value)
