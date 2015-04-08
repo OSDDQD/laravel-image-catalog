@@ -1,87 +1,154 @@
 <?php
+
 namespace Catalog;
 
 class AlbumController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /catalog/album
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		//
+		$category = Category::find($id);
+		if (!$category)
+			return \Response::view('errors.404', [], 404);
+
+		$itemsOnMenu = 15;
+
+		$albums = Album::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
+		foreach ($albums as $album) {
+			$album->title = '<a href="' . \URL::Route('manager.catalog.albums.edit', ['id' => $album->id]) . '">' . $album->title . '</a>';
+		}
+		unset($itemsOnMenu);
+
+		return \View::make('manager.index', [
+			'entities' => $albums,
+			'fields' => ['title', 'is_visible'],
+			'actions' => ['edit'],
+			'slug' => 'album',
+			'routeSlug' => 'catalog.albums',
+			'toolbar' => [
+				['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.catalog.albums.create', 'routeParams' => ['categoryId' => $category['id']]],
+				['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.catalog.categories.index'],
+			],
+			'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $category->title . '")',
+			'fieldAsIndex' => 'position',
+		]);
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /catalog/album/create
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
-	public function create()
+	public function create($categoryId)
 	{
-		//
+		return \View::make('manager.create', [
+			'entity' => new Album(['category_id' => $categoryId]),
+			'slug' => 'album',
+			'routeSlug' => 'catalog.albums',
+			'indexRouteParams' => ['id' => $categoryId],
+		]);
 	}
+
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /catalog/album
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function store()
 	{
-		//
+		$album = new Album(\Input::except(['options, image']));
+		if (!$album->save()) {
+			return \Redirect::back()->withInput()->withErrors($album->getErrors());
+		}
+
+		if (\Input::file('image')) {
+			if (!$album->uploadImage(\Input::file('image'), 'image')) {
+				$album->delete();
+				return \Redirect::back()->withInput()->withErrors($album->getErrors());
+			}
+		}
+
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
+		                                           ' <a href="' . \URL::Route('manager.catalog.albums.edit', ['id' => $album->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.catalog.albums.index', ['id' => $album->category_id]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /catalog/album/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /catalog/album/{id}/edit
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function edit($id)
 	{
-		//
+		$album = Album::find($id);
+
+		return \View::make('manager.edit', [
+			'entity' => $album,
+			'slug' => 'album',
+			'routeSlug' => 'catalog.albums',
+			'indexRouteParams' => ['id' => $album->category_id],
+		]);
 	}
+
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /catalog/album/{id}
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function update($id)
 	{
-		//
+		$album = Album::find($id);
+		if (!$album)
+			return \Response::View('errors.404', [], 404);
+
+		if (!$album->update(\Input::except(['image_delete', 'image']))) {
+			return \Redirect::back()->withInput()->withErrors($album->getErrors());
+		}
+
+		$imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+		$imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+		if ($imageDelete) {
+			$album->removeImage('image');
+		} elseif ($imageFile) {
+			if (!$album->uploadImage($imageFile, 'image')) {
+				return \Redirect::back()->withInput()->withErrors($album->getErrors());
+			}
+		}
+
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
+		                                           ' <a href="' . \URL::Route('manager.catalog.albums.edit', ['id' => $album->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.catalog.albums.index', ['id' => $album->category_id]);
 	}
+
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /catalog/album/{id}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$ids = \Input::get('id');
+		foreach ($ids as $id) {
+			$album = Album::find($id);
+			if (!$album)
+				continue;
+			Album::destroy($id);
+		}
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
+		return \Redirect::back();
 	}
+
 
 }

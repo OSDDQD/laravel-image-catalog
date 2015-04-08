@@ -142,7 +142,7 @@ Route::group(['prefix' => 'manager', 'before' => 'roles:master-admin'], function
             'uses' => 'AlbumController@index',
         ]);
         Route::get('categories/{categoryId}/albums/create', [
-            'as' => 'manager.catalog.album.create',
+            'as' => 'manager.catalog.albums.create',
             'uses' => 'AlbumController@create'
         ])->where(['categoryId' => '\d+']);
         Route::delete('albums/destroy', [

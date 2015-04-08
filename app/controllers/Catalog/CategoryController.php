@@ -6,9 +6,8 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /catalog/category
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function index()
 	{
@@ -16,25 +15,25 @@ class CategoryController extends \BaseController {
 
 		$categories = Category::with('translations')->orderBy('position')->paginate($itemsOnMenu);
 		foreach ($categories as $category) {
-			$category->title = '<a href="' . \URL::Route('manager.catalog.categories.index', ['categoryId' => $category->id]) . '">' . $category->title . '</a>';
+			$category->title = '<a href="' . \URL::Route('manager.catalog.albums.index', ['categoryId' => $category->id]) . '">' . $category->title . '</a>';
 		}
 		unset($itemsOnMenu);
 
 		return \View::make('manager.index', [
 			'entities' => $categories,
 			'fields' => ['title', 'is_visible'],
-			'actions' => ['show' => ['route' => 'manager.catalog.categories.index'], 'edit'],
+			'actions' => ['show' => ['route' => 'manager.catalog.albums.index'], 'edit'],
 			'slug' => 'category',
 			'routeSlug' => 'catalog.categories',
 			'fieldAsIndex' => 'position',
 		]);
 	}
 
+
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /catalog/category/create
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function create()
 	{
@@ -45,49 +44,37 @@ class CategoryController extends \BaseController {
 		]);
 	}
 
+
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /catalog/category
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function store()
 	{
-		$category = new Category(\Input::all());
+		$category = new Category(\Input::except(['options, image']));
 		if (!$category->save()) {
 			return \Redirect::back()->withInput()->withErrors($category->getErrors());
 		}
-        
-        if (\Input::file('image')) {
-            if (!$category->uploadImage(\Input::file('image'), 'image')) {
-                $category->delete();
-                return \Redirect::back()->withInput()->withErrors($category->getErrors());
-            }
-        }
-        
+
+		if (\Input::file('image')) {
+			if (!$category->uploadImage(\Input::file('image'), 'image')) {
+				$category->delete();
+				return \Redirect::back()->withInput()->withErrors($category->getErrors());
+			}
+		}
+
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
 		                                           ' <a href="' . \URL::Route('manager.catalog.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
 		return \Redirect::route('manager.catalog.categories.index');
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /catalog/category/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /catalog/category/{id}/edit
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function edit($id)
 	{
@@ -95,41 +82,37 @@ class CategoryController extends \BaseController {
 
 		return \View::make('manager.edit', [
 			'entity' => $category,
-			'slug' => 'catalog',
+			'slug' => 'menu',
 			'routeSlug' => 'catalog.categories',
 		]);
 	}
 
+
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /catalog/category/{id}
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function update($id)
 	{
 		$category = Category::find($id);
 		if (!$category)
 			return \Response::View('errors.404', [], 404);
-        
-        if (!$category->update(\Input::except(['image_delete', 'image']))) {
-            return \Redirect::back()->withInput()->withErrors($category->getErrors());
-        }
 
-        $imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
-        $imageFile = \Input::exists('image') ? \Input::file('image') : false;
-
-        if ($imageDelete) {
-            $category->removeImage('image');
-        } elseif ($imageFile) {
-            if (!$category->uploadImage($imageFile, 'image')) {
-                return \Redirect::back()->withInput()->withErrors($category->getErrors());
-            }
-        }
-        
-		if (!$category->update(\Input::all())) {
+		if (!$category->update(\Input::except(['image_delete', 'image']))) {
 			return \Redirect::back()->withInput()->withErrors($category->getErrors());
+		}
+
+		$imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+		$imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+		if ($imageDelete) {
+			$category->removeImage('image');
+		} elseif ($imageFile) {
+			if (!$category->uploadImage($imageFile, 'image')) {
+				return \Redirect::back()->withInput()->withErrors($category->getErrors());
+			}
 		}
 
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
@@ -137,24 +120,31 @@ class CategoryController extends \BaseController {
 		return \Redirect::route('manager.catalog.categories.index');
 	}
 
+
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /catalog/category/{id}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function destroy()
 	{
-        $ids = \Input::get('id');
-        foreach ($ids as $id) {
-            $category = Category::find($id);
-            if (!$category)
-                continue;
-            Category::destroy($id);
-        }
-        \Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
-        return \Redirect::back();
-    }
+		$ids = \Input::get('id');
+		foreach ($ids as $id) {
+			$category = Category::find($id);
+			if (!$category)
+				continue;
+//            foreach ($category->pages as $page) {
+//                if ($page->is_home) {
+//                    \Session::flash('manager_error_message', \Lang::get('manager.messages.menu_containing_home_page_cant_be_removed'));
+//                    return \Redirect::back();
+//                }
+//            }
+			$category->removeImage('image');
+			Category::destroy($id);
+		}
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
+		return \Redirect::back();
+	}
+
 
 }

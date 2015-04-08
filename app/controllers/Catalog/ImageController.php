@@ -1,87 +1,221 @@
 <?php
-namespace Catalog;
 
-class ImageController extends \BaseController {
+namespace Pizza;
+
+class IngredientsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /catalog/image
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		//
+		$category = IngredientsCategory::find($id);
+		if (!$category)
+			return \Response::view('errors.404', [], 404);
+
+		$itemsOnMenu = 15;
+
+		$ingredients = Ingredient::with('translations')->whereCategoryId($category->id)->orderBy('position')->paginate($itemsOnMenu);
+		foreach ($ingredients as $ingredient) {
+			$ingredient->title = '<a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . $ingredient->title . '</a>';
+		}
+		unset($itemsOnMenu);
+
+		return \View::make('manager.index', [
+			'entities' => $ingredients,
+			'fields' => ['title', 'is_visible'],
+			'actions' => ['edit'],
+			'slug' => 'ingredient',
+			'routeSlug' => 'pizza.ingredients',
+			'toolbar' => [
+				['label' => \Lang::get('buttons.create'), 'class' => 'success', 'route' => 'manager.pizza.ingredients.create', 'routeParams' => ['categoryId' => $category['id']]],
+				['label' => \Lang::get('buttons.back_to_list'), 'class' => 'primary', 'route' => 'manager.pizza.icategories.index'],
+			],
+			'headerSubtext' => '(' . \Lang::choice('entities.category.inf', 1) . ' "' . $category->title . '")',
+			'fieldAsIndex' => 'position',
+		]);
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /catalog/image/create
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
-	public function create()
+	public function create($categoryId)
 	{
-		//
+		if (!$options = \Input::get('options'))
+			$options = [];
+
+		return \View::make('manager.create', [
+			'entity' => new Ingredient(['category_id' => $categoryId]),
+			'slug' => 'ingredient',
+			'routeSlug' => 'pizza.ingredients',
+			'indexRouteParams' => ['id' => $categoryId],
+			'options' => $options,
+		]);
 	}
+
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /catalog/image
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function store()
 	{
-		//
+		$ingredient = new Ingredient(\Input::except(['options, image']));
+		if (!$ingredient->save()) {
+			return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+		}
+
+		if (\Input::file('image')) {
+			if (!$ingredient->uploadImage(\Input::file('image'), 'image')) {
+				$ingredient->delete();
+				return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+			}
+		}
+
+		$pizzas = [];
+		$options = \Input::get('options');
+		foreach(array_keys($options) as $pizza) {
+			if (!isset($pizzas[$pizza])) {
+				$pizza = Pizza::find($pizza);
+				$pizzas[$pizza->id] = $pizza;
+			} else {
+				$pizza = $pizzas[$pizza];
+			}
+			if (!$pizza instanceof Pizza)
+				return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+
+			$option = new Option($options[$pizza->id]);
+			$option->pizza_id = $pizza->id;
+			$option->ingredient_id = $ingredient->id;
+			if (!$option->save())
+				return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+		}
+
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
+		                                           ' <a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.pizza.ingredients.index', ['id' => $ingredient->category_id]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /catalog/image/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /catalog/image/{id}/edit
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function edit($id)
 	{
-		//
+		$ingredient = Ingredient::find($id);
+
+		if (!$options = \Input::get('options')) {
+			$options = [];
+			$optionsData = Option::whereIngredientId($ingredient->id)->get();
+			foreach ($optionsData as $data) {
+				$options[$data->pizza_id] = [
+					'weight' => $data->weight,
+					'price' => $data->price,
+					'max_quantity' => $data->max_quantity,
+				];
+			}
+		}
+
+		return \View::make('manager.edit', [
+			'entity' => $ingredient,
+			'slug' => 'ingredient',
+			'routeSlug' => 'pizza.ingredients',
+			'indexRouteParams' => ['id' => $ingredient->category_id],
+			'options' => $options,
+		]);
 	}
+
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /catalog/image/{id}
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
 	public function update($id)
 	{
-		//
+		$ingredient = Ingredient::find($id);
+		if (!$ingredient)
+			return \Response::View('errors.404', [], 404);
+
+		if (!$ingredient->update(\Input::except(['image_delete', 'image']))) {
+			return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+		}
+
+		$imageDelete = \Input::exists('image_delete') ? \Input::get('image_delete') : false;
+		$imageFile = \Input::exists('image') ? \Input::file('image') : false;
+
+		if ($imageDelete) {
+			$ingredient->removeImage('image');
+		} elseif ($imageFile) {
+			if (!$ingredient->uploadImage($imageFile, 'image')) {
+				return \Redirect::back()->withInput()->withErrors($ingredient->getErrors());
+			}
+		}
+
+		$pizzas = [];
+		$options = \Input::get('options');
+
+		foreach($options as $key => $value) {
+			if (!isset($pizzas[$key])) {
+				$pizza = Pizza::find($key);
+				$pizzas[$pizza->id] = $pizza;
+			} else {
+				$pizza = $pizzas[$key];
+			}
+
+			if (!$pizza instanceof Pizza)
+				return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+
+			if ($option = Option::where('pizza_id', '=', $pizza->id)->where('ingredient_id', '=', $ingredient->id)->first()) {
+				$option->pizza_id = $pizza->id;
+				$option->ingredient_id = $ingredient->id;
+				foreach ($value as $field => $setting) {
+					$option->$field = $setting;
+				}
+			} else {
+				$option = new Option($options[$key]);
+				$option->pizza_id = $pizza->id;
+				$option->ingredient_id = $ingredient->id;
+			}
+
+			if (!$option->save())
+				return \Redirect::route('manager.pizza.ingredients.edit', ['id' => $ingredient->id])->withInput();
+			unset($option);
+		}
+
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
+		                                           ' <a href="' . \URL::Route('manager.pizza.ingredients.edit', ['id' => $ingredient->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
+		return \Redirect::route('manager.pizza.ingredients.index', ['id' => $ingredient->category_id]);
 	}
+
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /catalog/image/{id}
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @return \Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$ids = \Input::get('id');
+		foreach ($ids as $id) {
+			$ingredient = Ingredient::find($id);
+			if (!$ingredient)
+				continue;
+			Ingredient::destroy($id);
+		}
+		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
+		return \Redirect::back();
 	}
+
 
 }

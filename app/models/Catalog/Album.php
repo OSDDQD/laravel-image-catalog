@@ -24,7 +24,7 @@ class Album extends \Eloquent  implements UploadableInterface {
      *
      * @var array
      */
-    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible', 'cover'];
+    protected $fillable = ['position', 'category_id', 'title', 'description', 'is_visible', 'image'];
 
     /**
      * The attributes that are translatable.
@@ -62,7 +62,7 @@ class Album extends \Eloquent  implements UploadableInterface {
 
         static::deleted(function(Album $entity) {
             $entity->alterSiblingsPosition('decrement');
-            $entity->removeImage('cover');
+            $entity->removeImage('image');
         });
     }
 
