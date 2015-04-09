@@ -1,7 +1,5 @@
-<div class="socseti">
-    <a href="{{ isset($socialFacebookUrl) ? $socialFacebookUrl : '#' }}" class="fsb"></a>
-    <a href="{{ isset($socialTwitterUrl) ? $socialTwitterUrl : '#' }}" class="twt"></a>
-    <a href="{{ isset($socialVkontakteUrl) ? $socialVkontakteUrl : '#' }}" class="vk"></a>
-    <a href="{{ isset($socialOdnoklassnikiUrl) ? $socialOdnoklassnikiUrl : '#' }}" class="ok"></a>
-    <a href="{{ URL::Route('rss', ['locale' => App::getLocale()]) }}" class="m"></a>
-</div>
+<ul class="social-icons">
+    <li><a href="{{ isset($socialFacebookUrl) ? $socialFacebookUrl : '#' }}" target="_blank" title="Facebook"><img src="/assets/img/client/social_icons/facebook.png" alt="Facebook"></a></li>
+    <li><a href="{{ isset($socialTwitterUrl) ? $socialTwitterUrl : '#' }}" target="_blank" title="Twitter"><img src="/assets/img/client/social_icons/twitter.png" alt="Twitter"></a></li>
+    <li><a href="{{ isset($socialGoogleUrl) ? $socialGoogleUrl : '#' }}" target="_blank" title="Google+"><img src="/assets/img/client/social_icons/googleplus.png" alt="Google+"></a></li>
+</ul>

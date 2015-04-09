@@ -99,7 +99,7 @@ class Category extends \BaseModel implements UploadableInterface
 
 	public function album()
 	{
-		return $this->belongsTo('\Catalog\Album');
+		return $this->hasMany('\Catalog\Album', 'category_id');
 	}
 
 	public function setPositionAttribute($value)

@@ -22,20 +22,9 @@ class SettingsController extends \BaseController {
             $localizedFields[$field->locale][] = $field;
         }
 
-        // Serialized fields
-        $topSlider = Setting::whereIsEditable(true)->whereName('top_slider')->first();
-        $topSliderData = $topSlider ? unserialize($topSlider->value) : [];
-        for ($i = 0; $i < count($topSliderData); $i++) {
-            if (!$topSliderData[$i])
-                continue;
-            $topSliderData[$i] = new Slider\Image();
-            $topSliderData[$i]->id = $i;
-        }
-
         return View::make('settings.index', [
             'textFields' => $textFields,
             'localizedFields' => $localizedFields,
-            'topSliderData' => $topSliderData,
             'slug' => 'setting',
             'routeSlug' => 'settings',
         ]);
@@ -72,31 +61,6 @@ class SettingsController extends \BaseController {
                 return Redirect::back()->withInput()->withErrors([$localizedField->name => $errors['value']]);
             }
         }
-
-        // Serialized fields
-        $topSlider = Setting::whereIsEditable(true)->whereName('top_slider')->first();
-        $topSliderData = $topSlider ? unserialize($topSlider->value) : [];
-
-        $topSliderDelete = Input::exists('top_slider_delete') ? Input::get('top_slider_delete') : [];
-        $topSliderFiles = Input::exists('top_slider') ? Input::file('top_slider') : [];
-
-        $newTopSlider = [];
-        for ($i = 0; $i < 5; $i++) {
-            $topSliderImage = new Slider\Image();
-            $topSliderImage->id = $i;
-
-            if (array_key_exists($i, $topSliderDelete)) {
-                $newTopSlider[$i] = $topSliderImage->removeImage() ? false : true;
-            } elseif (isset($topSliderFiles[$i])) {
-                $newTopSlider[$i] = $topSliderImage->uploadImage($topSliderFiles[$i]);
-            } elseif (isset($topSliderData[$i])) {
-                $newTopSlider[$i] = $topSliderData[$i];
-            } else {
-                $newTopSlider[$i] = false;
-            }
-        }
-
-        $topSlider->update(['value' => serialize($newTopSlider)]);
 
         Session::flash('manager_success_message', Lang::get('manager.messages.entity_updated') .
             ' <a href="' . URL::Route('manager.settings.index') . '">' . Lang::get('buttons.edit') . '</a>');

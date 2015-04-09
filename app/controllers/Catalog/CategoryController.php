@@ -148,6 +148,9 @@ class CategoryController extends \BaseController {
 
 	public function frontpage()
 	{
-
+        $categories = Category::with('translations', 'album', 'album.translations')->orderBy('position')->get();
+        return \View::make('catalog.categories.index', [
+            'entity' => $categories,
+        ]);
 	}
 }

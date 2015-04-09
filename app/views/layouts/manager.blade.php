@@ -8,8 +8,8 @@
     <meta name="author" content="">
     <title>{{ Config::get('app.site_title') }} Control Panel</title>
     <link href="/assets/css/admin.css" rel="stylesheet">
-    <script src="/assets/js/global/jquery-1.11.1.min.js"></script>
-    <script src="/assets/js/global/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/assets/js/client/jquery-1.11.2.min.js"></script>
+    <script src="/assets/js/client/jquery-ui/jquery-ui.min.js"></script>
     <script src="/assets/js/manager/plugins/morris/raphael.min.js"></script>
     <script src="/assets/js/manager/plugins/morris/morris.min.js"></script>
     <script src="/assets/js/manager/plugins/damnUploader/interface.js"></script>

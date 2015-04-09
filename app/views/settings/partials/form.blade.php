@@ -1,7 +1,6 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-generic" data-toggle="tab">{{ Lang::get('forms.tabs.generic') }}</a></li>
-        <li><a href="#tab-top-slider" data-toggle="tab">{{ Lang::get('forms.tabs.slider') }}</a></li>
         @foreach (Config::get('app.locales') as $i => $locale)
         <li><a href="#tab-{{ $locale }}" data-toggle="tab">{{ Lang::get("languages.$locale") }}</a></li>
         @endforeach
@@ -19,38 +18,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-            </div>
-            <div class="tab-pane" id="tab-top-slider">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ Lang::get('manager.slider.image') }}</th>
-                                    <th>{{ Lang::get('manager.slider.file_upload') }}</th>
-                                    <th>{{ Lang::get('manager.slider.delete') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for($i = 0; $i < 5; $i++)
-                                <tr>
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>
-                                        @if (isset($topSliderData[$i]) and $topSliderData[$i])
-                                            <img src="{{ \URL::Route('preview.managed', ['object' => 'slider', 'mode' => 'managertable', 'format' => 'jpg', 'file' => $topSliderData[$i]->getUploadedFilename('jpg')]) }}" alt="" />
-                                        @else
-                                            {{ Lang::get('manager.messages.no_image') }}
-                                        @endif
-                                    </td>
-                                    <td>{{ Form::file("top_slider[$i]", [], ['class' => 'form-control']) }}</td>
-                                    <td>{{ Form::checkbox("top_slider_delete[$i]", 1, 0) }}</td>
-                                </tr>
-                                @endfor
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
             @foreach (Config::get('app.locales') as $i => $locale)
