@@ -146,5 +146,8 @@ class CategoryController extends \BaseController {
 		return \Redirect::back();
 	}
 
+	public function frontpage()
+	{
 
+	}
 }

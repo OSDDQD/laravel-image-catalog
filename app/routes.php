@@ -39,7 +39,7 @@ if ($locale and in_array($locale, Config::get('app.locales')))
 // Home
 Route::get('/', [
     'as' => 'home',
-    'uses' => 'Catalog\Category@index',
+    'uses' => 'Catalog\CategoryController@frontpage',
 ]);
 
 // Preview
