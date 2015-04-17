@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
     color: #fff;
     background: #000;
     width:100%;
@@ -45,7 +45,7 @@ a:hover {
 p a {
     padding-bottom:1px;
     border-bottom:1px dotted rgba(255,255,255,0.4);
-    font-family: 'open_sansregular', sans-serif;
+    font-family: 'OpenSansRegular', sans-serif;
 }
 p a:hover {
     border-color:#fff;
@@ -53,10 +53,10 @@ p a:hover {
 }
 
 strong {
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
 }
 em {
-    font-family: 'open_sansitalic', sans-serif;
+    font-family: 'OpenSansItalic', sans-serif;
 }
 
 h1,
@@ -71,7 +71,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
 }
 
 p {
@@ -122,7 +122,7 @@ dl {
     margin-top:2em;
 }
 dt {
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
 }
 
 /* -------------- Bootstrap Tables ----------------- */
@@ -232,7 +232,7 @@ table {
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
     border-radius: 0;
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
 }
 
 .btn-outline-inverse {
@@ -263,10 +263,17 @@ table {
 /* ====================================================
    FIXED LEFT SIDEBAR (LOGO + MENU)
    ==================================================== */
+.sidebar-bg {
+    background: url(../../img/client/menu_bg.png) no-repeat top center;
+    position: fixed;
+    width: 285px;
+    height: 444px;
+    left: 5.7%;
+}
 
 #left-sidebar {
     display:block;
-    background: rgba(0,0,0,0.29); 
+    background: rgba(0,0,0,0.29);
 }
 
     @media (min-width: 768px) {
@@ -293,8 +300,8 @@ table {
             /* any change has to be replicated in #footer below */
             left:6.5%;  
             width:13%;
-            max-width:205px;
-            min-width:190px; 
+            max-width:264px;
+            min-width:264px;
         }
     }
     @media (min-width: 1200px) {
@@ -313,7 +320,7 @@ table {
     display:block;
     margin:0 auto;
     width:auto;
-    max-width:75%;
+    max-width:100%;
     height:auto;
 }
 
@@ -371,7 +378,7 @@ table {
     list-style: none;
     margin:0;
     padding:0;
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
     font-size:0.86em;
     line-height:1.05;
     text-transform: lowercase;
@@ -401,8 +408,8 @@ table {
 }
 
 #left-sidebar #main-menu > li.menu-item.active > * {
-    font-family: 'open_sansbold', sans-serif;
-    font-weight: bold;
+    /*font-family: 'OpenSansBold', sans-serif;*/
+    /*font-weight: bold;*/
     background:rgba(0,0,0,0.15);
 }
 
@@ -411,7 +418,7 @@ table {
             display:block;
             margin:8px 0;
             background:none;
-            font-size:0.9em;
+            /*font-size:0.9em;*/
             line-height:1;            
         } 
         #left-sidebar #main-menu > li.menu-item > a,
@@ -422,7 +429,7 @@ table {
     @media (min-width: 992px) {
         #left-sidebar #main-menu {
             margin:12px 0;
-            font-size:1.02em;
+            /*font-size:1.02em;*/
             line-height:1;              
         }
     }
@@ -546,7 +553,7 @@ table {
     margin:20px 5%;
     overflow: visible;
     min-height:1px;
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
     -webkit-transform: translate3d(0,0,0);
 }
 
@@ -949,7 +956,7 @@ h6 {
     right:12%;
     text-align: right;
     position: absolute;
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
     font-weight: bold;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
@@ -1184,7 +1191,7 @@ h6 {
     background:#fff;
     color:#a10000;
     font-size: 0.7em;
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
     border-radius: 0;
     padding:8px 10px;
 }
@@ -1206,7 +1213,7 @@ h6 {
 
 #main-content .contact-details {
     font-size: 0.9em;
-    font-family: 'open_sansregular', sans-serif;
+    font-family: 'OpenSansRegular', sans-serif;
 }
 
     @media (min-width: 768px) {
@@ -1414,7 +1421,7 @@ h6 {
     cursor: pointer;
     background:none;
     border-radius:0;
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
     font-size:0.8em;
     line-height:1;
     font-weight: normal;
@@ -1456,7 +1463,7 @@ h6 {
 
 #main-content .carousel *.title {
     font-size:2em;
-    font-family: 'open_sansbold', sans-serif;
+    font-family: 'OpenSansBold', sans-serif;
     line-height:1.1;
     color:#fff;
     margin:0.6em 0 0.7em 0;
@@ -1665,7 +1672,7 @@ h6 {
     font-size: 0.9em;
     line-height: 1.1;
     text-align: center;
-    font-family: 'open_sanslight', sans-serif;
+    font-family: 'OpenSansLight', sans-serif;
 }
 
 .owl-carousel.hide-bullets .owl-pagination {
@@ -1967,3 +1974,29 @@ img.full-width {
 .vegas-loading {
   display:none !important;
 }
+.languages {
+    border-bottom: 2px solid #5a5a5a;
+    text-align: center;
+}
+.languages:after {
+    content:"";
+    display:table;
+    clear:both;
+}
+    .languages a {
+        display: block;
+        float: left;
+        padding: 5px;
+        color: #f5f5f5;
+        text-transform: uppercase;
+        font-family: 'OpenSansSemiBold', Tahoma;
+        width: 33%;
+        border-right: 2px solid #5a5a5a;
+        text-align: center;
+    }
+    .languages a:hover {
+        background: #202020;
+    }
+    .languages a:last-child {
+        border-right: none;
+    }

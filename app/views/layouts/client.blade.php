@@ -46,18 +46,20 @@
 <div id="outer-container">
 
     <!-- Left Sidebar -->
-    <section id="left-sidebar">
+    <div class="sidebar-bg">
+        <section id="left-sidebar">
+            @include('layouts.partials.language_switcher')
+            <div class="logo">
+                <a href="{{ URL::Route('home') }}#intro" class="link-scroll"><img src="/assets/img/logo.png" alt="{{ Config::get('app.site_title') }}"></a>
+            </div><!-- .logo -->
 
-        <div class="logo">
-            <a href="{{ URL::Route('home') }}#intro" class="link-scroll"><img src="/assets/img/logo.png" alt="{{ Config::get('app.site_title') }}"></a>
-        </div><!-- .logo -->
+            <!-- Menu Icon for smaller viewports -->
+            <div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>
 
-        <!-- Menu Icon for smaller viewports -->
-        <div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>
+            @include('layouts.partials.menu')
 
-        @include('layouts.partials.menu')
-
-    </section><!-- #left-sidebar -->
+        </section><!-- #left-sidebar -->
+    </div>
     <!-- end: Left Sidebar -->
 
     <section id="main-content" class="clearfix">
