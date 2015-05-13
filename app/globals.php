@@ -10,7 +10,12 @@ try {
             case 'odnoklassniki':
 	        case 'google':
             case 'vkontakte':
+            case 'instagram':
                 View::share('social' . ucfirst($setting->name) . 'Url', $setting->value);
+                break;
+
+            case 'unescourl':
+                View::share(ucfirst($setting->name), $setting->value);
                 break;
 
             case 'address':

@@ -225,6 +225,7 @@ return array(
         'category' => [
             '_class' => 'Catalog\Category',
             'preview' => [150, 150],
+            'background' => [1920, 1080],
         ],
         'album' => [
             '_class' => 'Catalog\Album',

@@ -42,6 +42,12 @@ return array(
     'instagram' => [
         '_title' => 'Адрес страницы в Instagram',
     ],
+    'google' => [
+        '_title' => 'Адрес страницы в Google+',
+    ],
+    'unescourl' => [
+        '_title' => 'Ссылка на главный сайт Unesco',
+    ],
 
 
 );

@@ -15,8 +15,8 @@
 		"way/generators": "2.6.1",
 		"mews/captcha": "1.0.1",
 		"roumen/feed": "v2.6.8",
-	        "nicolaslopezj/searchable": "1.*",
-        	"doctrine/dbal": "~2.3",
+        "nicolaslopezj/searchable": "1.*",
+        "doctrine/dbal": "~2.3",
 		"dompdf/dompdf" : "0.6.*"
 	},
 	"autoload": {

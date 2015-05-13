@@ -18,6 +18,18 @@ class SettingsTableSeeder extends Seeder {
         ]);
 
         Setting::create([
+            'name' => 'twitter',
+            'value' => 'https://www.twitter.com/',
+            'is_editable' => true,
+        ]);
+
+        Setting::create([
+            'name' => 'google',
+            'value' => 'https://plus.google.com/',
+            'is_editable' => true,
+        ]);
+
+        Setting::create([
             'name' => 'feedback_emails',
             'value' => '',
             'is_editable' => true,

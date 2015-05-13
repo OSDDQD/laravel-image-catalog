@@ -40,7 +40,7 @@
 </head>
 @show
 
-<body data-default-background-img="assets/img/client/default_bg.jpg" data-overlay="true" data-overlay-opacity="0.35">
+<body data-default-background-img="assets/img/client/default_bg.jpg" data-overlay="true" data-overlay-opacity="1">
 
 <!-- Outer Container -->
 <div id="outer-container">
@@ -50,7 +50,7 @@
         <section id="left-sidebar">
             @include('layouts.partials.language_switcher')
             <div class="logo">
-                <a href="{{ URL::Route('home') }}#intro" class="link-scroll"><img src="/assets/img/logo.png" alt="{{ Config::get('app.site_title') }}"></a>
+                <a href="{{ isset($Unescourl) ? $Unescourl : '#' }}" class="link-scroll"><img src="/assets/img/logo.png" alt="{{ Config::get('app.site_title') }}"></a>
             </div><!-- .logo -->
 
             <!-- Menu Icon for smaller viewports -->

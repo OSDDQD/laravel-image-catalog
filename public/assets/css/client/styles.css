@@ -633,7 +633,7 @@ table {
         #main-content .section-wrapper .content-wrapper {
             position: absolute;
             right:0;
-            bottom:16%;
+            top:10%;
             text-align: right;
             padding:0;
             background:none;
@@ -714,7 +714,11 @@ h6 {
         h3 { font-size:2em; }
         h4 { font-size:1.6em; }
         h5 { font-size:1.3em; }
-        h6 { font-size:1.1em; }        
+        h6 { font-size:1.1em; }
+        h2.headline {
+            margin-right: 15%;
+            width: 85%;
+        }
     }
     @media (min-width: 1200px) {
 
@@ -1341,7 +1345,7 @@ h6 {
 
 #main-content .carousel .carousel-inner .item {
     height:100%;  
-    text-align: center;     
+    text-align: left;
 }
 
 #main-content .carousel .carousel-inner .item .carousel-text-content {
@@ -1482,7 +1486,8 @@ h6 {
         #main-content .carousel .carousel-control {
             background-position: 50%;
             opacity: 0;
-            filter: alpha(opacity=0); 
+            filter: alpha(opacity=0);
+            height: 350px;
         }
         #main-content .carousel .carousel-control.left:hover { 
             background-position: 40% 50%;
@@ -1519,7 +1524,7 @@ h6 {
         #main-content .carousel .carousel-inner {
             width:60%;
             margin-left:20%;
-            margin-right:20%;   
+            margin-right:20%;
         } 
 
         #main-content .section-wrapper .carousel.with-title-indicators .carousel-inner {
