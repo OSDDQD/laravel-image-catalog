@@ -25,7 +25,7 @@ class Category extends \BaseModel implements UploadableInterface
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['position', 'title', 'description', 'is_visible', 'image'];
+	protected $fillable = ['position', 'title', 'description', 'is_visible', 'image', 'image_desc', 'is_intro'];
 
 	/**
 	 * The attributes that are translatable.
@@ -62,6 +62,7 @@ class Category extends \BaseModel implements UploadableInterface
 		static::deleted(function(Category $entity) {
 			$entity->alterSiblingsPosition('decrement');
             $entity->removeImage('image');
+			$entity->removeImage('image_desc');
 		});
 	}
 

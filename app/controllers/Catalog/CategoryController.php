@@ -64,6 +64,13 @@ class CategoryController extends \BaseController {
 			}
 		}
 
+		if (\Input::file('image_desc')) {
+			if (!$category->uploadImage(\Input::file('image_desc'), 'image_desc')) {
+				$category->delete();
+				return \Redirect::back()->withInput()->withErrors($category->getErrors());
+			}
+		}
+
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_created') .
 		                                           ' <a href="' . \URL::Route('manager.catalog.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
 		return \Redirect::route('manager.catalog.categories.index');
@@ -100,7 +107,7 @@ class CategoryController extends \BaseController {
 		if (!$category)
 			return \Response::View('errors.404', [], 404);
 
-		if (!$category->update(\Input::except(['image_delete', 'image']))) {
+		if (!$category->update(\Input::except(['image_delete', 'image', 'image_desc', 'image_desc_delete']))) {
 			return \Redirect::back()->withInput()->withErrors($category->getErrors());
 		}
 
@@ -115,6 +122,16 @@ class CategoryController extends \BaseController {
 			}
 		}
 
+		$imageDescDelete = \Input::exists('image_desc_delete') ? \Input::get('image_desc_delete') : false;
+		$imageDescFile = \Input::exists('image_desc') ? \Input::file('image_desc') : false;
+
+		if ($imageDescDelete) {
+			$category->removeImage('image_desc');
+		} elseif ($imageDescFile) {
+			if (!$category->uploadImage($imageDescFile, 'image_desc')) {
+				return \Redirect::back()->withInput()->withErrors($category->getErrors());
+			}
+		}
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entity_updated') .
 		                                           ' <a href="' . \URL::Route('manager.catalog.categories.edit', ['id' => $category->id]) . '">' . \Lang::get('buttons.edit') . '</a>');
 		return \Redirect::route('manager.catalog.categories.index');
@@ -140,6 +157,7 @@ class CategoryController extends \BaseController {
 //                }
 //            }
 			$category->removeImage('image');
+			$category->removeImage('image_desc');
 			Category::destroy($id);
 		}
 		\Session::flash('manager_success_message', \Lang::get('manager.messages.entities_deleted'));
@@ -148,9 +166,12 @@ class CategoryController extends \BaseController {
 
 	public function frontpage()
 	{
-        $categories = Category::with('translations', 'album', 'album.translations')->orderBy('position')->get();
+        $categories = Category::with('translations', 'album', 'album.translations')->orderBy('position')->whereIsVisible(true)->whereIsIntro(false)->get();
+		$intro = Category::with('translations')->whereIsIntro(true)->whereIsVisible(true)->limit(1)->get();
+
         return \View::make('catalog.categories.index', [
             'entity' => $categories,
+	        'intro' => $intro,
         ]);
 	}
 }

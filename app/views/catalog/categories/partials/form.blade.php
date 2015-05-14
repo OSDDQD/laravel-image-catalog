@@ -21,6 +21,7 @@
                         'list' => array_combine(range(1, $maxPosition), range(1, $maxPosition))
                     ])
                     @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_visible', 'default' => 1])
+                    @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'is_intro', 'default' => 0])
                     @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image'])
                     @if (isset($entity->image) and $entity->image)
                         <div class="col-md-12">
@@ -29,6 +30,15 @@
                             </div>
                         </div>
                         @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'image_delete', 'default' => 0])
+                    @endif
+                    @include('manager.partials.form_control', ['type' => 'file', 'field' => 'image_desc'])
+                    @if (isset($entity->image_desc) and $entity->image_desc)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <img src="{{ \URL::Route('preview.managed', ['object' => 'category', 'mode' => 'preview', 'format' => 'jpg', 'file' => $entity->image_desc]) }}" alt="" />
+                            </div>
+                        </div>
+                        @include('manager.partials.form_control', ['type' => 'checkbox', 'field' => 'image_desc_delete', 'default' => 0])
                     @endif
                 </div>
             </div>

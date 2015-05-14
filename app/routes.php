@@ -42,6 +42,12 @@ Route::get('/', [
     'uses' => 'Catalog\CategoryController@frontpage',
 ]);
 
+// Album
+Route::get('album/{id}', [
+	'as' => 'album.show',
+	'uses' => 'Catalog\AlbumController@show'
+]);
+
 // Preview
 Route::get('preview/managed/{object}/{mode}-{format}-{file}', [
     'as' => 'preview.managed',

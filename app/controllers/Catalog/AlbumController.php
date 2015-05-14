@@ -151,5 +151,16 @@ class AlbumController extends \BaseController {
 		return \Redirect::back();
 	}
 
+	public function show($id)
+	{
+		$images = Image::with('translations')->whereAlbumId($id)->whereIsVisible(true)->orderBy('position')->paginate(18);
+		if (!$images)
+			return \Response::view('errors.404', [], 404);
+
+		return \View::make('catalog.albums.index', [
+			'entity' => $images,
+		]);
+	}
+
 
 }

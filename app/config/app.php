@@ -230,10 +230,13 @@ return array(
         'album' => [
             '_class' => 'Catalog\Album',
             'preview' => [150, 150],
+	        'thumb' => [245, 160],
         ],
         'image' => [
             '_class' => 'Catalog\Image',
             'preview' => [150, 150],
+            'show' => [100, 100],
+	        'full' => [1400, 900]
         ],
     ],
 

@@ -12,8 +12,8 @@ class CategoryAddIntroField extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('catalog_categories', function(Blueprint $table) {
-			$table->tinyInteger('is_intro')->nullable();
+		Schema::table('catalog_categories', function(Blueprint $table) {
+			$table->boolean('is_intro')->default(0);
 		});
 	}
 

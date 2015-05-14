@@ -2,6 +2,6 @@
 
 @section('content')
 
-    @include('catalog.categories.partials.display')
+    @include('catalog.albums.partials.display')
 
 @stop

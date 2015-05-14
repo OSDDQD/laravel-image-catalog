@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CategoryAddIntroField extends Migration {
+class CategoryAddDescImage extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,8 +12,9 @@ class CategoryAddIntroField extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('catalog_categories', function(Blueprint $table) {
-			$table->tinyInteger('is_intro')->nullable();
+		Schema::table('catalog_categories', function($table)
+		{
+			$table->boolean('image_desc')->nullable();
 		});
 	}
 
@@ -25,7 +26,7 @@ class CategoryAddIntroField extends Migration {
 	public function down()
 	{
 		Schema::table('catalog_categories', function($table) {
-			$table->dropColumn('is_intro');
+			$table->dropColumn('image_desc');
 		});
 	}
 

@@ -24,23 +24,17 @@
     <link href="/assets/js/owl-carousel/owl.transitions.css" rel="stylesheet">
     <!-- intro animations -->
     <link href="/assets/js/wow/animate.css" rel="stylesheet">
-    <!-- font awesome -->
-    <link href="/assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- lightbox -->
     <link href="/assets/js/lightbox/css/lightbox.css" rel="stylesheet">
 
     <!-- styles for this template -->
     <link href="/assets/css/client/styles.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <link href="/assets/js/colorbox/css/colorbox.css" rel="stylesheet">
 </head>
 @show
 
-<body data-default-background-img="assets/img/client/default_bg.jpg" data-overlay="true" data-overlay-opacity="1">
+<body data-default-background-img="{{ URL::Route('home') }}/assets/img/client/default_bg.jpg" data-overlay="true" data-overlay-opacity="1">
 
 <!-- Outer Container -->
 <div id="outer-container">
@@ -63,20 +57,6 @@
     <!-- end: Left Sidebar -->
 
     <section id="main-content" class="clearfix">
-
-        <article id="intro" class="section-wrapper clearfix" data-custom-background-img="assets/img/client/default_bg.jpg">
-            <div class="content-wrapper clearfix wow fadeInDown" data-wow-delay="0.3s">
-                <div class="col-sm-10 col-md-9 pull-right">
-
-                    <section class="feature-text">
-                        <h1>UNESCO Catalog</h1>
-                        <p>This is DEMO Content..</p>
-                    </section>
-
-                </div><!-- .col-sm-10 -->
-            </div><!-- .content-wrapper -->
-        </article><!-- .section-wrapper -->
-
         @yield('content')
     </section><!-- #main-content -->
 
@@ -129,13 +109,16 @@
 <script src="/assets/js/owl-carousel/owl.carousel.min.js"></script>
 
 <!-- lightbox js -->
-<script src="/assets/js/lightbox/js/lightbox.min.js"></script>
+{{--<script src="/assets/js/lightbox/js/lightbox.min.js"></script>--}}
 
 <!-- intro animations -->
 <script src="/assets/js/wow/wow.min.js"></script>
 
 <!-- responsive videos -->
 <script src="/assets/js/client/jquery.fitvids.js"></script>
+
+<!--colorbox-->
+<script src="/assets/js/colorbox/js/jquery.colorbox-min.js"></script>
 
 <!-- Custom functions for this theme -->
 <script src="/assets/js/client/functions.min.js"></script>
