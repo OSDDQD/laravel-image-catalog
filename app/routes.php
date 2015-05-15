@@ -46,7 +46,7 @@ Route::get('/', [
 Route::get('album/{id}', [
 	'as' => 'album.show',
 	'uses' => 'Catalog\AlbumController@show'
-]);
+])->where(['id' => '\d+']);
 
 // Preview
 Route::get('preview/managed/{object}/{mode}-{format}-{file}', [
@@ -65,7 +65,7 @@ Route::get('rss/{locale?}', [
 ]);
 
 // Search
-Route::get('/search/{where?}', [
+Route::get('/search/{query}', [
     'as' => 'search',
     'uses' => 'SearchController@search',
 ]);

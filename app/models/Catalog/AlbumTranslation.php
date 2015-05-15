@@ -4,6 +4,18 @@ namespace Catalog;
 
 class AlbumTranslation extends \Eloquent {
 
+
+    public function category()
+    {
+        return $this->belongsTo('\Catalog\CategoryTranslation');
+    }
+
+    public function images()
+    {
+        return $this->hasMany('\Catalog\Image');
+    }
+
+
     protected static $rules = [
         'title' => 'required',
     ];

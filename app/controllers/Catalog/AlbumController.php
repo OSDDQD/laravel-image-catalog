@@ -157,8 +157,12 @@ class AlbumController extends \BaseController {
 		if (!$images)
 			return \Response::view('errors.404', [], 404);
 
+        $album = Album::find($id);
+        $category = Category::with('translations')->find($album->category_id);
+
 		return \View::make('catalog.albums.index', [
 			'entity' => $images,
+            'category' => $category,
 		]);
 	}
 

@@ -235,7 +235,7 @@ return array(
         'image' => [
             '_class' => 'Catalog\Image',
             'preview' => [150, 150],
-            'show' => [100, 100],
+            'show' => [120, 140],
 	        'full' => [1400, 900]
         ],
     ],

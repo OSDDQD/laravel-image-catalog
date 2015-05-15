@@ -13,6 +13,12 @@ class Album extends \Eloquent  implements UploadableInterface {
         PositionedTrait;
 
     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+
+    /**
      * The table associated with the model.
      *
      * @var string

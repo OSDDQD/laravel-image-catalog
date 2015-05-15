@@ -48,7 +48,7 @@
             </div><!-- .logo -->
 
             <!-- Menu Icon for smaller viewports -->
-            <div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>
+            {{--<div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>--}}
 
             @include('layouts.partials.menu')
 
@@ -66,7 +66,7 @@
 
         <!-- Go to Top -->
         <div id="go-to-top" onclick="scroll_to_top();"><span class="icon glyphicon glyphicon-chevron-up"></span></div>
-
+        @include('layouts.partials.search_form')
         @include('layouts.partials.social')
 
     </section>
