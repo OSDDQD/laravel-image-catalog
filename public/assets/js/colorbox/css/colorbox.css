@@ -30,13 +30,13 @@
     #cboxBottomRight{width:14px; height:43px; background:url(../images/controls.png) no-repeat -36px -32px;}
     #cboxMiddleLeft{width:14px; background:url(../images/controls.png) repeat-y -175px 0;}
     #cboxMiddleRight{width:14px; background:url(../images/controls.png) repeat-y -211px 0;}
-    #cboxContent{background:#fff; overflow:visible;}
+    #cboxContent{background:#56534c; overflow:visible;}
         .cboxIframe{background:#fff;}
         #cboxError{padding:50px; border:1px solid #ccc;}
         #cboxLoadedContent{margin-bottom:5px;}
         #cboxLoadingOverlay{background:url(../images/loading_background.png) no-repeat center center;}
         #cboxLoadingGraphic{background:url(../images/loading.gif) no-repeat center center;}
-        #cboxTitle{position:absolute; bottom:-25px; left:0; text-align:center; width:100%; font-weight:bold; color:#7C7C7C;}
+        #cboxTitle{position:absolute; bottom:-40px; left:0; text-align:center; width:100%; font-weight:normal; font-size: 12px; color:#7C7C7C;}
         #cboxCurrent{position:absolute; bottom:-25px; left:58px; font-weight:bold; color:#7C7C7C;}
 
         /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */

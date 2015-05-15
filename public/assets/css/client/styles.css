@@ -2009,9 +2009,11 @@ img.full-width {
         padding: 10px;
     }
     .item-content .image .image-title {
-        font-size: 11px;
+        font-size: 13px;
+        text-shadow: none;
         color: #a7a49b;
-        max-width: 100px;
+        max-width: 130px;
+        font-weight: bold;
     }
     .preview-width {
         width: auto;
