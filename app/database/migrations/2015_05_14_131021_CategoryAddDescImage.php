@@ -14,7 +14,7 @@ class CategoryAddDescImage extends Migration {
 	{
 		Schema::table('catalog_categories', function($table)
 		{
-			$table->boolean('image_desc')->nullable();
+			$table->string('image_desc')->nullable();
 		});
 	}
 
