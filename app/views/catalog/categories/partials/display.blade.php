@@ -3,6 +3,7 @@
     <article id="{{ $category->id }}" class="section-wrapper clearfix" data-custom-background-img="{{ \URL::Route('preview.managed', ['object' => 'category', 'mode' => 'background', 'format' => 'jpg', 'file' => $category->image]) }}">
         <div class="content-wrapper clearfix">
             <h2 class="headline">{{ $category->title }}</h2>
+            <img class="slide" src="{{ \URL::Route('preview.managed', ['object' => 'category', 'mode' => 'slide', 'format' => 'jpg', 'file' => $category->image_desc]) }}" />
             <div id="{{ $category->id }}-carousel" class="carousel slide max-height" data-height-percent="70" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">

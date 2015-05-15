@@ -2046,3 +2046,7 @@ img.full-width {
         height: 30px;
         cursor: pointer;
     }
+    img.slide {
+        margin-bottom: 10px;
+        text-align: right;
+    }

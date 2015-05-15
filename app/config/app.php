@@ -226,6 +226,7 @@ return array(
             '_class' => 'Catalog\Category',
             'preview' => [150, 150],
             'background' => [1920, 1080],
+            'slide' => [600, 100]
         ],
         'album' => [
             '_class' => 'Catalog\Album',
