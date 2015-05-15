@@ -1345,7 +1345,7 @@ h6 {
 
 #main-content .carousel .carousel-inner .item {
     height:100%;  
-    text-align: left;
+    text-align: right;
 }
 
 #main-content .carousel .carousel-inner .item .carousel-text-content {
@@ -2049,5 +2049,4 @@ img.full-width {
     img.slide {
         margin-bottom: 10px;
         text-align: right;
-        margin-right: 20%;
     }
