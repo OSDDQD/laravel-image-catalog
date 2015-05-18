@@ -379,8 +379,8 @@ table {
     margin:0;
     padding:0;
     font-family: 'OpenSansLight', sans-serif;
-    font-size:0.86em;
-    line-height:1.05;
+    font-size:0.75em;
+    line-height:1;
     text-transform: uppercase;
     background: rgba(0,0,0,0.1);
     width:100%;
@@ -430,7 +430,7 @@ table {
         #left-sidebar #main-menu {
             margin:12px 0;
             /*font-size:1.02em;*/
-            line-height:1.5;
+            line-height:1.1;
         }
     }
     @media (min-width: 1200px) {
