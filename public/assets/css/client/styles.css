@@ -490,6 +490,8 @@ table {
     margin:10px 0;
     padding:0;
     text-align: center;
+    right: 9%;
+    position: relative;
 }
 #footer .social-icons li {
     display:inline-block;

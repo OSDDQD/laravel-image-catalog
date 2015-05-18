@@ -51,7 +51,18 @@
             {{--<div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>--}}
 
             @include('layouts.partials.menu')
+            @section('footer')
+            <!-- Footer -->
+            <section id="footer">
 
+                <!-- Go to Top -->
+                <div id="go-to-top" onclick="scroll_to_top();"><span class="icon glyphicon glyphicon-chevron-up"></span></div>
+                @include('layouts.partials.search_form')
+                @include('layouts.partials.social')
+
+            </section>
+            <!-- end: Footer -->
+            @show
         </section><!-- #left-sidebar -->
     </div>
     <!-- end: Left Sidebar -->
@@ -59,18 +70,6 @@
     <section id="main-content" class="clearfix">
         @yield('content')
     </section><!-- #main-content -->
-
-@section('footer')
-    <!-- Footer -->
-    <section id="footer">
-
-        <!-- Go to Top -->
-        <div id="go-to-top" onclick="scroll_to_top();"><span class="icon glyphicon glyphicon-chevron-up"></span></div>
-        @include('layouts.partials.search_form')
-        @include('layouts.partials.social')
-
-    </section>
-    <!-- end: Footer -->
 
 </div><!-- #outer-container -->
 <!-- end: Outer Container -->
@@ -85,7 +84,6 @@
         </div><!-- .modal-content -->
     </div><!-- .modal-dialog -->
 </div><!-- .modal -->
-@show
     <!-- Javascripts
 ================================================== -->
 
