@@ -11,7 +11,7 @@ trait UploadableTrait
 
     public function getUploadedFilename($ext = null)
     {
-        $filename = $this->getUploadSlug() . '-' . $this->id.substr(uniqid(), 0, 4);
+        $filename = $this->getUploadSlug() . '-' . $this->id . '-' . substr(md5(rand()), 0, 4);
         if ($ext)
             $filename .= '.' . $ext;
         return $filename;
