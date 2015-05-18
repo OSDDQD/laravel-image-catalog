@@ -535,8 +535,8 @@ table {
         #footer {
             /* have to match with #left-sidebar rules above */
             left:8%;
-            max-width:205px;
-            min-width:190px; 
+            max-width:264px;
+            min-width:264px;
         }   
     }
     @media (min-width: 1200px) {
