@@ -65,7 +65,7 @@ Route::get('rss/{locale?}', [
 ]);
 
 // Search
-Route::get('/search/{query}', [
+Route::get('/search', [
     'as' => 'search',
     'uses' => 'Catalog\SearchController@search',
 ]);

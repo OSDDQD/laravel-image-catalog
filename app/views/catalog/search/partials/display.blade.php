@@ -1,7 +1,7 @@
 <article id="search" data-overlay="true" data-overlay-opacity="1" class="section-wrapper clearfix" data-custom-background-img="{{ URL::Route('home') }}/assets/img/client/default_bg.jpg">
     <div class="content-wrapper clearfix">
         <div class="col-sm-11 col-md-10 pull-right">
-
+            @if($result)
             <h4 class="section-title">{{ Lang::get('search.categories') }}</h4>
             <!-- grid -->
             <section class="grid row clearfix clearfix-for-1cols">
@@ -80,6 +80,9 @@
                     @endforeach
                 @endif
             </section><!-- end: grid -->
+            @else
+                <h4 class="section-title">{{ Lang::get('search.err.search_error') }}</h4>
+            @endif
         </div><!-- .col-sm-11 -->
     </div><!-- .content-wrapper -->
 </article><!-- .section-wrapper -->
