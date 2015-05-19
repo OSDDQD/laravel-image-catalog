@@ -134,6 +134,7 @@ return array(
         'Mews\Captcha\CaptchaServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
+        'Frozennode\XssInput\XssInputServiceProvider',
 
 	),
 
@@ -184,6 +185,7 @@ return array(
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
 		'HTML'            => 'Illuminate\Support\Facades\HTML',
 		'Input'           => 'Illuminate\Support\Facades\Input',
+        'InputProtect'    => 'Frozennode\XssInput\XssInput',
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',
 		'Mail'            => 'Illuminate\Support\Facades\Mail',

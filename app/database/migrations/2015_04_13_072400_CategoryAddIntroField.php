@@ -5,28 +5,28 @@ use Illuminate\Database\Migrations\Migration;
 
 class CategoryAddIntroField extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('catalog_categories', function(Blueprint $table) {
-			$table->tinyInteger('is_intro')->nullable();
-		});
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('catalog_categories', function(Blueprint $table) {
+            $table->boolean('is_intro')->default(0);
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::table('catalog_categories', function($table) {
-			$table->dropColumn('is_intro');
-		});
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('catalog_categories', function($table) {
+            $table->dropColumn('is_intro');
+        });
+    }
 
 }

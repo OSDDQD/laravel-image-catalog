@@ -10,7 +10,7 @@ class SearchController extends \BaseController {
         $albums = NULL;
         $images = NULL;
 
-        $query = \Input::get('q');
+        $query = \InputProtect::get('q');
 
         if(!isset($query))
             $query = false;
