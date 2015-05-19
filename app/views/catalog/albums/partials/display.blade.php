@@ -11,7 +11,7 @@
                 <div class="grid-item col-md-3 preview-width">
                     <div class="item-content clearfix">
                         <div class="image">
-                            <a class="viewimg" title="{{ $image->description }}" href="{{ \URL::Route('preview.managed', ['object' => 'image', 'mode' => 'full', 'format' => 'jpg', 'file' => $image->image]) }}">
+                            <a data-lightbox="album" data-title="{{ $image->description }}" href="{{ \URL::Route('preview.managed', ['object' => 'image', 'mode' => 'full', 'format' => 'jpg', 'file' => $image->image]) }}">
                                 <img src="{{ \URL::Route('preview.managed', ['object' => 'image', 'mode' => 'show', 'format' => 'jpg', 'file' => $image->image]) }}" />
                             </a>
                             <div class="image-title">

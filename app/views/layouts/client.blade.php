@@ -30,7 +30,6 @@
     <!-- styles for this template -->
     <link href="/assets/css/client/styles.css" rel="stylesheet">
 
-    <link href="/assets/js/colorbox/css/colorbox.css" rel="stylesheet">
 </head>
 @show
 
@@ -116,7 +115,7 @@
 <script src="/assets/js/client/jquery.fitvids.js"></script>
 
 <!--colorbox-->
-<script src="/assets/js/colorbox/js/jquery.colorbox-min.js"></script>
+<script src="/assets/js/lightbox/js/lightbox.min.js"></script>
 
 <!-- Custom functions for this theme -->
 <script src="/assets/js/client/functions.min.js"></script>

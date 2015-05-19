@@ -2009,6 +2009,7 @@ img.full-width {
         background: #e4e0df;
         text-align: center;
         padding: 10px;
+        box-shadow: 0 0 6px rgba(0,0,0,0.7);
     }
     .item-content .image .image-title {
         font-size: 13px;
@@ -2016,6 +2017,8 @@ img.full-width {
         color: #a7a49b;
         max-width: 130px;
         font-weight: bold;
+        overflow: hidden;
+        margin-top: 5px;
     }
     .preview-width {
         width: auto;

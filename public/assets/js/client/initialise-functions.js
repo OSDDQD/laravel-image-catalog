@@ -3,10 +3,6 @@
  * ON DOCUMENT READY
  * ===============================================================
  */
-$(document).ready(function(){
-    $(".viewimg").colorbox({rel:'viewimg', slideshow:true, width:"75%", height:"75%"});
-});
-
 function initialise_document_ready_functions()
 {
     // background_settings.change_on_mobile = true; // uncomment to enable background change on mobile
