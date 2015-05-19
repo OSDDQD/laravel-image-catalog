@@ -67,7 +67,7 @@ Route::get('rss/{locale?}', [
 // Search
 Route::get('/search/{query}', [
     'as' => 'search',
-    'uses' => 'SearchController@search',
+    'uses' => 'Catalog\SearchController@search',
 ]);
 
 // Users
